@@ -1,5 +1,5 @@
 ---
-title: "Bee Wings 2"
+title: "Bee Wings Github"
 author: "Jorge De La Cruz"
 date: "2024-04-23"
 output: html_document
@@ -310,13 +310,13 @@ scatter(dapc_gen, scree.da = TRUE, posi.da = "bottomleft",
 ```{r}
 population <- lm_data[,c(2:19)] # Only preserves LM values
 
-#excluded_species <- c() #Subset "X" species from data
-#species_data <- population[!lm_data$Species %in% excluded_species, ]
-#species_groups <- lm_data$Species[!lm_data$Species %in% excluded_species]
+excluded_species <- c() #Subset "X" species from data
+species_data <- population[!lm_data$Species %in% excluded_species, ]
+species_groups <- lm_data$Species[!lm_data$Species %in% excluded_species]
 
-included_species <- c("Apis mellifera", "Xylocopa tabaniformis orpifex","Bombus californicus", "Bombus vosnesenskii", "Eucera actuosa") #Subset "X" species from data
-species_data <- population[lm_data$Species %in% included_species, ]
-species_groups <- lm_data$Species[lm_data$Species %in% included_species]
+#included_species <- c("Apis mellifera", "Xylocopa tabaniformis orpifex","Bombus californicus", "Bombus vosnesenskii", "Eucera actuosa") #Subset "X" species from data
+#species_data <- population[lm_data$Species %in% included_species, ]
+#species_groups <- lm_data$Species[lm_data$Species %in% included_species]
 
 dapc_spe <- dapc(species_data, 
                 grp = species_groups,
