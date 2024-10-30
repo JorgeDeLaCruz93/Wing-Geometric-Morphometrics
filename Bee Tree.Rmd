@@ -1,0 +1,245 @@
+---
+title: "Bee Tree"
+author: "Jorge De La Cruz"
+date: "2024-05-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 1. Load Necessary Packages
+```{r}
+library(geomorph)
+library(phytools)
+library(ape)
+library(ggtree)
+library(vegan)
+library(geiger)
+```
+
+
+```{r}
+bee_tree <- ape::read.tree("data/BEE_mat7gen_p8pmAa_fst.nwk"); phytools::read.newick("data/BEE_mat7gen_p8pmAa_fst.nwk")
+
+plot(bee_tree, cex = 0.1, no.margin=TRUE)
+
+species_to_keep <- c("Apis_mellifera~Apidae~Apinae~Apini", "Bombus_impatiens~Apidae~Apinae~Bombini", "Agapostemon_tyleri~Halictidae~Halictinae~Caenohalictini", "Xylocopa_virginica~Apidae~Xylocopinae~Xylocopini", "Osmia_bucephala~Megachilidae~Megachilinae~Osmiini", "Megachile_rotundata~Megachilidae~Megachilinae~Megachilini", "Diadasia_chilensis~Apidae~Eucerinae~Emphorini", "Eucera_nigrilabris~Apidae~Eucerinae~Eucerini", "Andrena_nigroaenea~Andrenidae~Andreninae~Andrenini", "Halictus_ligatus~Halictidae~Halictinae~Halictini", "Ceratina_calcarata~Apidae~Xylocopinae~Ceratinini", "Habropoda_laboriosa~Apidae~Anthophorinae~Anthophorini", "Anthophora_montana~Apidae~Anthophorinae~Anthophorini", "Panurginus_albopilosus~Andrenidae~Panurginae~Panurgini", "Lasioglossum_albipes~Halictidae~Halictinae~Halictini")
+
+pruned_tree <- drop.tip(bee_tree, setdiff(bee_tree$tip.label, species_to_keep)) # change "phylo_tree" to be the name of your tree
+
+#closest_genus_Bombus <- which(pruned_tree$tip.label == "Bombus_impatiens~Apidae~Apinae~Bombini")
+#new_bee_tree <- bind.tip(pruned_tree, "Bombus californicus", where = closest_genus_Bombus)
+
+# Replace "current_name1" and "current_name2" with the current names of the species
+# Replace "new_name1" and "new_name2" with the new names you want to assign
+#tree$tip.label[tree$tip.label == "current_name2"] <- "new_name2"
+
+pruned_tree$tip.label[pruned_tree$tip.label == "Apis_mellifera~Apidae~Apinae~Apini"] <- "Apis"
+pruned_tree$tip.label[pruned_tree$tip.label == "Bombus_impatiens~Apidae~Apinae~Bombini"] <- "Bombus"
+pruned_tree$tip.label[pruned_tree$tip.label == "Xylocopa_virginica~Apidae~Xylocopinae~Xylocopini"] <- "Xylocopa"
+pruned_tree$tip.label[pruned_tree$tip.label == "Osmia_bucephala~Megachilidae~Megachilinae~Osmiini"] <- "Osmia"
+pruned_tree$tip.label[pruned_tree$tip.label == "Megachile_rotundata~Megachilidae~Megachilinae~Megachilini"] <- "Megachile"
+pruned_tree$tip.label[pruned_tree$tip.label == "Eucera_nigrilabris~Apidae~Eucerinae~Eucerini"] <- "Eucera"
+pruned_tree$tip.label[pruned_tree$tip.label == "Diadasia_chilensis~Apidae~Eucerinae~Emphorini"] <- "Diadasia"
+pruned_tree$tip.label[pruned_tree$tip.label == "Agapostemon_tyleri~Halictidae~Halictinae~Caenohalictini"] <- "Agapostemon"
+pruned_tree$tip.label[pruned_tree$tip.label == "Andrena_nigroaenea~Andrenidae~Andreninae~Andrenini"] <- "Andrena"
+pruned_tree$tip.label[pruned_tree$tip.label == "Halictus_ligatus~Halictidae~Halictinae~Halictini"] <- "Halictus"
+pruned_tree$tip.label[pruned_tree$tip.label == "Ceratina_calcarata~Apidae~Xylocopinae~Ceratinini"] <- "Ceratina"
+pruned_tree$tip.label[pruned_tree$tip.label == "Habropoda_laboriosa~Apidae~Anthophorinae~Anthophorini"] <- "Habropoda"
+pruned_tree$tip.label[pruned_tree$tip.label == "Anthophora_montana~Apidae~Anthophorinae~Anthophorini"] <- "Anthophora"
+pruned_tree$tip.label[pruned_tree$tip.label == "Panurginus_albopilosus~Andrenidae~Panurginae~Panurgini"] <- "Panurginus"
+pruned_tree$tip.label[pruned_tree$tip.label == "Lasioglossum_albipes~Halictidae~Halictinae~Halictini"] <- "Lasioglossum" 
+
+
+
+
+#ggtree(pruned_tree, cex = 0.1) + geom_tiplab() + ggplot2::xlim(0, 0.4)
+ggtree(pruned_tree, cex = 0.5) + geom_tiplab(align = TRUE) + ggplot2::xlim(0, 0.3)
+
+pruned_tree
+```
+
+
+```{r}
+species_keep <- c("Apis_mellifera~Apidae~Apinae~Apini", "Bombus_impatiens~Apidae~Apinae~Bombini", "Agapostemon_tyleri~Halictidae~Halictinae~Caenohalictini", "Xylocopa_virginica~Apidae~Xylocopinae~Xylocopini", "Osmia_bucephala~Megachilidae~Megachilinae~Osmiini")
+
+phylotree <- drop.tip(bee_tree, setdiff(bee_tree$tip.label, species_keep))
+
+phylotree$tip.label[phylotree$tip.label == "Agapostemon_tyleri~Halictidae~Halictinae~Caenohalictini"] <- "Agapostemon"
+phylotree$tip.label[phylotree$tip.label == "Apis_mellifera~Apidae~Apinae~Apini"] <- "Apis"
+phylotree$tip.label[phylotree$tip.label == "Bombus_impatiens~Apidae~Apinae~Bombini"] <- "Bombus"
+phylotree$tip.label[phylotree$tip.label == "Osmia_bucephala~Megachilidae~Megachilinae~Osmiini"] <- "Osmia"
+phylotree$tip.label[phylotree$tip.label == "Xylocopa_virginica~Apidae~Xylocopinae~Xylocopini"] <- "Xylocopa"
+
+#ggtree(pruned_tree, cex = 0.1) + geom_tiplab() + ggplot2::xlim(0, 0.4)
+ggtree(phylotree, cex = 0.1, ladderize = TRUE) + geom_tiplab() + ggplot2::xlim(0, 0.2)
+
+```
+
+
+```{r}
+phylo_distances <- cophenetic.phylo(pruned_tree)
+
+phylo_distances
+```
+##Load TPS
+```{#r}
+#Read in the TPS data for all bee wing images
+
+phylogeny_tps <- readland.tps("C:/Users/super/OneDrive/Desktop/Files/Beesearch/Files/tpsdig/Wing TPS/Phylogeny/PhylogenyTPS.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+
+phylogeny_tps
+
+Agapostemon_tps <- readland.tps("C:/Users/super/OneDrive/Desktop/Files/Beesearch/Files/tpsdig/Wing TPS/Phylogeny/Agapostemon.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+Apis_tps <- readland.tps("C:/Users/super/OneDrive/Desktop/Files/Beesearch/Files/tpsdig/Wing TPS/Phylogeny/Apis.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+Bombus_tps <- readland.tps("C:/Users/super/OneDrive/Desktop/Files/Beesearch/Files/tpsdig/Wing TPS/Phylogeny/Bombus.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+Osmia_tps <- readland.tps("C:/Users/super/OneDrive/Desktop/Files/Beesearch/Files/tpsdig/Wing TPS/Phylogeny/Bombus.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+Xylocopa_tps <- readland.tps("C:/Users/super/OneDrive/Desktop/Files/Beesearch/Files/tpsdig/Wing TPS/Phylogeny/Xylocopa.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+```
+
+
+
+##Generalized Procrustes Analaysis (GPA)
+Run GPA on TPS data, to then generate coordinate data for each landmark on each specimen. In this code, we start with tps data and end with a CSV of coordinate data for each specimen. This can then be merged with the bee data generated above.
+```{r}
+phylogeny_gpa <- gpagen(phylogeny_tps, PrinAxes = TRUE)
+
+# Assuming gmm_data is a 3D array (p x k x n): p = landmarks, k = dimensions, n = specimens
+aligned_shapes <- phylogeny_gpa$coords
+
+```
+### 2. Prepare Your Data
+Ensure you have:
+-A phylogenetic tree (`phylo_tree`).
+-A geometric morphometric dataset (`gmm_data`) with species names corresponding to the tips of the tree.
+
+
+### 4. Calculate Morphometric Distances
+Calculate pairwise Procrustes distances between species.
+
+```{r}
+# Calculate mean shapes for each species
+mean_shapes <- mshape(aligned_shapes)
+# Calculate Procrustes distances
+procrustes_distances <- as.matrix(dist(mean_shapes))
+
+mean_shapes
+```
+
+
+### 5. Calculate Phylogenetic Distances
+Extract the cophenetic (phylogenetic) distances from the phylogenetic tree.
+```{r}
+phylo_distances <- cophenetic.phylo(phylotree)
+
+phylo_distances
+```
+
+
+### 6. Mantel Test
+Perform a Mantel test to assess the correlation between morphometric and phylogenetic distances.
+```{r}
+# Perform the Mantel test
+procrustes_distances <- unlist(phylo_distances)
+
+
+
+mantel_result <- mantel(phylo_distances, GM_Data)
+# Print the results
+print(mantel_result)
+```
+
+
+### 7. Phylogenetic Signal in Morphometric Data
+Alternatively, you can test for phylogenetic signal in the 
+morphometric data using methods like Blomberg’s K or Pagel’s λ.
+
+```{r}
+GM_Data <- read.csv("data/GM_Data.csv") 
+
+
+phylotree
+row.names(GM_Data)
+
+row.names(GM_Data) <- GM_Data$X
+
+# Remove species column 'X'
+GM_Data$X <- NULL
+
+GM_phylo <- as.matrix(GM_Data)
+
+
+
+#Calculate Physignal (physignal - geomorph)
+bee_signal <- physignal(GM_phylo, pruned_tree)
+
+# Estimate effect size
+effect_size <- physignal.z(A = GM_phylo, phy = pruned_tree)
+
+# Print results
+summary(bee_signal)
+print(effect_size)
+
+# Calculate Pagel’s λ (phylosig - phytools)
+lambda_result <- phylosig(pruned_tree, GM_phylo, method = "lambda", test = TRUE)
+print(lambda_result)
+
+# Calculate Blomberg's K
+K_result <- phylosig(pruned_tree, GM_phylo, method = "K", test = TRUE)
+print(K_result)
+
+# Calculate Pagel's λ (fitContinuous - geiger)
+fitContinuous(pruned_tree, GM_phylo, model="lambda")
+
+# Calculate Pagel's λ (fitContinuous - geiger)
+fitContinuous(pruned_tree, GM_phylo, model="BM")
+
+
+```
+
+### Example Code
+Here’s a more comprehensive example combining these steps:
+```R
+library(geomorph)
+library(phytools)
+library(ape)
+# Load your data
+phylo_tree <- read.tree("path_to_your_tree_file")
+gmm_data <- read.csv("path_to_your_gmm_data_file")
+# Perform GPA
+gpa_result <- gpagen(gmm_data)
+aligned_shapes <- gpa_result$coords
+# Calculate mean shapes for each species
+mean_shapes <- mshape(aligned_shapes)
+# Calculate Procrustes distances
+procrustes_distances <- as.matrix(dist(mean_shapes))
+# Calculate phylogenetic distances
+phylo_distances <- cophenetic.phylo(phylo_tree)
+# Perform Mantel test
+mantel_result <- mantel(procrustes_distances, phylo_distances)
+print(mantel_result)
+# Test for phylogenetic signal (Blomberg's K)
+K_result <- phylosig(phylo_tree, mean_shapes, method = "K")
+print(K_result)
+# Test for phylogenetic signal (Pagel's lambda)
+lambda_result <- phylosig(phylo_tree, mean_shapes, method = "lambda")
+print(lambda_result)
+```
+### Notes:
+- Ensure your species names match exactly between the morphometric dataset and the phylogenetic tree.
+- The `phylomorphospace` function in `phytools` can visualize the phylogenetic relationships in morphospace.
+This approach allows you to test the relationship between morphometric variation and phylogenetic distances, providing insight into how evolutionary history has influenced morphological traits.
