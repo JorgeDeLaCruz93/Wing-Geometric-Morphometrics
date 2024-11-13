@@ -20,13 +20,14 @@ library(geomorph) #NOTE: download XQuartz if using a Mac
 library(devtools)
 library(RRPP) #used for MANOVA 
 library(adegenet) # used for DAPC
+library(phangorn) #Maximum Likelihood (ML)
 ```
 
 ##Load TPS
 ```{r}
 #Read in the TPS data for all bee wing images
 
-all_tps_data <- readland.tps("data/bee_wings3.TPS",
+all_tps_data <- readland.tps("data/bee_wings5.TPS",
                              specID = c("imageID"), readcurves = FALSE, 
                              warnmsg = TRUE,negNA = FALSE)
 
@@ -56,8 +57,6 @@ all_tps_gpa <- gpagen(all_tps_data, PrinAxes = TRUE)
 write.csv(all_tps_gpa$coords, "data/tpsGPA.csv", row.names = TRUE)
 
 ```
-
-##Merge Landmark Data with Bee Collection/Curation Data
 ###Adjust the Landmark Data to usable format
 ```{r}
 lmdata <- read.csv("data/tpsGPA.csv") #read landmark data in
@@ -108,8 +107,6 @@ lmYonly3 <- lmYonly2[,c(2,6:14)]
 ########
 #Now: unite the Y and X coordinate dataframes into just one
 lm_both <- merge(lmXonly3, lmYonly3, by=("catalogNumber"))
-
-lm_both
 ```
 
 ###Merge Landmark and Curation Data
@@ -191,7 +188,7 @@ Assign "unknown" bees to the correct group, and test for % accuracy. Tells numbe
 ```{r}
 lm_values <- lm_data[,c(2:19)] # Only preserves LM values
 
-xval <- xvalDapc(lm_values, lm_data$Species, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
+xval <- xvalDapc(lm_values, lm_data$Subfamily, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
 
 xval$`Number of PCs Achieving Highest Mean Success` #Which number of PCs retained has highest accuracy?
 xval$`Mean Successful Assignment by Number of PCs of PCA` #What is accuracy at various PCs retained?
@@ -208,7 +205,7 @@ dapc_col <- c("red4", "darkblue", "forestgreen","darkcyan", "magenta4") #save co
 
 scatter(dapc_1,1,1,bg="white", #1,1, = 1st discriminant function
         cstar=0, scree.pca=FALSE, posi.pca="topright",
-        legend=TRUE, size.leg=4, posi.leg="topright", col = species_col) # plot w/ just one axis meaning just 1 DA
+        legend=TRUE, size.leg=4, posi.leg="topright", col = dapc_col) # plot w/ just one axis meaning just 1 DA
 
 ```
 # DAPC with 2 Discriminant Functions
@@ -263,14 +260,16 @@ filtered_subgroups <- lm_data$Subfamily[!lm_data$Subfamily %in% excluded_subfami
 
 dapc_sub <- dapc(filtered_subdata, 
                 grp = filtered_subgroups, 
-                n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
+                n.pca = 12, #Axes retained in Principal Component Analysis (PCA)
                 n.da = 10) #Axes retained in Discriminant Analysis
 
-sub_col <- c("red4", "darkblue", "darkcyan", "forestgreen", "gold3", "magenta4")
+sub_col <- c("red4", "darkblue", "darkcyan", "forestgreen","chartreuse4", "gold3","maroon3", "magenta4")
                  
+
+#("red4", "darkorange2","gold3", "seagreen3", "forestgreen","darkcyan","darkblue","magenta4")
 scatter(dapc_sub, scree.da = FALSE, posi.da = "bottomleft",
         bg="white", pch=20, 
-        cstar=0, solid=.4, cex=2.5, scree.pca=FALSE, posi.pca="topbottom",
+        cstar=0, solid=.45, cex=2.5, clab = 0.8, scree.pca=FALSE, posi.pca="topbottom",
         legend=TRUE, posi.leg = "bottomright",
         col = sub_col)
 
@@ -281,13 +280,13 @@ scatter(dapc_sub, scree.da = FALSE, posi.da = "bottomleft",
 ```{r}
 population <- lm_data[,c(2:19)] # Only preserves LM values
 
-#excluded_genus <- c() #Subset genus "X" from data
-#genus_data <- population[!lm_data$Genus %in% excluded_genus, ]
-#genus_groups <- lm_data$Genus[!lm_data$Genus %in% excluded_genus]
+excluded_genus <- c() #Subset genus "X" from data
+genus_data <- population[!lm_data$Family %in% excluded_genus, ]
+genus_groups <- lm_data$Genus[!lm_data$Family %in% excluded_genus]
 
-included_genus <- c("Apis", "Xylocopa","Bombus", "Ceratina", "Eucera", "Diadasia") #Subset "X" species from data
-genus_data <- population[lm_data$Genus %in% included_genus, ]
-genus_groups <- lm_data$Genus[lm_data$Genus %in% included_genus]
+#included_genus <- c("Apis", "Xylocopa","Bombus", "Ceratina", "Eucera", "Diadasia", "Lasioglossum") #Subset "X" species from data
+#genus_data <- population[lm_data$Genus %in% included_genus, ]
+#genus_groups <- lm_data$Genus[lm_data$Genus %in% included_genus]
 
 
 dapc_gen <- dapc(genus_data, 
@@ -295,12 +294,13 @@ dapc_gen <- dapc(genus_data,
                 n.pca = 6, #Axes retained in Principal Component Analysis (PCA)
                 n.da = 10) #Axes retained in Discriminant Analysis
 
-genus_col <- c( "darkblue", "forestgreen", "red4","darkcyan",  "magenta4") #save colors for population
+genus_col <- c("red4", "darkblue", "darkcyan", "forestgreen","chartreuse4", "gold3","maroon3", "magenta4") #save colors for population
+
 
 scatter(dapc_gen, scree.da = TRUE, posi.da = "bottomleft",
         bg="white", pch=20, 
-        cstar=0, solid=.4, cex=2.5, scree.pca=FALSE, posi.pca="topbottom",
-        legend=TRUE, posi.leg = "bottomright",
+        cstar=0, solid=.45, cex=2.5, clab = 0.4, scree.pca=FALSE, posi.pca="topbottom",
+        legend=TRUE, cleg = 0.8, posi.leg = "bottomright",
         col = genus_col)
 
 
@@ -310,7 +310,7 @@ scatter(dapc_gen, scree.da = TRUE, posi.da = "bottomleft",
 ```{r}
 population <- lm_data[,c(2:19)] # Only preserves LM values
 
-excluded_species <- c() #Subset "X" species from data
+#excluded_species <- c() #Subset "X" species from data
 species_data <- population[!lm_data$Species %in% excluded_species, ]
 species_groups <- lm_data$Species[!lm_data$Species %in% excluded_species]
 
@@ -323,18 +323,94 @@ dapc_spe <- dapc(species_data,
                 n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
                 n.da = 10) #Axes retained in Discriminant Analysis
 
-species_col <- c("darkblue", "darkcyan", "forestgreen", "red4", "magenta4", "chartreuse4", "gold3") #save colors for population
+species_col <- c("red4", "darkblue", "darkcyan", "forestgreen","chartreuse4", "gold3","maroon3", "magenta4") #save colors for population
 
 scatter(dapc_spe, scree.da = FALSE, posi.da = "bottomleft",
         bg="white", pch=20, 
-        cstar=0, solid=.4, cex=3, scree.pca=FALSE, posi.pca="bottomleft",
-        legend=TRUE, posi.leg = "topright",
+        cstar=0, solid=.45, cex=2, clab = 0.5, scree.pca=FALSE, posi.pca="bottomleft",
+        legend=TRUE, cleg = 0.6, posi.leg = "bottomright",
         col = species_col)
 
 
 
 ```
 
+###3-Dimensional PCA - Family
+```{r}
+lm_data$Family <- factor(lm_data$Family,
+                       levels = c("Apidae","Andrenidae","Megachilidae", "Halictidae"))
+
+colors <- as.numeric(lm_data$Family)
+
+head(lm_data)
+
+pc <- princomp(lm_data[,2:19], cor=TRUE, scores=TRUE)
+
+plot(pc,type="lines")
+
+biplot(pc)
+
+plot3d(pc$scores[,1:3], col = colors, size = 5, xlab = "PC1", ylab = "PC2", zlab = "PC3")
+
+legend3d("topright", legend = levels(lm_data$Family), col = 1:length(levels(lm_data$Family)), pch = 16)
+
+```
+###3-Dimensional PCA - Subfamily
+```{r}
+lm_data$Subfamily <- factor(lm_data$Subfamily)
+
+colors <- as.numeric(lm_data$Subfamily)
+
+head(lm_data)
+
+pc <- princomp(lm_data[,2:19], cor=TRUE, scores=TRUE)
+
+plot(pc,type="lines")
+
+biplot(pc)
+
+plot3d(pc$scores[,1:3], col = colors, size = 5, xlab = "PC1", ylab = "PC2", zlab = "PC3")
+
+legend3d("topright", legend = levels(lm_data$Subfamily), col = 1:length(levels(lm_data$Subfamily)), pch = 16)
+```
+###3-Dimensional PCA - Genus
+```{r}
+lm_data$Genus <- factor(lm_data$Genus)
+
+colors <- as.numeric(lm_data$Genus)
+
+head(lm_data)
+
+pc <- princomp(lm_data[,2:19], cor=TRUE, scores=TRUE)
+
+plot(pc,type="lines")
+
+biplot(pc)
+
+plot3d(pc$scores[,1:3], col = colors, size = 5, xlab = "PC1", ylab = "PC2", zlab = "PC3")
+
+legend3d("topright", legend = levels(lm_data$Genus), col = 1:length(levels(lm_data$Genus)), pch = 16)
+```
+
+
+
+###Estimating phylogenetic tree from a character matrix by maximum-likelihood
+```{r}
+seq_data <- matrix(lm_data)
+
+?phyDat
+seq_phyDat <- phyDat(seq_data, type = "DNA")
+dist_matrix <- dist.ml(seq_phyDat)
+
+# Step 1: Create a starting tree using Neighbor-Joining (NJ)
+nj_tree <- nj(dist_matrix)  # Using the distance matrix from earlier
+
+# Step 2: Optimize the tree using Maximum Likelihood
+ml_tree <- optim.pml(nj_tree, model = "GTR", rearrangement = "stochastic", control = pml.control(trace = 0))
+
+# View the tree
+plot(ml_tree$tree, main = "Maximum Likelihood Phylogeny")
+```
 
 
 
