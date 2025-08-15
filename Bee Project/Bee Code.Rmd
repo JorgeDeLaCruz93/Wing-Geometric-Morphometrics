@@ -1,0 +1,477 @@
+---
+title: "Bee Wings Github"
+author: "Jorge De La Cruz"
+date: "2024-04-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+############################################################################################################
+
+##Load Packages
+```{r packages, warning=FALSE, echo=FALSE, message=FALSE}
+library(htmltools)
+library(rgl)
+library(tidyverse)
+library(geomorph) #NOTE: download XQuartz if using a Mac
+library(devtools)
+library(RRPP) #used for MANOVA 
+library(adegenet) # used for DAPC
+library(phangorn) #Maximum Likelihood (ML)
+```
+
+##Load TPS
+```{r}
+#Read in the TPS data for all bee wing images
+
+all_tps_data <- readland.tps("data/bee_wings6.TPS",
+                             specID = c("imageID"), readcurves = FALSE, 
+                             warnmsg = TRUE,negNA = FALSE)
+
+```
+
+##Load csv Data
+Read bee data by first reading all Hymenoptera. After this chunk of code, all bee data is saved as __df1__ and is ready to be merged with the TPS data.
+```{r}
+#need to have "beedata26jun22.csv" saved in working directory
+bee_data <- read_csv("data/bee_metadata2.csv")
+
+#df1 <- bee_data
+#df1 <- df1 %>% separate(catalogNumber, c("UCSB", "number", "side")) #issue btwn _ vs - in catalogNumber
+#bee_data_clean <- df1 %>% tidyr::unite('catalogNumber', sep = "_", c('UCSB','number', 'side')) #solving it by switching to _ from - in #the downloaded Hymenoptera data
+
+bee_data_clean <- bee_data
+```
+
+##Generalized Procrustes Analaysis (GPA)
+Run GPA on TPS data, to then generate coordinate data for each landmark on each specimen. In this code, we start with tps data and end with a CSV of coordinate data for each specimen. This can then be merged with the bee data generated above.
+```{r}
+all_tps_gpa <- gpagen(all_tps_data, PrinAxes = TRUE)
+
+write.csv(all_tps_gpa$coords, "data/tpsGPA.csv", row.names = TRUE)
+
+```
+###Adjust the Landmark Data to usable format
+```{r}
+lmdata <- read.csv("data/tpsGPA.csv") #read landmark data in
+
+df_transpose = t(lmdata) #transpose the landmark data
+df_transpose1 <- df_transpose
+df_transpose1 <- df_transpose1[-c(1),] #Remove first row
+#Format of LM data is currently two rows per specimen
+#with one row being X coordinate values and one row
+#being Y coordinate values. Below, we split into two 
+#data frames and then stitch them back together to get
+#18 different variables for the 9 landmarks
+#(9 X coordinates and 9 Y coordinates)
+lm1 <- df_transpose1
+lmX <- lm1
+lmY <- lm1
+lmX1 <- lmX
+lmX1 <- data.frame(lmX1)
+lmX2 <- setNames(cbind(rownames(lmX1), lmX1, row.names = NULL),
+                 c("name", "LM1x", "LM2x", "LM3x",
+                   "LM4x", "LM5x", "LM6x", "LM7x", "LM8x", "LM9x"))
+lmXonly <- lmX2[str_detect(lmX2$name, "X."), ]
+#repeat with Y
+lmY1 <- lmY
+lmY1 <- data.frame(lmY1)
+lmY2 <- setNames(cbind(rownames(lmY1), lmY1, row.names = NULL),
+                 c("name", "LM1y", "LM2y", "LM3y",
+                   "LM4y", "LM5y", "LM6y", "LM7y", "LM8y", "LM9y"))
+lmYonly <- lmY2[str_detect(lmY2$name, "Y."), ]
+lmXonly1 <- lmXonly
+lmYonly1 <- lmYonly
+lmXonly2 <- lmXonly1 %>% 
+    tidyr::separate(name,                      
+                    c("X","collection", "barcode", "wing","species", 
+                      "location", "wingSide"), extra='drop') %>%
+    tidyr::unite('catalogNumber', c('collection', 'barcode', 'wing')) 
+lmXonly3 <- lmXonly2[,c(2,6:14)]
+
+##now: lmXonly5 has x coordinate values for all 9 landmarks, and just the catalogNumber
+###repeat for Y
+lmYonly2 <- lmYonly1 %>% 
+    tidyr::separate(name,                      
+                    c("Y","collection", "barcode", "wing","species", 
+                      "location", "wingSide"), extra='drop') %>%
+    tidyr::unite('catalogNumber', c('collection', 'barcode', "wing")) 
+lmYonly3 <- lmYonly2[,c(2,6:14)]
+
+########
+#Now: unite the Y and X coordinate dataframes into just one
+lm_both <- merge(lmXonly3, lmYonly3, by=("catalogNumber"))
+```
+
+
+###Merge Landmark and Curation Data
+```{r}
+lm_data <- merge(lm_both, bee_data_clean, by=c("catalogNumber"), all = FALSE)
+
+write.csv(lm_data, file = "data/LM_Data.csv")
+```
+
+###Phylogeny Data
+```{r}
+#Mean LM values by genus to calculate phylogenetic signal
+
+mean_lmx1 <- aggregate(LM1x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx2 <- aggregate(LM2x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx3 <- aggregate(LM3x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx4 <- aggregate(LM4x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx5 <- aggregate(LM5x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx6 <- aggregate(LM6x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx7 <- aggregate(LM7x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx8 <- aggregate(LM8x ~ Genus, data = lm_data, FUN = mean)
+mean_lmx9 <- aggregate(LM9x ~ Genus, data = lm_data, FUN = mean)
+
+mean_lmy1 <- aggregate(LM1y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy2 <- aggregate(LM2y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy3 <- aggregate(LM3y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy4 <- aggregate(LM4y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy5 <- aggregate(LM5y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy6 <- aggregate(LM6y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy7 <- aggregate(LM7y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy8 <- aggregate(LM8y ~ Genus, data = lm_data, FUN = mean)
+mean_lmy9 <- aggregate(LM9y ~ Genus, data = lm_data, FUN = mean)
+
+#mean_lmx3, mean_lmx4, mean_lmx5, mean_lmx6, mean_lmx7, mean_lmx8, mean_lmx9, mean_lmy1, mean_lmy2, mean_lmy3, mean_lmy4, mean_lmy5, mean_lmy6, mean_lmy7, mean_lmy8, mean_lmy9
+
+mean_LM2 <- merge(mean_lmx1, mean_lmx2, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx3, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx4, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx5, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx6, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx7, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx8, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx9, by=c("Genus"))
+
+mean_LM2 <- merge(mean_LM2, mean_lmy1, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy2, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy3, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy4, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy5, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy6, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy7, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy8, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy9, by=c("Genus"))
+
+rownames(mean_LM2) <- mean_LM2$Genus
+
+mean_LM3 <- mean_LM2[, -1] 
+
+LM_matrix <- mean_LM3
+
+write.csv(mean_LM3, file = "data/GM_Data.csv")
+```
+
+## MANOVA
+Using MANOVA to test for difference between groups using the RRPP package.
+```{r}
+# MANOVA test with three species
+manova_species <- lm_data
+manova_species <- manova_species[,c(2:20)] #drop catalog number and other non LM variables
+manova_species_data <- manova_species[,c(1:18)] #drop species variable
+manova_species_data <- as.matrix(manova_species_data) #as matrix
+
+fit_species <- lm.rrpp(manova_species_data ~ Species, SS.type = "I", 
+               data = manova_species, print.progress = FALSE) #run the linear model fit
+fitm_species <- manova.update(fit_species, print.progress = FALSE, tol = 0) #run manova update
+summary(fitm_species, test = "Pillai") #summarize with a manova table
+
+?summary.manova.lm.rrpp()
+
+?manova.update
+?lm.rrpp
+```
+
+### DAPC (Discriminant Analysis of Principal Components)
+
+## Cross-validation using DAPC
+Assign "unknown" bees to the correct group, and test for % accuracy. Tells number of PCs to retain
+```{r}
+lm_values <- lm_data[,c(2:19)] # Only preserves LM values
+
+#Replace lm_data$____ with taxonomic level 
+xval <- xvalDapc(lm_values, lm_data$Family, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
+
+xval$`Number of PCs Achieving Highest Mean Success` #Which number of PCs retained has highest accuracy? Put this value for n.pca = ___ when doing dapc() 
+
+xval$`Mean Successful Assignment by Number of PCs of PCA` #What is accuracy at various PCs retained?
+```
+#DAPC with 1 Discriminant Function
+Rather than a PCA, we run a DAPC here to visualize difference between groups.
+```{r}
+dapc_1 <- dapc(lm_values,  
+                grp = lm_data$Family, 
+                n.pca = 10,
+                n.da = 10) 
+
+dapc_col <- c("red4", "darkblue", "forestgreen","darkcyan", "magenta4") #save color values for DAPC
+
+scatter(dapc_1,1,1,bg="white", #1,1, = 1st discriminant function
+        cstar=0, scree.pca=FALSE, posi.pca="topright",
+        legend=TRUE, size.leg=4, posi.leg="topright", col = dapc_col) # plot w/ just one axis meaning just 1 DA
+
+```
+# DAPC with 2 Discriminant Functions
+```{r}
+population <- lm_data[,c(2:19)] # Only preserves LM values
+
+dapc_2 <- dapc(population, 
+                grp = lm_data$Family, #Species, Genus, Subfamily, Family, 
+                n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
+
+?dapc()
+
+scatter(dapc_2, 1,2, #1,2, = 1st and 2nd discriminant functions
+        scree.da = FALSE, posi.da = "topleft", 
+        bg="white", 
+        cstar=0,  pch=20, solid=.4, cex=2.5,scree.pca=FALSE, posi.pca="topleft",
+        legend=TRUE, posi.leg = "bottomright",
+        col = dapc_col) #plot the two populations
+
+prcomp(population)
+
+?dapc()
+
+?summary.dapc()
+
+print.dapc(dapc_2)
+
+summary.dapc(dapc_2)
+
+predict.dapc(dapc_2)
+
+```
+
+#Family DAPC
+```{r}
+population <- lm_data[,c(2:19)] # Only preserves LM values
+
+excluded_families <- c() #Subset family "X" from data
+family_data <- population[!lm_data$Family %in% excluded_families, ]
+family_groups <- lm_data$Family[!lm_data$Family %in% excluded_families]
+
+dapc_fam <- dapc(family_data, 
+                grp = family_groups, 
+                n.pca = 10, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
+
+phylo_col <- c("red4", "turquoise3", "gold2","forestgreen", "magenta4") #save colors for population
+
+scatter(dapc_fam, scree.da = FALSE, posi.da = "bottomleft",
+        bg="white", pch=20, 
+        cstar=0, solid=.4, cex=2.5, scree.pca=FALSE, posi.pca="topbottom",
+        legend=TRUE, posi.leg = "bottomright",
+        col = dapc_col)
+
+summary.dapc(dapc_fam)
+
+```
+
+#Subfamily DAPC
+```{r}
+population <- lm_data[,c(2:19)] # Only preserves LM values
+
+excluded_subfamilies <- c() #Subset subfamily "X" from data
+filtered_subdata <- population[!lm_data$Subfamily %in% excluded_subfamilies, ]
+filtered_subgroups <- lm_data$Subfamily[!lm_data$Subfamily %in% excluded_subfamilies]
+
+dapc_sub <- dapc(filtered_subdata, 
+                grp = filtered_subgroups, 
+                n.pca = 12, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
+
+sub_col <- c("red4", "darkblue", "darkcyan", "forestgreen","chartreuse4", "gold3","maroon3", "magenta4")
+                 
+
+#("red4", "darkorange2","gold3", "seagreen3", "forestgreen","darkcyan","darkblue","magenta4")
+scatter(dapc_sub, scree.da = FALSE, posi.da = "bottomleft",
+        bg="white", pch=20, 
+        cstar=0, solid=.45, cex=2.5, clab = 0.5, scree.pca=FALSE, posi.pca="topbottom",
+        legend=TRUE, posi.leg = "bottomright",
+        col = sub_col)
+
+summary.dapc(dapc_sub)
+print.dapc(dapc_sub)
+```
+
+#Genus DAPC
+```{r}
+population <- lm_data[,c(2:19)] # Only preserves LM values
+
+excluded_genus <- c() #Subset genus "X" from data
+genus_data <- population[!lm_data$Family %in% excluded_genus, ]
+genus_groups <- lm_data$Genus[!lm_data$Family %in% excluded_genus]
+
+#included_genus <- c("Apis", "Xylocopa","Bombus", "Ceratina", "Eucera", "Diadasia", "Lasioglossum") #Subset "X" species from data
+#genus_data <- population[lm_data$Genus %in% included_genus, ]
+#genus_groups <- lm_data$Genus[lm_data$Genus %in% included_genus]
+
+
+dapc_gen <- dapc(genus_data, 
+                grp = genus_groups, 
+                n.pca = 8, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
+
+genus_col <- c("red4", "darkblue", "darkcyan", "forestgreen","chartreuse4", "gold3","maroon3", "magenta4") #save colors for population
+
+
+scatter(dapc_gen, scree.da = TRUE, posi.da = "bottomleft",
+        bg="white", pch=20, 
+        cstar=0, solid=.45, cex=2.5, clab = 0.4, scree.pca=FALSE, posi.pca="topbottom",
+        legend=TRUE, cleg = 0.8, posi.leg = "bottomright",
+        col = genus_col)
+
+summary.dapc(dapc_gen)
+print.dapc(dapc_gen)
+```
+
+#Species DAPC
+```{r}
+population <- lm_data[,c(2:19)] # Only preserves LM values
+
+excluded_species <- c() #Subset "X" species from data
+species_data <- population[!lm_data$Species %in% excluded_species, ]
+species_groups <- lm_data$Species[!lm_data$Species %in% excluded_species]
+
+#included_species <- c("Apis mellifera", "Xylocopa tabaniformis orpifex","Bombus californicus", "Bombus vosnesenskii", "Eucera actuosa") #Subset "X" species from data
+#species_data <- population[lm_data$Species %in% included_species, ]
+#species_groups <- lm_data$Species[lm_data$Species %in% included_species]
+
+dapc_spe <- dapc(species_data, 
+                grp = species_groups,
+                n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
+
+species_col <- c("red4", "darkblue", "darkcyan", "forestgreen","chartreuse4", "gold3","maroon3", "magenta4") #save colors for population
+
+scatter(dapc_spe, scree.da = FALSE, posi.da = "bottomleft",
+        bg="white", pch=20, 
+        cstar=0, solid=.45, cex=2, clab = 0.5, scree.pca=FALSE, posi.pca="bottomleft",
+        legend=TRUE, cleg = 0.6, posi.leg = "bottomright",
+        col = species_col)
+
+
+summary.dapc(dapc_spe)
+print.dapc(dapc_spe)
+```
+
+#################################################################################################
+
+#DELETE CHUNKS AFTER THIS
+
+#################################################################################################
+
+
+
+
+###3-Dimensional PCA - Family
+```{r}
+lm_data$Family <- factor(lm_data$Family,
+                       levels = c("Apidae","Andrenidae","Megachilidae", "Halictidae", "Melittidae"))
+
+colors <- as.numeric(lm_data$Family)
+
+head(lm_data)
+
+pc <- princomp(lm_data[,2:19], cor=TRUE, scores=TRUE)
+
+plot(pc,type="lines")
+
+biplot(pc)
+
+plot3d(pc$scores[,1:3], col = colors, size = 5, xlab = "PC1", ylab = "PC2", zlab = "PC3")
+
+legend3d("topright", legend = levels(lm_data$Family), col = 1:length(levels(lm_data$Family)), pch = 16)
+
+```
+
+###3-Dimensional PCA - Subfamily
+```{r}
+lm_data$Subfamily <- factor(lm_data$Subfamily)
+
+colors <- as.numeric(lm_data$Subfamily)
+
+head(lm_data)
+
+pc <- princomp(lm_data[,2:19], cor=TRUE, scores=TRUE)
+
+plot(pc,type="lines")
+
+biplot(pc)
+
+plot3d(pc$scores[,1:3], col = colors, size = 5, xlab = "PC1", ylab = "PC2", zlab = "PC3")
+
+legend3d("topright", legend = levels(lm_data$Subfamily), col = 1:length(levels(lm_data$Subfamily)), pch = 16)
+```
+
+###3-Dimensional PCA - Genus
+```{r}
+lm_data$Genus <- factor(lm_data$Genus)
+
+colors <- as.numeric(lm_data$Genus)
+
+head(lm_data)
+
+pc <- princomp(lm_data[,2:19], cor=TRUE, scores=TRUE)
+
+plot(pc,type="lines")
+
+biplot(pc)
+
+plot3d(pc$scores[,1:3], col = colors, size = 5, xlab = "PC1", ylab = "PC2", zlab = "PC3")
+
+legend3d("topright", legend = levels(lm_data$Genus), col = 1:length(levels(lm_data$Genus)), pch = 16)
+```
+
+
+
+###Estimating phylogenetic tree from a character matrix by maximum-likelihood
+```{r}
+LM_matrix
+
+```
+
+
+```{r}
+# Example data (replace with your actual data)
+landmark_data <- matrix(c(1.2, 3.4, 2.3, 4.5, 3.1, 2.6,
+                          2.0, 4.0, 3.5, 5.2, 4.0, 3.4), 
+                        nrow = 2, byrow = TRUE)
+
+# Create a species or specimen label for each row (each specimen)
+species_labels <- c("Specimen1", "Specimen2")
+
+# Convert data to a dataframe with labels
+landmark_df <- data.frame(species = species_labels, landmark_data)
+
+############################################
+
+# Prepare data for NEXUS file
+nexus_data <- data.frame(species = species_labels, landmark_data)
+
+# Write the data to a NEXUS file
+nexus_file <- "morphometric_data.nex"
+
+write.nexus.data(nexus_data, file = nexus_file)
+
+############################################
+
+# Write the data to a NEXUS file
+nexus_file <- "bee_matrix.nex"
+
+write.nexus.data(LM_matrix, file = nexus_file)
+
+```
+
+
+
+
+
+
