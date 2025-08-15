@@ -1,0 +1,18 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+Bee Wing Code/
+Csize_tps.csv
+*.zip
+Bee Project/
+Geom_morph_bee_wings-1.0/
+Mesquite/
+Plots/
+R Scripts/
+Test Code/
+Wing_Venation_V3.Rmd
+Wing_Venation_V3.html
+beedata26jun22.csv
+tps.csv
+tpsdig/

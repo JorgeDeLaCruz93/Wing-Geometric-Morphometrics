@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<morphojroot version="1.08.02">
+  <morphojproject>
+    <morphojproject_contents visiblename="Bee Project\" lollipopcolor="-16776961" lollipopgraphpointsize="9.0" lollipoplandmarknumbercolor="-65536" lollipopshowlandmarknumber="true" outlinedefaultgraphpointsize="9.0" outlinelandmarknumbercolor="-65536" outlineshowlandmarknumber="true" outlineshowstartingshape="true" outlinestartingconfigcolor="-16711681" outlinetargetconfigcolor="-16776961" transgridgraphpointsize="9.0" transgridgridcolor="-16711681" transgridLandmarkNumberColor="-65536" transgridlollipopcolor="-16776961" transgridshowlandmarknumber="true" transgridShowLollipop="true" wireframedefaultgraphpointsize="9.0" wireframelandmarknumbercolor="-65536" wireframeshowlandmarknumber="true" wireframeshowstartingshape="true" wireframestartingconfigcolor="-16711681" wireframetargetconfigcolor="-16776961">
+      <uniquenumber>0</uniquenumber>
+    </morphojproject_contents>
+    <phylogeny>
+      <phylogeny_content visiblename="Bee Tree Test" matchestablished="false" mappingdone="false" ntaxa="0" rooted="true" weightedparsimony="false" withbranchlengths="true" uniqueid="0">
+        <branchlengths>0.0058208359 0.0081263823 0.0303093941 0.0938274709 0.1366418118 0.0081011847 0.098164692 0.1377364383 0.0150845658 0.1107188124 0.0714683934 0.0597663428 0.0648244389 0.0165582859 0.1124234111 0.1039013936 </branchlengths>
+        <descendancest>
+          <vector>1 0 </vector>
+          <vector>2 1 </vector>
+          <vector>3 2 </vector>
+          <vector>4 3 </vector>
+          <vector>5 3 </vector>
+          <vector>6 2 </vector>
+          <vector>7 6 </vector>
+          <vector>8 6 </vector>
+          <vector>9 1 </vector>
+          <vector>10 9 </vector>
+          <vector>11 9 </vector>
+          <vector>12 11 </vector>
+          <vector>13 11 </vector>
+          <vector>14 0 </vector>
+          <vector>15 14 </vector>
+          <vector>16 14 </vector>
+        </descendancest>
+        <nodeNames>100	100	100	100	Andrena	Perdita	100	Colletes	Lasioglossum	100	Bombus	98	Megachile	Osmia	100	Hesperapis	Melitta</nodeNames>
+      </phylogeny_content>
+    </phylogeny>
+    <phylogeny>
+      <phylogeny_content visiblename="Bee Tree" matchestablished="false" mappingdone="false" ntaxa="0" rooted="true" weightedparsimony="false" withbranchlengths="true" uniqueid="0">
+        <branchlengths>0.0058208359 0.0081263823 0.0303093941 0.0938274709 0.036604564 0.0579490624 0.1058675972 0.1138381888 0.0505470719 0.0067654821 0.0318435414 0.0252339521 0.0150845658 0.0219864429 0.0076753852 0.0230663824 0.1046387797 0.0579906019 0.0037232913 0.0192480892 0.0904933936 0.0730534784 0.0105402548 0.1544446554 0.0948719949 0.0508610738 0.0486721159 0.0402079377 0.0714683934 0.0597663428 0.0648244389 0.128981697 </branchlengths>
+        <descendancest>
+          <vector>1 0 </vector>
+          <vector>2 1 </vector>
+          <vector>3 2 </vector>
+          <vector>4 3 </vector>
+          <vector>5 3 </vector>
+          <vector>6 5 </vector>
+          <vector>7 5 </vector>
+          <vector>8 2 </vector>
+          <vector>9 8 </vector>
+          <vector>10 8 </vector>
+          <vector>11 10 </vector>
+          <vector>12 10 </vector>
+          <vector>13 1 </vector>
+          <vector>14 13 </vector>
+          <vector>15 14 </vector>
+          <vector>16 15 </vector>
+          <vector>17 16 </vector>
+          <vector>18 16 </vector>
+          <vector>19 15 </vector>
+          <vector>20 19 </vector>
+          <vector>21 20 </vector>
+          <vector>22 20 </vector>
+          <vector>23 19 </vector>
+          <vector>24 23 </vector>
+          <vector>25 23 </vector>
+          <vector>26 14 </vector>
+          <vector>27 26 </vector>
+          <vector>28 26 </vector>
+          <vector>29 13 </vector>
+          <vector>30 29 </vector>
+          <vector>31 29 </vector>
+          <vector>32 0 </vector>
+        </descendancest>
+        <nodeNames>100	100	100	100	Andrena	100	Calliopsis	Panurginus	100	Agapostemon	100	Halictus	Lasioglossum	100	92	100	99	Apis	Bombus	100	100	Diadasia	Eucera	100	Ceratina	Xylocopa	73	Anthophora	Habropoda	98	Megachile	Osmia	Hesperapis</nodeNames>
+      </phylogeny_content>
+    </phylogeny>
+  </morphojproject>
+</morphojroot>

@@ -1,0 +1,31 @@
+#NEXUS
+[R-package APE, Wed Oct 30 11:02:16 2024]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 9;
+	TAXLABELS
+		Andrena
+		Perdita
+		Colletes
+		Lasioglossum
+		Bombus
+		Megachile
+		Osmia
+		Hesperapis
+		Melitta
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Andrena,
+		2	Perdita,
+		3	Colletes,
+		4	Lasioglossum,
+		5	Bombus,
+		6	Megachile,
+		7	Osmia,
+		8	Hesperapis,
+		9	Melitta
+	;
+	TREE * UNTITLED = [&R] ((((1:0.0938274709,2:0.1366418118)100:0.0303093941,(3:0.098164692,4:0.1377364383)100:0.0081011847)100:0.0081263823,(5:0.1107188124,(6:0.0597663428,7:0.0648244389)98:0.0714683934)100:0.0150845658)100:0.0058208359,(8:0.1124234111,9:0.1039013936)100:0.0165582859)100;
+END;
