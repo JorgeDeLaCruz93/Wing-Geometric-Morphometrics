@@ -1,7 +1,7 @@
 ---
-title: "Bee Wings Github"
+title: "Bee Wings - Github"
 author: "Jorge De La Cruz"
-date: "2024-04-23"
+date: "2025-08-15"
 output: html_document
 ---
 
@@ -13,9 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##Load Packages
 ```{r packages, warning=FALSE, echo=FALSE, message=FALSE}
+#install.packages("xfun")
+
+library(tidyverse)
 library(htmltools)
 library(rgl)
-library(tidyverse)
 library(geomorph) #NOTE: download XQuartz if using a Mac
 library(devtools)
 library(RRPP) #used for MANOVA 
@@ -457,14 +459,14 @@ landmark_df <- data.frame(species = species_labels, landmark_data)
 nexus_data <- data.frame(species = species_labels, landmark_data)
 
 # Write the data to a NEXUS file
-nexus_file <- "morphometric_data.nex"
+nexus_file <- "output/morphometric_data.nex"
 
 write.nexus.data(nexus_data, file = nexus_file)
 
 ############################################
 
 # Write the data to a NEXUS file
-nexus_file <- "bee_matrix.nex"
+nexus_file <- "output/bee_matrix.nex"
 
 write.nexus.data(LM_matrix, file = nexus_file)
 

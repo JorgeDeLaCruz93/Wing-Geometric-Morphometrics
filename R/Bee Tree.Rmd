@@ -1,7 +1,7 @@
 ---
-title: "Bee Tree"
+title: "Bee Tree - Github"
 author: "Jorge De La Cruz"
-date: "2024-05-16"
+date: "2025-08-15"
 output: html_document
 ---
 
@@ -54,7 +54,7 @@ pruned_tree
 
 new_bee_tree <- pruned_tree
 
-write.tree(new_bee_tree, file = "newick.tre")
+write.tree(new_bee_tree, file = "output/newick.tre")
 write.nexus(new_bee_tree, file = "data/bee_tree.nex")
 ```
 ```{r}

@@ -1,0 +1,16 @@
+#NEXUS
+[Data written by write.nexus.data.R, Fri Aug 15 13:33:25 2025]
+BEGIN DATA;
+  DIMENSIONS NTAX=7 NCHAR=2;
+  FORMAT DATATYPE=DNA MISSING=? GAP=- INTERLEAVE=NO;
+  MATRIX
+    species      Specimen1Specimen2
+    X1           1.22
+    X2           3.44
+    X3           2.33.5
+    X4           4.55.2
+    X5           3.14
+    X6           2.63.4
+  ;
+END;
+

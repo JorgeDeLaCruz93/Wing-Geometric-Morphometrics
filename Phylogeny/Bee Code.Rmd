@@ -1,5 +1,5 @@
 ---
-title: "Bee Wings Github"
+title: "Bee Wings"
 author: "Jorge De La Cruz"
 date: "2024-04-23"
 output: html_document
