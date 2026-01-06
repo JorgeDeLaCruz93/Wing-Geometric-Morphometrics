@@ -17,3 +17,8 @@ Our results demonstrate that wing shape alone can reliably distinguish taxa at m
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
 | File Name  | Description  | 
 | :------------ |:---------------|
+|bee_wings6.TPS | Wing venation landmark coordinates created in tpsdig2|
+|bee_metadata2.csv | Bee specimen metadata |
+|tpsGPA.csv | Procrustes aligned landmark coordinates |
+|LM_Data.csv| Merged GPA landmark and metadata|
+
