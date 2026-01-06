@@ -21,4 +21,5 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |bee_metadata2.csv | Bee specimen metadata |
 |tpsGPA.csv | Procrustes aligned landmark coordinates |
 |LM_Data.csv| Merged GPA landmark and metadata|
+|subset_data.csv| Subset of 10 wings per genera|
 
