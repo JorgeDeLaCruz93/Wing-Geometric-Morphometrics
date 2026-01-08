@@ -22,4 +22,6 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |tpsGPA.csv | Procrustes aligned landmark coordinates |
 |LM_Data.csv| Merged GPA landmark and metadata|
 |subset_data.csv| Subset of 10 wings per genera|
-
+|BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
+|bee_tree.nex | Nexus format pruned phylogeny |
+|phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
