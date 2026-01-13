@@ -25,3 +25,4 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
 |bee_tree.nex | Nexus format pruned phylogeny |
 |phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
+|GM_Data_subset.csv | Mean LM values per genus |
