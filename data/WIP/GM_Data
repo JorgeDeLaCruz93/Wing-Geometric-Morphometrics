@@ -1,0 +1,662 @@
+#NEXUS
+[written Fri Nov 22 16:45:03 PST 2024 by Mesquite  version 3.81 (build 955) at MSI/10.180.66.245]
+
+BEGIN TAXA;
+	TITLE Taxa;
+	DIMENSIONS NTAX=17;
+	TAXLABELS
+		Agapostemon Andrena Anthophora Apis Bombus Calliopsis Ceratina Diadasia Eucera Habropoda Halictus Hesperapis Lasioglossum Megachile Osmia Panurginus Xylocopa 
+	;
+
+END;
+
+
+BEGIN CHARACTERS;
+	TITLE  Character_Matrix;
+	DIMENSIONS  NCHAR=18;
+	FORMAT DATATYPE = CONTINUOUS GAP = - MISSING = ?;
+CHARSTATELABELS 
+		1 LM1x,
+		2 LM2x,
+		3 LM3x,
+		4 LM4x,
+		5 LM5x,
+		6 LM6x,
+		7 LM7x,
+		8 LM8x,
+		9 LM9x,
+		10 LM1y,
+		11 LM2y,
+		12 LM3y,
+		13 LM4y,
+		14 LM5y,
+		15 LM6y,
+		16 LM7y,
+		17 LM8y,
+		18 LM9y ; 
+	MATRIX
+	Agapostemon    0.402310659 0.299386204 -0.030152565 -0.114386095 -0.326453127 -0.489651604 0.010662119 0.088007839 0.160276571 0.112710205 0.245245143 0.179337927 0.207735619 0.036633922 0.006469699 -0.178891055 -0.294649009 -0.314592451
+	Andrena        0.417693157 0.325724502 0.037872283 -0.091411056 -0.338718076 -0.485564084 -0.029792669 0.044164172 0.120031772 0.164056431 0.248126246 0.174695436 0.188959516 -0.001816061 -0.023890269 -0.130764048 -0.286264908 -0.333102344
+	Anthophora     0.498078842 0.350512982 -0.099822468 -0.214759306 -0.409649385 -0.430116517 0.039719288 0.084147004 0.181889561 0.115833857 0.180995923 0.092310298 0.113245331 0.032942653 0.057242271 -0.077930761 -0.227922778 -0.286716795
+	Apis           0.478886645 0.297419622 0.010929395 -0.160382301 -0.357125308 -0.440504466 -0.04388021 0.054803874 0.15985275 0.196669567 0.193868224 0.140778648 0.148442838 0.037799735 0.022215171 -0.163055741 -0.260951438 -0.315767004
+	Bombus         0.453337735 0.383151817 -0.102975977 -0.209387114 -0.368159509 -0.435012403 0.021845563 0.085523924 0.171675963 0.119820872 0.216884951 0.099795106 0.126715288 0.033225399 0.055051647 -0.109513302 -0.236318899 -0.305661061
+	Calliopsis     0.398893069 0.272958789 0.02688055 -0.12493452 -0.352179993 -0.466420801 0.002797311 0.086831943 0.155173651 0.143005938 0.229197897 0.191740284 0.208035721 0.027967511 0.009924814 -0.157659796 -0.307502608 -0.344709762
+	Ceratina       0.395107313 0.289175841 -0.004180064 -0.121684181 -0.336150982 -0.495624293 0.026960021 0.096199152 0.150197194 0.138488749 0.2156378 0.184182619 0.209328074 0.034722012 0.014159174 -0.181537483 -0.288212197 -0.326768749
+	Diadasia       0.446087706 0.325137248 -0.071063306 -0.186118953 -0.345299738 -0.473428787 0.038901321 0.0983644 0.167420109 0.120058335 0.211777417 0.117863832 0.145401006 0.046107023 0.046498033 -0.097253369 -0.279888165 -0.310564111
+	Eucera         0.448905417 0.273230175 -0.027830031 -0.16700083 -0.36602491 -0.448193441 0.038995453 0.085798379 0.162119786 0.145533519 0.210535263 0.141509399 0.164494848 0.021368018 0.05503061 -0.094782544 -0.288180512 -0.3555086
+	Habropoda      0.453132928 0.385134664 -0.066330727 -0.204793587 -0.405713119 -0.441410943 0.041784287 0.075248383 0.162948114 0.097131164 0.228032109 0.100987413 0.118133597 0.021945407 0.043605075 -0.089170373 -0.237621057 -0.283043333
+	Halictus       0.392255868 0.31089141 -0.015367413 -0.10990708 -0.341685998 -0.49533541 0.01615653 0.081061246 0.161930847 0.100700115 0.25379462 0.176454131 0.205935052 0.024824026 0.004457649 -0.16796559 -0.284542562 -0.313657442
+	Hesperapis     0.406429303 0.239648877 0.034316875 -0.103734745 -0.369472829 -0.541056103 0.02053353 0.124901243 0.188433848 0.099327016 0.187194175 0.179361305 0.210933154 0.032938336 0.010066353 -0.129388992 -0.266884657 -0.32354669
+	Lasioglossum   0.406133911 0.266892927 -0.026717588 -0.109948874 -0.325540577 -0.515497147 0.041677573 0.096649866 0.166349909 0.122068353 0.205891617 0.187769179 0.221542465 0.02957406 0.020847844 -0.184305469 -0.281994423 -0.321393628
+	Megachile      0.450263978 0.322547836 -0.002764992 -0.145721563 -0.377141453 -0.430639887 -9.93481E-4 0.062472232 0.121977331 0.178258663 0.223216939 0.146029395 0.161277039 0.006632439 0.028733447 -0.13674243 -0.296347221 -0.311058271
+	Osmia          0.43431806 0.298325671 -0.010153704 -0.192764024 -0.391716746 -0.449906677 0.024957628 0.110181359 0.176758434 0.123106319 0.197253871 0.150430408 0.150379798 0.026755699 0.059176144 -0.112033641 -0.281401708 -0.31366689
+	Panurginus     0.408403708 0.307196861 0.046961288 -0.07638736 -0.349514587 -0.518830507 -0.022506794 0.071420136 0.133257254 0.145589821 0.221263067 0.191538235 0.201149571 -5.01073E-4 -0.022952543 -0.149730169 -0.274059156 -0.312297754
+	Xylocopa       0.472617276 0.307269027 -0.103029518 -0.181619897 -0.346396025 -0.411692707 -0.035021092 0.086294279 0.211578656 0.148342877 0.203698399 0.128620218 0.154602705 0.053086241 0.064959477 -0.172405924 -0.26995 -0.310953993
+
+;
+
+END;
+BEGIN ASSUMPTIONS;
+	TYPESET * UNTITLED   =  Squared:  1- 18;
+
+END;
+
+BEGIN MESQUITECHARMODELS;
+	ProbModelSet * UNTITLED   =  Brownian_default:  1- 18;
+END;
+
+BEGIN TREES[!'Parameters: Clustering via  Single Linkage from Distances from Character Matrix;    Distance: Distances calculated by Uncorrected Distance (General) Matrix source: Stored Matrices (Current Matrix: Character Matrix)'];
+	Title 'Trees from Single Linkage cluster analysis (Distance: Distances from Character Matrix)';
+	ID 01935673191815;
+	LINK Taxa = Taxa;
+	TRANSLATE
+[0] 		1 Agapostemon,
+[1] 		2 Andrena,
+[2] 		3 Anthophora,
+[3] 		4 Apis,
+[4] 		5 Bombus,
+[5] 		6 Calliopsis,
+[6] 		7 Ceratina,
+[7] 		8 Diadasia,
+[8] 		9 Eucera,
+[9] 		10 Habropoda,
+[10] 		11 Halictus,
+[11] 		12 Hesperapis,
+[12] 		13 Lasioglossum,
+[13] 		14 Megachile,
+[14] 		15 Osmia,
+[15] 		16 Panurginus,
+[16] 		17 Xylocopa;
+	TREE Single_Linkage_tree_1 = (((2,16),(12,(6,(13,(7,(1,11)))))),(17,((4,14),((3,(5,10)),(8,(9,15))))));
+
+END;
+
+
+BEGIN TREES[!'Parameters: Clustering via  UPGMA from Distances from Character Matrix;    Distance: Distances calculated by Uncorrected Distance (General) Matrix source: Stored Matrices (Current Matrix: Character Matrix)'];
+	Title 'Trees from UPGMA cluster analysis (Distance: Distances from Character Matrix)';
+	ID 01935675045417;
+	LINK Taxa = Taxa;
+	TRANSLATE
+[0] 		1 Agapostemon,
+[1] 		2 Andrena,
+[2] 		3 Anthophora,
+[3] 		4 Apis,
+[4] 		5 Bombus,
+[5] 		6 Calliopsis,
+[6] 		7 Ceratina,
+[7] 		8 Diadasia,
+[8] 		9 Eucera,
+[9] 		10 Habropoda,
+[10] 		11 Halictus,
+[11] 		12 Hesperapis,
+[12] 		13 Lasioglossum,
+[13] 		14 Megachile,
+[14] 		15 Osmia,
+[15] 		16 Panurginus,
+[16] 		17 Xylocopa;
+	TREE UPGMA_tree_1 = (((2,16),(12,(6,((1,11),(7,13))))),((17,(4,14)),((3,(5,10)),(8,(9,15)))));
+
+END;
+
+
+BEGIN TREES[!'Parameters: Clustering via  Single Linkage from Distances from Character Matrix;    Distance: Distances calculated by Uncorrected Distance (General) Matrix source: Stored Matrices (Current Matrix: Character Matrix)'];
+	Title 'Trees from Single Linkage cluster analysis (Distance: Distances from Character Matrix)';
+	ID 01935675c62419;
+	LINK Taxa = Taxa;
+	TRANSLATE
+[0] 		1 Agapostemon,
+[1] 		2 Andrena,
+[2] 		3 Anthophora,
+[3] 		4 Apis,
+[4] 		5 Bombus,
+[5] 		6 Calliopsis,
+[6] 		7 Ceratina,
+[7] 		8 Diadasia,
+[8] 		9 Eucera,
+[9] 		10 Habropoda,
+[10] 		11 Halictus,
+[11] 		12 Hesperapis,
+[12] 		13 Lasioglossum,
+[13] 		14 Megachile,
+[14] 		15 Osmia,
+[15] 		16 Panurginus,
+[16] 		17 Xylocopa;
+	TREE Single_Linkage_tree_1 = (((2,16),(12,(6,(13,(7,(1,11)))))),(17,((4,14),((3,(5,10)),(8,(9,15))))));
+
+END;
+
+
+BEGIN TREES[!'Parameters: Clustering via  Single Linkage from Distances from Character Matrix;    Distance: Distances calculated by Absolute Distance (General) Matrix source: Stored Matrices (Current Matrix: Character Matrix)'];
+	Title 'Trees from Single Linkage cluster analysis (Distance: Distances from Character Matrix)';
+	ID 0193567a67d523;
+	LINK Taxa = Taxa;
+	TRANSLATE
+[0] 		1 Agapostemon,
+[1] 		2 Andrena,
+[2] 		3 Anthophora,
+[3] 		4 Apis,
+[4] 		5 Bombus,
+[5] 		6 Calliopsis,
+[6] 		7 Ceratina,
+[7] 		8 Diadasia,
+[8] 		9 Eucera,
+[9] 		10 Habropoda,
+[10] 		11 Halictus,
+[11] 		12 Hesperapis,
+[12] 		13 Lasioglossum,
+[13] 		14 Megachile,
+[14] 		15 Osmia,
+[15] 		16 Panurginus,
+[16] 		17 Xylocopa;
+	TREE Single_Linkage_tree_1 = (((2,16),(12,(6,(13,(7,(1,11)))))),(17,((4,14),((3,(5,10)),(8,(9,15))))));
+
+END;
+
+
+Begin MESQUITE;
+		MESQUITESCRIPTVERSION 2;
+		TITLE AUTO;
+		tell ProjectCoordinator;
+		timeSaved 1732322703094;
+		getEmployee #mesquite.minimal.ManageTaxa.ManageTaxa;
+		tell It;
+			setID 0 3066123414845420580;
+		endTell;
+		getEmployee #mesquite.charMatrices.ManageCharacters.ManageCharacters;
+		tell It;
+			setID 0 4854503956066774333;
+			mqVersion 381;
+			checksumv 0 3 4221424211 null  numChars 18   numItems 1   min -0.541056103   max 0.498078842   sumSquares 17.296805762152754   NumFiles 1 NumMatrices 1;
+			mqVersion;
+		endTell;
+		getWindow;
+		tell It;
+			suppress;
+			setResourcesState false false 68;
+			setPopoutState 300;
+			setExplanationSize 0;
+			setAnnotationSize 0;
+			setFontIncAnnot 0;
+			setFontIncExp 0;
+			setSize 1920 930;
+			setLocation -9 -9;
+			setFont SanSerif;
+			setFontSize 24;
+			getToolPalette;
+			tell It;
+			endTell;
+			desuppress;
+		endTell;
+		getEmployee  #mesquite.trees.BasicTreeWindowCoord.BasicTreeWindowCoord;
+		tell It;
+			makeTreeWindow #3066123414845420580  #mesquite.trees.BasicTreeWindowMaker.BasicTreeWindowMaker;
+			tell It;
+				suppressEPCResponse;
+				setTreeSource  #mesquite.trees.StoredTrees.StoredTrees;
+				tell It;
+					setTreeBlock 1;
+					setTreeBlockID 01935673191815;
+					toggleUseWeights off;
+				endTell;
+				setAssignedID 2220.1732322204084.3433854120122707725;
+				getTreeWindow;
+				tell It;
+					setExplanationSize 30;
+					setAnnotationSize 20;
+					setFontIncAnnot 0;
+					setFontIncExp 0;
+					setSize 1552 858;
+					setLocation -9 -9;
+					setFont SanSerif;
+					setFontSize 24;
+					getToolPalette;
+					tell It;
+					endTell;
+					getTreeDrawCoordinator #mesquite.trees.BasicTreeDrawCoordinator.BasicTreeDrawCoordinator;
+				tell It;
+					suppress;
+					setTreeDrawer  #mesquite.trees.SquareLineTree.SquareLineTree;
+					tell It;
+						setNodeLocs #mesquite.trees.NodeLocsStandard.NodeLocsStandard;
+						tell It;
+							branchLengthsToggle off;
+							toggleScale on;
+							toggleBroadScale off;
+							toggleCenter on;
+							toggleEven on;
+							setFixedTaxonDistance 0;
+						endTell;
+						setEdgeWidth 4;
+						showEdgeLines on;
+						orientRight;
+					endTell;
+					setBackground White;
+					setBranchColor Black;
+					showNodeNumbers off;
+					showBranchColors on;
+					labelBranchLengths off;
+					centerBrLenLabels on;
+					showBrLensUnspecified on;
+					showBrLenLabelsOnTerminals on;
+					setBrLenLabelColor 0 0 255;
+					setNumBrLenDecimals 6;
+					setSelectedTaxonHighlightMode 1;
+					desuppress;
+					getEmployee #mesquite.trees.BasicDrawTaxonNames.BasicDrawTaxonNames;
+					tell It;
+						setColor Black;
+						setTaxonNameStyler  #mesquite.trees.NoColorForTaxon.NoColorForTaxon;
+						toggleShadePartition off;
+						toggleShowFootnotes on;
+						toggleNodeLabels on;
+						toggleCenterNodeNames off;
+						toggleShowNames on;
+						namesAngle ?;
+					endTell;
+				endTell;
+					setTreeNumber 1;
+					setDrawingSizeMode 0;
+					toggleLegendFloat on;
+					scale 0;
+					toggleTextOnTree off;
+					togglePrintName off;
+					showWindow;
+				endTell;
+				desuppressEPCResponse;
+				getEmployee #mesquite.trees.ColorBranches.ColorBranches;
+				tell It;
+					setColor Red;
+					removeColor off;
+				endTell;
+				getEmployee #mesquite.ornamental.BranchNotes.BranchNotes;
+				tell It;
+					setAlwaysOn off;
+				endTell;
+				getEmployee #mesquite.ornamental.ColorTreeByPartition.ColorTreeByPartition;
+				tell It;
+					colorByPartition off;
+				endTell;
+				getEmployee #mesquite.ornamental.DrawTreeAssocDoubles.DrawTreeAssocDoubles;
+				tell It;
+					setOn on;
+					toggleShow consensusFrequency;
+					toggleShow bootstrapFrequency;
+					toggleShow posteriorProbability;
+					toggleShow consensusFrequency;
+					toggleShow posteriorProbability;
+					toggleShow bootstrapFrequency;
+					setDigits 4;
+					setThreshold ?;
+					writeAsPercentage off;
+					toggleCentred off;
+					toggleHorizontal on;
+					toggleWhiteEdges on;
+					toggleShowOnTerminals on;
+					setFontSize 10;
+					setOffset 0  0;
+				endTell;
+				getEmployee #mesquite.ornamental.DrawTreeAssocStrings.DrawTreeAssocStrings;
+				tell It;
+					setOn on;
+					toggleCentred on;
+					toggleHorizontal on;
+					setFontSize 10;
+					setOffset 0  0;
+					toggleShowOnTerminals on;
+				endTell;
+				getEmployee #mesquite.trees.TreeInfoValues.TreeInfoValues;
+				tell It;
+					panelOpen false;
+				endTell;
+			endTell;
+			makeTreeWindow #3066123414845420580  #mesquite.trees.BasicTreeWindowMaker.BasicTreeWindowMaker;
+			tell It;
+				suppressEPCResponse;
+				setTreeSource  #mesquite.trees.StoredTrees.StoredTrees;
+				tell It;
+					setTreeBlock 2;
+					setTreeBlockID 01935675045417;
+					toggleUseWeights off;
+				endTell;
+				setAssignedID 2264.1732322329872.9201120049306233164;
+				getTreeWindow;
+				tell It;
+					setExplanationSize 30;
+					setAnnotationSize 20;
+					setFontIncAnnot 0;
+					setFontIncExp 0;
+					setSize 1552 858;
+					setLocation -9 -9;
+					setFont SanSerif;
+					setFontSize 24;
+					getToolPalette;
+					tell It;
+					endTell;
+					getTreeDrawCoordinator #mesquite.trees.BasicTreeDrawCoordinator.BasicTreeDrawCoordinator;
+				tell It;
+					suppress;
+					setTreeDrawer  #mesquite.trees.SquareLineTree.SquareLineTree;
+					tell It;
+						setNodeLocs #mesquite.trees.NodeLocsStandard.NodeLocsStandard;
+						tell It;
+							branchLengthsToggle off;
+							toggleScale on;
+							toggleBroadScale off;
+							toggleCenter on;
+							toggleEven on;
+							setFixedTaxonDistance 0;
+						endTell;
+						setEdgeWidth 4;
+						showEdgeLines on;
+						orientRight;
+					endTell;
+					setBackground White;
+					setBranchColor Black;
+					showNodeNumbers off;
+					showBranchColors on;
+					labelBranchLengths off;
+					centerBrLenLabels on;
+					showBrLensUnspecified on;
+					showBrLenLabelsOnTerminals on;
+					setBrLenLabelColor 0 0 255;
+					setNumBrLenDecimals 6;
+					setSelectedTaxonHighlightMode 1;
+					desuppress;
+					getEmployee #mesquite.trees.BasicDrawTaxonNames.BasicDrawTaxonNames;
+					tell It;
+						setColor Black;
+						setTaxonNameStyler  #mesquite.trees.NoColorForTaxon.NoColorForTaxon;
+						toggleShadePartition off;
+						toggleShowFootnotes on;
+						toggleNodeLabels on;
+						toggleCenterNodeNames off;
+						toggleShowNames on;
+						namesAngle ?;
+					endTell;
+				endTell;
+					setTreeNumber 1;
+					setDrawingSizeMode 0;
+					toggleLegendFloat on;
+					scale 0;
+					toggleTextOnTree off;
+					togglePrintName off;
+					showWindow;
+				endTell;
+				desuppressEPCResponse;
+				getEmployee #mesquite.trees.ColorBranches.ColorBranches;
+				tell It;
+					setColor Red;
+					removeColor off;
+				endTell;
+				getEmployee #mesquite.ornamental.BranchNotes.BranchNotes;
+				tell It;
+					setAlwaysOn off;
+				endTell;
+				getEmployee #mesquite.ornamental.ColorTreeByPartition.ColorTreeByPartition;
+				tell It;
+					colorByPartition off;
+				endTell;
+				getEmployee #mesquite.ornamental.DrawTreeAssocDoubles.DrawTreeAssocDoubles;
+				tell It;
+					setOn on;
+					toggleShow consensusFrequency;
+					toggleShow bootstrapFrequency;
+					toggleShow posteriorProbability;
+					toggleShow consensusFrequency;
+					toggleShow posteriorProbability;
+					toggleShow bootstrapFrequency;
+					setDigits 4;
+					setThreshold ?;
+					writeAsPercentage off;
+					toggleCentred off;
+					toggleHorizontal on;
+					toggleWhiteEdges on;
+					toggleShowOnTerminals on;
+					setFontSize 10;
+					setOffset 0  0;
+				endTell;
+				getEmployee #mesquite.ornamental.DrawTreeAssocStrings.DrawTreeAssocStrings;
+				tell It;
+					setOn on;
+					toggleCentred on;
+					toggleHorizontal on;
+					setFontSize 10;
+					setOffset 0  0;
+					toggleShowOnTerminals on;
+				endTell;
+				getEmployee #mesquite.trees.TreeInfoValues.TreeInfoValues;
+				tell It;
+					panelOpen false;
+				endTell;
+			endTell;
+			makeTreeWindow #3066123414845420580  #mesquite.trees.BasicTreeWindowMaker.BasicTreeWindowMaker;
+			tell It;
+				suppressEPCResponse;
+				setTreeSource  #mesquite.trees.StoredTrees.StoredTrees;
+				tell It;
+					setTreeBlock 4;
+					setTreeBlockID 0193567a67d523;
+					toggleUseWeights off;
+				endTell;
+				setAssignedID 2363.1732322683087.4589099515491437691;
+				getTreeWindow;
+				tell It;
+					setExplanationSize 30;
+					setAnnotationSize 20;
+					setFontIncAnnot 0;
+					setFontIncExp 0;
+					setSize 1552 858;
+					setLocation -9 -9;
+					setFont SanSerif;
+					setFontSize 24;
+					getToolPalette;
+					tell It;
+					endTell;
+					setActive;
+					getTreeDrawCoordinator #mesquite.trees.BasicTreeDrawCoordinator.BasicTreeDrawCoordinator;
+				tell It;
+					suppress;
+					setTreeDrawer  #mesquite.trees.SquareLineTree.SquareLineTree;
+					tell It;
+						setNodeLocs #mesquite.trees.NodeLocsStandard.NodeLocsStandard;
+						tell It;
+							branchLengthsToggle off;
+							toggleScale on;
+							toggleBroadScale off;
+							toggleCenter on;
+							toggleEven on;
+							setFixedTaxonDistance 0;
+						endTell;
+						setEdgeWidth 4;
+						showEdgeLines on;
+						orientRight;
+					endTell;
+					setBackground White;
+					setBranchColor Black;
+					showNodeNumbers off;
+					showBranchColors on;
+					labelBranchLengths off;
+					centerBrLenLabels on;
+					showBrLensUnspecified on;
+					showBrLenLabelsOnTerminals on;
+					setBrLenLabelColor 0 0 255;
+					setNumBrLenDecimals 6;
+					setSelectedTaxonHighlightMode 1;
+					desuppress;
+					getEmployee #mesquite.trees.BasicDrawTaxonNames.BasicDrawTaxonNames;
+					tell It;
+						setColor Black;
+						setTaxonNameStyler  #mesquite.trees.NoColorForTaxon.NoColorForTaxon;
+						toggleShadePartition off;
+						toggleShowFootnotes on;
+						toggleNodeLabels on;
+						toggleCenterNodeNames off;
+						toggleShowNames on;
+						namesAngle ?;
+					endTell;
+				endTell;
+					setTreeNumber 1;
+					setDrawingSizeMode 0;
+					toggleLegendFloat on;
+					scale 0;
+					toggleTextOnTree off;
+					togglePrintName off;
+					showWindow;
+				endTell;
+				desuppressEPCResponse;
+				getEmployee #mesquite.trees.ColorBranches.ColorBranches;
+				tell It;
+					setColor Red;
+					removeColor off;
+				endTell;
+				getEmployee #mesquite.ornamental.BranchNotes.BranchNotes;
+				tell It;
+					setAlwaysOn off;
+				endTell;
+				getEmployee #mesquite.ornamental.ColorTreeByPartition.ColorTreeByPartition;
+				tell It;
+					colorByPartition off;
+				endTell;
+				getEmployee #mesquite.ornamental.DrawTreeAssocDoubles.DrawTreeAssocDoubles;
+				tell It;
+					setOn on;
+					toggleShow consensusFrequency;
+					toggleShow bootstrapFrequency;
+					toggleShow posteriorProbability;
+					toggleShow consensusFrequency;
+					toggleShow posteriorProbability;
+					toggleShow bootstrapFrequency;
+					setDigits 4;
+					setThreshold ?;
+					writeAsPercentage off;
+					toggleCentred off;
+					toggleHorizontal on;
+					toggleWhiteEdges on;
+					toggleShowOnTerminals on;
+					setFontSize 10;
+					setOffset 0  0;
+				endTell;
+				getEmployee #mesquite.ornamental.DrawTreeAssocStrings.DrawTreeAssocStrings;
+				tell It;
+					setOn on;
+					toggleCentred on;
+					toggleHorizontal on;
+					setFontSize 10;
+					setOffset 0  0;
+					toggleShowOnTerminals on;
+				endTell;
+				getEmployee #mesquite.trees.TreeInfoValues.TreeInfoValues;
+				tell It;
+					panelOpen false;
+				endTell;
+			endTell;
+		endTell;
+		getEmployee  #mesquite.charMatrices.BasicDataWindowCoord.BasicDataWindowCoord;
+		tell It;
+			showDataWindow #4854503956066774333 #mesquite.charMatrices.BasicDataWindowMaker.BasicDataWindowMaker;
+			tell It;
+				getWindow;
+				tell It;
+					setExplanationSize 30;
+					setAnnotationSize 20;
+					setFontIncAnnot 0;
+					setFontIncExp 0;
+					setSize 1552 858;
+					setLocation -9 -9;
+					setFont SanSerif;
+					setFontSize 24;
+					getToolPalette;
+					tell It;
+					endTell;
+					setTool mesquite.charMatrices.BasicDataWindowMaker.BasicDataWindow.arrow;
+					colorCells  #mesquite.charMatrices.NoColor.NoColor;
+					colorRowNames  #mesquite.charMatrices.TaxonGroupColor.TaxonGroupColor;
+					colorColumnNames  #mesquite.charMatrices.CharGroupColor.CharGroupColor;
+					colorText  #mesquite.charMatrices.NoColor.NoColor;
+					setBackground White;
+					toggleShowNames on;
+					toggleShowTaxonNames on;
+					toggleTight off;
+					toggleThinRows off;
+					toggleShowChanges on;
+					toggleSeparateLines off;
+					toggleShowStates on;
+					toggleReduceCellBorders off;
+					toggleAutoWCharNames on;
+					toggleAutoTaxonNames off;
+					toggleShowDefaultCharNames off;
+					toggleConstrainCW on;
+					toggleBirdsEye off;
+					toggleColorOnlyTaxonNames off;
+					toggleShowPaleGrid off;
+					toggleShowPaleCellColors off;
+					toggleShowPaleExcluded off;
+					togglePaleInapplicable on;
+					togglePaleMissing off;
+					toggleShowBoldCellText off;
+					toggleAllowAutosize on;
+					toggleColorsPanel off;
+					toggleLinkedScrolling on;
+					toggleScrollLinkedTables off;
+				endTell;
+				showWindow;
+				getWindow;
+				tell It;
+					forceAutosize;
+				endTell;
+				getEmployee #mesquite.charMatrices.AlterData.AlterData;
+				tell It;
+					toggleBySubmenus off;
+				endTell;
+				getEmployee #mesquite.charMatrices.ColorByState.ColorByState;
+				tell It;
+					setStateLimit 9;
+					toggleUniformMaximum on;
+				endTell;
+				getEmployee #mesquite.charMatrices.ColorCells.ColorCells;
+				tell It;
+					setColor Red;
+					removeColor off;
+				endTell;
+				getEmployee #mesquite.charMatrices.AnnotPanel.AnnotPanel;
+				tell It;
+					togglePanel off;
+				endTell;
+				getEmployee #mesquite.charMatrices.CharReferenceStrip.CharReferenceStrip;
+				tell It;
+					showStrip off;
+				endTell;
+				getEmployee #mesquite.charMatrices.SelSummaryStrip.SelSummaryStrip;
+				tell It;
+					showStrip off;
+				endTell;
+				getEmployee #mesquite.cont.ItemsEditorForInfoPanel.ItemsEditorForInfoPanel;
+				tell It;
+					panelOpen false;
+				endTell;
+			endTell;
+		endTell;
+		endTell;
+end;
+
+
