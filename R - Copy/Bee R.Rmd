@@ -395,8 +395,6 @@ typprobs_genus <- typprobClass(cva.1$CVscores, groups = genus)
 print(typprobs_genus)
 cva.1
 
-?typprobClass
-
 typprobs_subfamily <- typprobClass(cva.2$CVscores, groups = subfamily)
 print(typprobs_subfamily)
 cva.2
