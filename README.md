@@ -27,3 +27,9 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |bee_tree.nex | Nexus format pruned phylogeny |
 |phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
 |GM_Data_subset.csv | Mean LM values per genus |
+
+## Data Analysis
+In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
+| File Name  | Analysis  | 
+| :------------ |:---------------|
+|bee_wings2.TPS | Generalized Procrustes Analysis (GPA) |
