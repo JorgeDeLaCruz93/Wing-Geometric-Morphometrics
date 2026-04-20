@@ -30,6 +30,6 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 
 ## Data Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
-| Input  | Analysis  | |
+| Input  | Analysis  | 
 | :------------ |:---------------|
-|bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | |
+|bee_wings2.TPS | Generalized Procrustes Analysis (GPA) |
