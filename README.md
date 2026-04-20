@@ -13,3 +13,16 @@ Wing venation characteristics are fundamental to taxonomic delimitation and clas
 
 Our results demonstrate that wing shape alone can reliably distinguish taxa at multiple hierarchical levels (species, genus, subfamily, and family), with increasing morphological divergence among more distantly related lineages. Phylogenetic analysis of the morphometric data reveals strong concordance between wing morphology and evolutionary relationships. Additionally, intertegular distance (a proxy for body size) correlates with divergence in wing morphology, suggesting potential allometric effects of bee body size on wing structure. These findings underscore the utility of geometric morphometrics for inferring the phylogenetic placement of indeterminate taxa and highlight its practical value as an efficient tool for species identification based solely on wing venation. 
 
+## Description of data
+In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
+| File Name  | Description  | 
+| :------------ |:---------------|
+|bee_wings6.TPS | Wing venation landmark coordinates created in tpsdig2|
+|bee_metadata2.csv | Bee specimen metadata |
+|tpsGPA.csv | Procrustes aligned landmark coordinates |
+|LM_Data.csv| Merged GPA landmark and metadata|
+|subset_data.csv| Subset of 10 wings per genera|
+|BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
+|bee_tree.nex | Nexus format pruned phylogeny |
+|phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
+|GM_Data_subset.csv | Mean LM values per genus |

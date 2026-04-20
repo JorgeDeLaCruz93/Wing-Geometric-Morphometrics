@@ -63,6 +63,7 @@ all_tps_gpa <- gpagen(all_tps_data, PrinAxes = TRUE)
 write.csv(all_tps_gpa$coords, "data/tpsGPA.csv", row.names = TRUE)
 
 ```
+
 ### Adjust the Landmark Data to usable format
 ```{r}
 lmdata <- read.csv("data/tpsGPA.csv") #read landmark data in
