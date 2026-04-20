@@ -13,8 +13,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##Load Packages
 ```{r packages, warning=FALSE, echo=FALSE, message=FALSE}
-#install.packages("xfun")
-
 library(tidyverse)
 library(htmltools)
 library(rgl)
@@ -56,6 +54,7 @@ all_tps_gpa <- gpagen(all_tps_data, PrinAxes = TRUE)
 write.csv(all_tps_gpa$coords, "data/tpsGPA.csv", row.names = TRUE)
 
 ```
+
 ###Adjust the Landmark Data to usable format
 ```{r}
 lmdata <- read.csv("data/tpsGPA.csv") #read landmark data in
@@ -116,7 +115,75 @@ lm_data <- merge(lm_both, bee_data_clean, by=c("catalogNumber"), all = FALSE)
 write.csv(lm_data, file = "data/LM_Data.csv")
 ```
 
+## Create subset with equal numbers of specimens
+Since there are different numbers of bee wings from each genus, we randomly select the same number of bees from each genus to create a subset with equal number of wings.
+```{r}
+subset_lm <- lm_data %>%
+  group_by(Genus) %>%
+  slice_sample(n = 10) %>%
+  ungroup()
+
+write.csv(subset_lm, file = "data/subset_data.csv")
+```
+
+
 ###Phylogeny Data
+```{r}
+### SUBSET
+#Mean LM values by genus to calculate phylogenetic signal
+
+mean_lmx1 <- aggregate(LM1x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx2 <- aggregate(LM2x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx3 <- aggregate(LM3x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx4 <- aggregate(LM4x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx5 <- aggregate(LM5x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx6 <- aggregate(LM6x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx7 <- aggregate(LM7x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx8 <- aggregate(LM8x ~ Genus, data = subset_lm, FUN = mean)
+mean_lmx9 <- aggregate(LM9x ~ Genus, data = subset_lm, FUN = mean)
+
+mean_lmy1 <- aggregate(LM1y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy2 <- aggregate(LM2y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy3 <- aggregate(LM3y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy4 <- aggregate(LM4y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy5 <- aggregate(LM5y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy6 <- aggregate(LM6y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy7 <- aggregate(LM7y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy8 <- aggregate(LM8y ~ Genus, data = subset_lm, FUN = mean)
+mean_lmy9 <- aggregate(LM9y ~ Genus, data = subset_lm, FUN = mean)
+
+#mean_lmx3, mean_lmx4, mean_lmx5, mean_lmx6, mean_lmx7, mean_lmx8, mean_lmx9, mean_lmy1, mean_lmy2, mean_lmy3, mean_lmy4, mean_lmy5, mean_lmy6, mean_lmy7, mean_lmy8, mean_lmy9
+
+mean_LM2 <- merge(mean_lmx1, mean_lmx2, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx3, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx4, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx5, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx6, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx7, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx8, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmx9, by=c("Genus"))
+
+mean_LM2 <- merge(mean_LM2, mean_lmy1, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy2, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy3, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy4, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy5, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy6, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy7, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy8, by=c("Genus"))
+mean_LM2 <- merge(mean_LM2, mean_lmy9, by=c("Genus"))
+
+rownames(mean_LM2) <- mean_LM2$Genus
+
+mean_LM3 <- mean_LM2[, -1] 
+
+LM_matrix_subset <- mean_LM3
+
+write.csv(LM_matrix_subset, file = "data/GM_Data_subset.csv")
+
+```
+
+
 ```{r}
 #Mean LM values by genus to calculate phylogenetic signal
 
@@ -170,24 +237,24 @@ LM_matrix <- mean_LM3
 write.csv(mean_LM3, file = "data/GM_Data.csv")
 ```
 
+
 ## MANOVA
 Using MANOVA to test for difference between groups using the RRPP package.
 ```{r}
 # MANOVA test with three species
-manova_species <- lm_data
-manova_species <- manova_species[,c(2:20)] #drop catalog number and other non LM variables
+#manova_species <- lm_data
+manova_species <- subset_lm #subset
+manova_species <- manova_species[,c(2:23)] #drop catalog number and other non LM variables
 manova_species_data <- manova_species[,c(1:18)] #drop species variable
 manova_species_data <- as.matrix(manova_species_data) #as matrix
 
-fit_species <- lm.rrpp(manova_species_data ~ Species, SS.type = "I", 
+fit_species <- lm.rrpp(manova_species_data ~ Genus, SS.type = "I", #Species, Genus, Subfamily, Family
                data = manova_species, print.progress = FALSE) #run the linear model fit
 fitm_species <- manova.update(fit_species, print.progress = FALSE, tol = 0) #run manova update
 summary(fitm_species, test = "Pillai") #summarize with a manova table
+summary(fitm_species, test = "Wilks") #summarize with a manova table
+summary(fitm_species, test = "Hotelling-Lawley") #summarize with a manova table
 
-?summary.manova.lm.rrpp()
-
-?manova.update
-?lm.rrpp
 ```
 
 ### DAPC (Discriminant Analysis of Principal Components)
@@ -195,15 +262,20 @@ summary(fitm_species, test = "Pillai") #summarize with a manova table
 ## Cross-validation using DAPC
 Assign "unknown" bees to the correct group, and test for % accuracy. Tells number of PCs to retain
 ```{r}
-lm_values <- lm_data[,c(2:19)] # Only preserves LM values
+#lm_values <- lm_data[,c(2:19)] # Only preserves LM values
+#lm_values <- subset_lm[,c(2:19)] # Subset
 
 #Replace lm_data$____ with taxonomic level 
-xval <- xvalDapc(lm_values, lm_data$Family, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
+xval <- xvalDapc(lm_values, lm_data$Genus, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
 
 xval$`Number of PCs Achieving Highest Mean Success` #Which number of PCs retained has highest accuracy? Put this value for n.pca = ___ when doing dapc() 
 
 xval$`Mean Successful Assignment by Number of PCs of PCA` #What is accuracy at various PCs retained?
+
+
+?xvalDapc
 ```
+
 #DAPC with 1 Discriminant Function
 Rather than a PCA, we run a DAPC here to visualize difference between groups.
 ```{r}
@@ -224,7 +296,7 @@ scatter(dapc_1,1,1,bg="white", #1,1, = 1st discriminant function
 population <- lm_data[,c(2:19)] # Only preserves LM values
 
 dapc_2 <- dapc(population, 
-                grp = lm_data$Family, #Species, Genus, Subfamily, Family, 
+                grp = lm_data$Species, #Species, Genus, Subfamily, Family, 
                 n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
                 n.da = 10) #Axes retained in Discriminant Analysis
 
@@ -235,13 +307,36 @@ scatter(dapc_2, 1,2, #1,2, = 1st and 2nd discriminant functions
         bg="white", 
         cstar=0,  pch=20, solid=.4, cex=2.5,scree.pca=FALSE, posi.pca="topleft",
         legend=TRUE, posi.leg = "bottomright",
-        col = dapc_col) #plot the two populations
+        col = dapc_col, clabel = 0.5) #plot the two populations
 
 prcomp(population)
 
-?dapc()
+print.dapc(dapc_2)
 
-?summary.dapc()
+summary.dapc(dapc_2)
+
+predict.dapc(dapc_2)
+
+```
+# DAPC with 2 Discriminant Functions (SUBSET)
+```{r}
+population <- subset_lm[,c(2:19)] # Only preserves LM values
+
+dapc_2 <- dapc(population, 
+                grp = subset_lm$Genus, #Species, Genus, Subfamily, Family, 
+                n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
+
+scatter(dapc_2, 1, 2,  # 1st and 2nd discriminant functions
+        scree.da = FALSE, posi.da = "topleft", 
+        bg = "white", 
+        cstar = 0, pch = 20, solid = 0.4, cex = 2.5, 
+        scree.pca = FALSE, posi.pca = "topleft",
+        legend = TRUE, posi.leg = "bottomright",
+        col = dapc_col,
+        clabel = 0.5)       # size of group labels
+
+prcomp(population)
 
 print.dapc(dapc_2)
 
@@ -469,6 +564,19 @@ write.nexus.data(nexus_data, file = nexus_file)
 nexus_file <- "output/bee_matrix.nex"
 
 write.nexus.data(LM_matrix, file = nexus_file)
+
+```
+
+#CV Size-Corrected test
+```{r}
+
+CV_Allo <- read_csv("data/CV_Allometry.csv")
+
+geom_point()
+
+ggplot(CV_Allo, aes(x=CV1, y=CV2)) + geom_point()
+
+ggplot(CV_Allo, aes(x=CV1, y=CV2, color=Genus)) + geom_point() + stat_ellipse()
 
 ```
 
