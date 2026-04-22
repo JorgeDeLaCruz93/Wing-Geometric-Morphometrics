@@ -33,7 +33,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | Input  | Analysis  | Output |
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
-|tpsGPA.csv bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
+|tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 | ITD_covariates2.csv |Merge landmark data with ITD data | subset_ITD |
 | | Multivariate Analysis Of Variance (MANOVA) | |
 | | Discriminant Analysis of Principal Components (DAPC) | |
