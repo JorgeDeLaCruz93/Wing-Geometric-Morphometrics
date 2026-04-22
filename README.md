@@ -41,6 +41,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | | Calculate phylogenetic distances | phylo_distances.csv |
 | | Canonical Variate Analysis (CVA) |   |
 |  | Calculate Pagel’s λ and Blomberg's K  |  |
-
-
+|  | Phylogenetic Tree Reconstruction |  |
+| | Phylogenetic Tree Similarity | |
+| | Allometric Linear Regression | |
 
