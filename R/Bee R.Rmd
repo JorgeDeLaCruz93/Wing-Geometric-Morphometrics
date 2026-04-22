@@ -63,6 +63,7 @@ all_tps_gpa <- gpagen(all_tps_data, PrinAxes = TRUE)
 write.csv(all_tps_gpa$coords, "data/tpsGPA.csv", row.names = TRUE)
 
 ```
+
 ### Adjust the Landmark Data to usable format
 ```{r}
 lmdata <- read.csv("data/tpsGPA.csv") #read landmark data in
@@ -110,9 +111,9 @@ lmYonly2 <- lmYonly1 %>%
     tidyr::unite('catalogNumber', c('collection', 'barcode', "wing")) 
 lmYonly3 <- lmYonly2[,c(2,6:14)]
 
-########
 #Now: unite the Y and X coordinate dataframes into just one
 lm_both <- merge(lmXonly3, lmYonly3, by=("catalogNumber"))
+
 ```
 
 
@@ -330,7 +331,6 @@ write.nexus(ref_tree, file = "data/bee_tree.nex")
 
 #Calculate Phylogenetic Distances
 Extract the cophenetic (phylogenetic) distances from the phylogenetic tree.
-Calculate pairwise Procrustes distances between species.
 ```{r}
 phylo_distances <- cophenetic.phylo(ref_tree)
 
