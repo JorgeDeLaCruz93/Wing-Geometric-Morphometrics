@@ -39,6 +39,8 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | | Discriminant Analysis of Principal Components (DAPC) | |
 | BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 | | Calculate phylogenetic distances | phylo_distances.csv |
+| | Canonical Variate Analysis (CVA) |   |
+|  | Calculate Pagel’s λ and Blomberg's K  |  |
 
 
 
