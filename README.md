@@ -27,13 +27,14 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |bee_tree.nex | Nexus format pruned phylogeny |
 |phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
 |GM_Data_subset.csv | Mean LM values per genus |
+| CV_ITD_data.csv | Canonical variate data with ITD measurements|
 
-## Data Analysis
+## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
 | Input  | Analysis  | Output |
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
-|tpsGPA.csv bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
+|tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 | ITD_covariates2.csv |Merge landmark data with ITD data | subset_ITD |
 | | Multivariate Analysis Of Variance (MANOVA) | |
 | | Discriminant Analysis of Principal Components (DAPC) | |
@@ -43,5 +44,5 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |  | Calculate Pagel’s λ and Blomberg's K  |  |
 |  | Phylogenetic Tree Reconstruction |  |
 | | Phylogenetic Tree Similarity | |
-| | Allometric Linear Regression | |
+| CV_ITD_data.csv | Allometric Linear Regression | |
 
