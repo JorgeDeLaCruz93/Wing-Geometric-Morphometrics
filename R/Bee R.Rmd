@@ -555,6 +555,7 @@ print(lambda_result)
 K_result <- phylosig(ref_tree, LMmeans, method = "K", test = TRUE)
 print(K_result)
 ```
+
 ###Morphometric Phylogenetic Tree Reconstruction
 Estimate phylogeny from mahalanobis distance matrix produced by CVA
 ```{r}

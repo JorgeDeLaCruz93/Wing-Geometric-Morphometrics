@@ -38,7 +38,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | | Multivariate Analysis Of Variance (MANOVA) | |
 | | Discriminant Analysis of Principal Components (DAPC) | |
 | BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
-| | Cophenetic (phylogenetic) distances | phylo_distances.csv |
+| | Calculate phylogenetic distances | phylo_distances.csv |
 
 
 
