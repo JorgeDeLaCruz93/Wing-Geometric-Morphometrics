@@ -24,10 +24,12 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |tpsGPA.csv | Procrustes aligned landmark coordinates |
 |LM_Data.csv| Merged GPA landmark and metadata|
 |subset_data.csv| Subset of 10 wings per genera|
+|subset_LM.csv | Subset of landmark data with ITD measurements|
+|CV_ITD_data.csv | Canonical variate data with ITD measurements|
 |bee_tree.nex | Nexus format pruned phylogeny |
 |phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
 |GM_Data_subset.csv | Mean LM values per genus |
-| CV_ITD_data.csv | Canonical variate data with ITD measurements|
+
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
@@ -35,14 +37,14 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
-| ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
-| | Multivariate Analysis Of Variance (MANOVA) | |
-| | Discriminant Analysis of Principal Components (DAPC) | |
-| BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
-| | Calculate phylogenetic distances | phylo_distances.csv |
-| | Canonical Variate Analysis (CVA) |   |
-|  | Calculate Pagel’s λ and Blomberg's K  |  |
-|  | Phylogenetic Tree Reconstruction |  |
+|ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
+|subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | |
+|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | |
+|BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
+|bee_tree.nex | Calculate phylogenetic distances | phylo_distances.csv |
+|subset_LM.csv | Canonical Variate Analysis (CVA) |   |
+| | Calculate Pagel’s λ and Blomberg's K  |  |
+| | Phylogenetic Tree Reconstruction |  |
 | | Phylogenetic Tree Similarity | |
 | CV_ITD_data.csv | Allometric Linear Regression | |
 
