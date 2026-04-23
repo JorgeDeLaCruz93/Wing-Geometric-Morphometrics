@@ -35,7 +35,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
-| ITD_covariates2.csv |Merge landmark data with ITD data | subset_ITD |
+| ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
 | | Multivariate Analysis Of Variance (MANOVA) | |
 | | Discriminant Analysis of Principal Components (DAPC) | |
 | BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |

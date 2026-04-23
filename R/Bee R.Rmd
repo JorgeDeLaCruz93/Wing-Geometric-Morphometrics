@@ -166,6 +166,7 @@ subset_LM <- subset_ITD %>%
   ungroup() %>% 
   relocate(Genus, .after = Species)
 
+write.csv(subset_LM, file = "data/subset_LM.csv")
 ```
 
 ### MANOVA
