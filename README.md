@@ -26,7 +26,8 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |subset_data.csv| Subset of 10 wings per genera|
 |subset_LM.csv | Subset of landmark data with ITD measurements|
 |CV_ITD_data.csv | Canonical variate data with ITD measurements|
-|bee_tree.nex | Nexus format pruned phylogeny |
+|bee_tree.nex | Newick format pruned phylogeny |
+|bee_tree.nwk | Nexus format pruned phylogeny |
 |phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
 |GM_Data_subset.csv | Mean LM values per genus |
 

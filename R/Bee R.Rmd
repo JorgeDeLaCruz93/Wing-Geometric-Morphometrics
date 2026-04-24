@@ -326,7 +326,8 @@ species_to_keep = c("Apis", "Bombus", "Agapostemon", "Xylocopa", "Osmia", "Megac
 pruned_tree <- drop.tip(bee_tree, setdiff(bee_tree$tip.label, species_to_keep)) 
 ref_tree <- pruned_tree
 
-write.tree(ref_tree, file = "output/newick.tre")
+write.tree(ref_tree, file = "data/bee_tree.nwk")
+
 write.nexus(ref_tree, file = "data/bee_tree.nex")
 ```
 
