@@ -39,7 +39,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 |ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
-|subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | |
+|subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | fitm_genus |
 |subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | |
 |subset_LM.csv | Canonical Variate Analysis (CVA) | cva.1 |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
@@ -47,6 +47,6 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |cva.1$groupmeans | Calculate phylogenetic signal quantified by Pagel’s λ and Blomberg's K  |  |
 |cva.1[["Dist"]][["GroupdistMaha"]] | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
 |cva.1[["Dist"]][["GroupdistMaha"]] | UPGMA (unweighted pair group method with arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
-| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Phylogenetic Tree Similarity | |
+| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | RefvsNJ / RefvsUPGMA / NJvsUPGMA |
 |CV_ITD_data.csv | Allometric Linear Regression |ITD_regession |
 

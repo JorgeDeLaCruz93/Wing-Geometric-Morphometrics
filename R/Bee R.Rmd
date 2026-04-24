@@ -522,7 +522,6 @@ write.tree(upgma_tree, file = "data/upgma_tree.nwk")
 ```{r}
 #Reference Tree vs Neighbor-Joining Tree
 RefvsNJ <- QuartetStatus(ref_tree, nj_tree)
-RefvsNJ
 SimilarityMetrics(RefvsNJ, similarity = TRUE)
 VisualizeQuartets(ref_tree, nj_tree)
 plot(cophylo(ref_tree, nj_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
