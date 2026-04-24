@@ -189,62 +189,6 @@ summary(fitm_genus, test = "Hotelling-Lawley") #summarize with a manova table
 
 ```
 
-###Calculate mean LM values
-```{r}
-### SUBSET
-#Mean LM values by genus to calculate phylogenetic signal
-mean_lmx1 <- aggregate(LM1x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx2 <- aggregate(LM2x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx3 <- aggregate(LM3x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx4 <- aggregate(LM4x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx5 <- aggregate(LM5x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx6 <- aggregate(LM6x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx7 <- aggregate(LM7x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx8 <- aggregate(LM8x ~ Genus, data = subset_LM, FUN = mean)
-mean_lmx9 <- aggregate(LM9x ~ Genus, data = subset_LM, FUN = mean)
-
-mean_lmy1 <- aggregate(LM1y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy2 <- aggregate(LM2y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy3 <- aggregate(LM3y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy4 <- aggregate(LM4y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy5 <- aggregate(LM5y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy6 <- aggregate(LM6y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy7 <- aggregate(LM7y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy8 <- aggregate(LM8y ~ Genus, data = subset_LM, FUN = mean)
-mean_lmy9 <- aggregate(LM9y ~ Genus, data = subset_LM, FUN = mean)
-
-#mean_lmx3, mean_lmx4, mean_lmx5, mean_lmx6, mean_lmx7, mean_lmx8, mean_lmx9, mean_lmy1, mean_lmy2, mean_lmy3, mean_lmy4, mean_lmy5, mean_lmy6, mean_lmy7, mean_lmy8, mean_lmy9
-
-mean_LM2 <- merge(mean_lmx1, mean_lmx2, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx3, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx4, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx5, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx6, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx7, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx8, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmx9, by=c("Genus"))
-
-mean_LM2 <- merge(mean_LM2, mean_lmy1, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy2, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy3, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy4, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy5, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy6, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy7, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy8, by=c("Genus"))
-mean_LM2 <- merge(mean_LM2, mean_lmy9, by=c("Genus"))
-
-rownames(mean_LM2) <- mean_LM2$Genus
-
-mean_LM3 <- mean_LM2[, -1] 
-
-LM_matrix_subset <- mean_LM3
-
-write.csv(LM_matrix_subset, file = "data/GM_Data_subset.csv")
-
-```
-
-
 ### DAPC (Discriminant Analysis of Principal Components)
 
 ## Cross-validation using DAPC
