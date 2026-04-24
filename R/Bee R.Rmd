@@ -622,8 +622,8 @@ metadata <- subset_LM[,-c(2:19)]
 
 CVscores <- cva.1$CVscores
 
-CV_data_full <- cbind(CVscores, metadata)
-write.csv(CV_data_full, "data/CV_ITD_data.csv", row.names = FALSE)
+CV_ITD_data <- cbind(CVscores, metadata)
+write.csv(CV_ITD_data, "data/CV_ITD_data.csv", row.names = FALSE)
 
 CV_sub <- CV_data_full[!is.na(CV_data_full$ITD), ]
 

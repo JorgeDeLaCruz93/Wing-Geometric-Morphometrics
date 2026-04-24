@@ -22,7 +22,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |ITD_covariates2.csv | Specimen ITD data |
 |BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
 |tpsGPA.csv | Procrustes aligned landmark coordinates |
-|LM_Data.csv| Merged GPA landmark and metadata|
+|LM_Data.csv| Merged GPA landmarks and metadata|
 |subset_data.csv| Subset of 10 wings per genera|
 |subset_LM.csv | Subset of landmark data with ITD measurements|
 |CV_ITD_data.csv | Canonical variate data with ITD measurements|
@@ -33,18 +33,18 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
-| Input  | Analysis  | Output |
+| Input  | Analysis / Transformation  | Output |
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 |ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
 |subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | |
 |subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | |
-|subset_LM.csv | Canonical Variate Analysis (CVA) |   |
+|subset_LM.csv | Canonical Variate Analysis (CVA) | cva.1 |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nex | Calculate phylogenetic distances | phylo_distances.csv |
-| | Calculate Pagel’s λ and Blomberg's K  |  |
-| | Phylogenetic Tree Reconstruction |  |
+| cva.1$groupmeans | Calculate phylogenetic signal quantified by Pagel’s λ and Blomberg's K  |  |
+| cva.1[["Dist"]][["GroupdistMaha"]] | Phylogenetic Tree Reconstruction |  |
 | | Phylogenetic Tree Similarity | |
 | CV_ITD_data.csv | Allometric Linear Regression | |
 
