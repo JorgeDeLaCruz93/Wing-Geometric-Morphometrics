@@ -29,8 +29,8 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |phylo_distances.csv | Cophenetic phylogenetic distances from the reference phylogeny |
 |bee_tree.nwk | Newick format pruned reference phylogeny |
 |bee_tree.nex | Nexus format pruned reference phylogeny |
-
-
+|nj_tree.nwk | Newick format Neighbor-Joining (NJ) tree reconstruction from Mahalanobis Distance |
+|upgma_tree.nwk | Newick format UPGMA tree reconstruction from Mahalanobis Distance |
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
@@ -40,13 +40,14 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 |ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
 |subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | fitm_genus |
-|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | |
+|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | dapc_2 |
 |subset_LM.csv | Canonical Variate Analysis (CVA) | cva.1 |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
-|cva.1$groupmeans | Calculate phylogenetic signal quantified by Pagel’s λ and Blomberg's K  |  |
+|cva.1$groupmeans | Calculate phylogenetic signal quantified by Pagel’s λ | lambda_result |
+|cva.1$groupmeans | Calculate phylogenetic signal quantified by Blomberg's K  | K_result  |
 |cva.1[["Dist"]][["GroupdistMaha"]] | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
-|cva.1[["Dist"]][["GroupdistMaha"]] | UPGMA (unweighted pair group method with arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
+|cva.1[["Dist"]][["GroupdistMaha"]] | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
 | bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | RefvsNJ / RefvsUPGMA / NJvsUPGMA |
 |CV_ITD_data.csv | Allometric Linear Regression |ITD_regession |
 
