@@ -18,18 +18,32 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 | File Name  | Description  | 
 | :------------ |:---------------|
 |bee_wings2.TPS | Wing venation landmark coordinates created in tpsdig2|
+
 |bee_metadata4.csv | Bee specimen metadata |
-|ITD_covariates2.csv | Specimen ITD data |
-|BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
+
 |tpsGPA.csv | Procrustes aligned landmark coordinates |
+
 |LM_Data.csv| Merged GPA landmarks and metadata|
+
 |subset_data.csv| Subset of 10 wings per genera|
+
+|ITD_covariates2.csv | Specimen ITD data |
+
 |subset_LM.csv | Subset of landmark data with ITD measurements|
+
 |CV_ITD_data.csv | Canonical variate data with ITD measurements|
-|bee_tree.nex | Newick format pruned phylogeny |
-|bee_tree.nwk | Nexus format pruned phylogeny |
-|phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
+
 |GM_Data_subset.csv | Mean LM values per genus |
+
+|BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
+
+|phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
+
+|bee_tree.nex | Newick format pruned phylogeny |
+
+|bee_tree.nwk | Nexus format pruned phylogeny |
+
+
 
 
 ## Data Processing & Analysis
