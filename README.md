@@ -26,10 +26,9 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |subset_LM.csv | Subset of landmark data with ITD measurements|
 |CV_ITD_data.csv | Canonical variate data with ITD measurements|
 |BEE_mat7gen_p8pmAa_fst.nwk| Genus level phylogeny from Henríquez-Piskulich et al. (2024)|
-|phylo_distances.csv | Cophenetic (phylogenetic) distances from the phylogenetic tree |
-|bee_tree.nex | Newick format pruned phylogeny |
-|bee_tree.nwk | Nexus format pruned phylogeny |
-
+|phylo_distances.csv | Cophenetic phylogenetic distances from the reference phylogeny |
+|bee_tree.nwk | Newick format pruned reference phylogeny |
+|bee_tree.nex | Nexus format pruned reference phylogeny |
 
 
 
@@ -44,9 +43,10 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | |
 |subset_LM.csv | Canonical Variate Analysis (CVA) | cva.1 |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
-|bee_tree.nex | Calculate phylogenetic distances | phylo_distances.csv |
-| cva.1$groupmeans | Calculate phylogenetic signal quantified by Pagel’s λ and Blomberg's K  |  |
-| cva.1[["Dist"]][["GroupdistMaha"]] | Phylogenetic Tree Reconstruction |  |
-| | Phylogenetic Tree Similarity | |
-| CV_ITD_data.csv | Allometric Linear Regression | |
+|bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
+|cva.1$groupmeans | Calculate phylogenetic signal quantified by Pagel’s λ and Blomberg's K  |  |
+|cva.1[["Dist"]][["GroupdistMaha"]] | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
+|cva.1[["Dist"]][["GroupdistMaha"]] | UPGMA (unweighted pair group method with arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
+| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Phylogenetic Tree Similarity | |
+|CV_ITD_data.csv | Allometric Linear Regression |ITD_regession |
 

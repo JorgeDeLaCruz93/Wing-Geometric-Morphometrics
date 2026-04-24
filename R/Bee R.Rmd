@@ -271,7 +271,6 @@ pruned_tree <- drop.tip(bee_tree, setdiff(bee_tree$tip.label, species_to_keep))
 ref_tree <- pruned_tree
 
 write.tree(ref_tree, file = "data/bee_tree.nwk")
-
 write.nexus(ref_tree, file = "data/bee_tree.nex")
 ```
 
@@ -510,10 +509,12 @@ MahaMatrix <- cva.1[["Dist"]][["GroupdistMaha"]] #mahalanobis distance matrix
 # Build a Neighbor-Joining tree (unrooted by default)
 nj_tree <- nj(MahaMatrix)
 ggtree(nj_tree,branch.length="branch.length", cex = 0.75) + geom_tiplab(size = 2) 
+write.tree(nj_tree, file = "data/nj_tree.nwk")
 
 # Build a rooted UPGMA tree
 upgma_tree <- upgma(MahaMatrix)
-ggtree(upgma_tree,branch.length="branch.length", cex = 0.75) + geom_tiplab(size = 2) 
+ggtree(upgma_tree,branch.length="branch.length", cex = 0.75) + geom_tiplab(size = 2)
+write.tree(upgma_tree, file = "data/upgma_tree.nwk")
 
 ```
 
@@ -538,29 +539,6 @@ SimilarityMetrics(NJvsUPGMA, similarity = TRUE)
 plot(cophylo(nj_tree, upgma_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
 ```
 
-###Allometry Linear Regression
-```{r}
-#ITD_data <- read.csv("data/ITD_covariates2.csv")
-
-#lm_data <- read.csv("data/LM_Data.csv")
-#lm_data <- lm_data[,-1]
-#metadata <- lm_data[,-c(2:19)]
-#CVscores <- cva.1$CVscores
-#CV_data_full <- cbind(CVscores, metadata)
-
-
-#ITD_CV <- merge(CV_data_full, ITD_data, by=("catalogNumber"))
-
-
-#ggplot(data = ITD_CV, aes(x = ITD, y = `CV 1`)) +
-#  geom_point(aes(color = factor(Genus)), size = 2) +
-#  labs(title = "Allometry Regression", x = "ITD (cm)", y = "CV1", color = "Genus") +
-#  geom_smooth(method = "lm") + theme_light()
-
-#lm_ITD <- lm(formula = `ITD`~`CV 1`, data = ITD_CV) #Linear Regression Model
-#summary(lm_ITD)
-```
-
 ###Allometry Linear Regression (SUBSET)
 ```{r}
 metadata <- subset_LM[,-c(2:19)]
@@ -582,8 +560,8 @@ ggplot(data = CV_sub, aes(x = ITD, y = `CV 1`)) +
   labs(title = "Allometry Regression", x = "ITD (cm)", y = "CV1", color = "Genus") +
   geom_smooth(method = "lm") + theme_light()
 
-lm_ITD <- lm(formula = `ITD`~`CV 1`, data = CV_sub) #Linear Regression Model
-summary(lm_ITD)
+ITD_regession <- lm(formula = `ITD`~`CV 1`, data = CV_sub) #Linear Regression Model
+summary(ITD_regession)
 ```
 
 
