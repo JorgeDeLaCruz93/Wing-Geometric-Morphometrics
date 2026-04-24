@@ -49,5 +49,5 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |cva.1[["Dist"]][["GroupdistMaha"]] | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
 |cva.1[["Dist"]][["GroupdistMaha"]] | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
 | bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | RefvsNJ / RefvsUPGMA / NJvsUPGMA |
-|CV_ITD_data.csv | Allometric Linear Regression |ITD_regession |
+|cva.1$CVscores| Allometric Linear Regression |ITD_regession |
 
