@@ -40,9 +40,9 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
 |subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | |
 |subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | |
+|subset_LM.csv | Canonical Variate Analysis (CVA) |   |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nex | Calculate phylogenetic distances | phylo_distances.csv |
-|subset_LM.csv | Canonical Variate Analysis (CVA) |   |
 | | Calculate Pagel’s λ and Blomberg's K  |  |
 | | Phylogenetic Tree Reconstruction |  |
 | | Phylogenetic Tree Similarity | |
