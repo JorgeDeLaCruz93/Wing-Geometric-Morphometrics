@@ -296,46 +296,12 @@ ref_tree <- pruned_tree
 write.tree(ref_tree, file = "data/bee_tree.nwk")
 write.nexus(ref_tree, file = "data/bee_tree.nex")
 ```
-
 #Calculate Phylogenetic Distances
 Extract the cophenetic (phylogenetic) distances from the phylogenetic tree.
 ```{r}
 phylo_distances <- cophenetic.phylo(ref_tree)
 
 write.csv(phylo_distances, "data/phylo_distances.csv", row.names = TRUE)
-```
-
-
-### Canonical Variate Analysis
-```
-lm_data <- read.csv("data/LM_Data.csv")
-lm_data <- lm_data[,-1]
-
-vari <- lm_data[,2:19]
-species <- as.factor(lm_data$Species)
-genus <- as.factor(lm_data$Genus)
-subfamily <- as.factor(lm_data$Subfamily)
-family <- as.factor(lm_data$Family)
-catalog <- as.factor(lm_data$catalogNumber)
-
-cva.0 <- CVA(vari, groups = species) #canonical variate analysis - Species level
-cva.1 <- CVA(vari, groups = genus) #canonical variate analysis - Generic level
-cva.2 <- CVA(vari, groups = subfamily) #canonical variate analysis - Subfamily level
-cva.3 <- CVA(vari, groups = family) #canonical variate analysis - Family level
-
-## get the typicality probabilities and resulting classifications - tagging
-## all specimens with a probability of < 0.01 as outliers (assigned to no class)
-typprobs_species <- typprobClass(cva.0$CVscores, groups = species)
-print(typprobs_species)
-
-typprobs_genus <- typprobClass(cva.1$CVscores, groups = genus)
-print(typprobs_genus)
-
-typprobs_subfamily <- typprobClass(cva.2$CVscores, groups = subfamily)
-print(typprobs_subfamily)
-
-typprobs_family <- typprobClass(cva.3$CVscores, groups = family)
-print(typprobs_family)
 ```
 
 ### Canonical Variate Analysis (SUBSET)
@@ -347,36 +313,38 @@ subfamily <- as.factor(subset_LM$Subfamily)
 family <- as.factor(subset_LM$Family)
 catalog <- as.factor(subset_LM$catalogNumber)
 
-cva.0 <- CVA(vari, groups = species) #canonical variate analysis - Species level
-cva.1 <- CVA(vari, groups = genus) #canonical variate analysis - Generic level
-cva.2 <- CVA(vari, groups = subfamily) #canonical variate analysis - Subfamily level
-cva.3 <- CVA(vari, groups = family) #canonical variate analysis - Family level
+cva.0 <- CVA(vari, groups = species) # canonical variate analysis @ species level
+cva.1 <- CVA(vari, groups = genus) # canonical variate analysis @ generic level
+cva.2 <- CVA(vari, groups = subfamily) # canonical variate analysis @ subfamily level
+cva.3 <- CVA(vari, groups = family) # canonical variate analysis @ family level
 
-## get the typicality probabilities and resulting classifications - tagging
-## all specimens with a probability of < 0.01 as outliers (assigned to no class)
-#species
+# species
 cva.0
+# calculate the typicality probabilities and classification accuracy
 typprobs_species <- typprobClass(cva.0$CVscores, groups = species)
 print(typprobs_species)
 # Variance explained by the canonical roots
 cva.0$Var
 
-#genus
+# genus
 cva.1
+# calculate the typicality probabilities and classification accuracy
 typprobs_genus <- typprobClass(cva.1$CVscores, groups = genus)
 print(typprobs_genus)
 # Variance explained by the canonical roots
 cva.1$Var
 
-#subfamily
+# subfamily
 cva.2
+# calculate the typicality probabilities and classification accuracy
 typprobs_subfamily <- typprobClass(cva.2$CVscores, groups = subfamily)
 print(typprobs_subfamily)
 # Variance explained by the canonical roots
 cva.2$Var
 
-#family
+# family
 cva.3
+# calculate the typicality probabilities and classification accuracy
 typprobs_family <- typprobClass(cva.3$CVscores, groups = family)
 print(typprobs_family)
 # Variance explained by the canonical roots
