@@ -45,11 +45,14 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
 |_cva.1$groupmeans_ | Calculate phylogenetic signal quantified by Pagel’s λ | **lambda_result** |
-|_cva.1$groupmeans_ | Calculate phylogenetic signal quantified by Blomberg's K  | ***K_result**  |
+|_cva.1$groupmeans_ | Calculate phylogenetic signal quantified by Blomberg's K  | **K_result**  |
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
 | bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _RefvsNJ_ / _RefvsUPGMA_ / _NJvsUPGMA_ |
-|cva.1$CVscores| Allometric Linear Regression |ITD_regession |
+|_cva.1$CVscores_| Allometric Linear Regression |ITD_regession |
+
+_R Objects_	are italized
 
 **Statistics** are bolded
-	_R Objects_	are italized
+
+
