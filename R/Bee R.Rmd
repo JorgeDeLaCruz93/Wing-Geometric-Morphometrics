@@ -44,9 +44,8 @@ all_tps_data <- readland.tps("data/bee_wings2.TPS",
 ```
 
 ##Load csv Data
-Read bee data by first reading all Hymenoptera. After this chunk of code, all bee data is saved as __df1__ and is ready to be merged with the TPS data.
+Read bee metadata to be merged with the TPS data.
 ```{r}
-#need to have "beedata26jun22.csv" saved in working directory
 bee_data <- read_csv("data/bee_metadata4.csv")
 
 #df1 <- bee_data
@@ -217,13 +216,9 @@ capture.output(summary(fitm_fam, test = "Pillai"), file = "output/manova_pillai_
 ## Cross-validation using DAPC
 Assign "unknown" bees to the correct group, and test for % accuracy. Tells number of PCs to retain
 ```{r}
-lm_values <- lm_data[,c(2:19)] # Only preserves LM values
-lm_values_sub <- subset_LM[,c(2:19)] # Subset
+lm_values_sub <- subset_LM[,c(2:19)]
 
-#Replace lm_data$____ with taxonomic level 
-xval <- xvalDapc(lm_values, lm_data$Genus, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
-
-#Replace lm_data$____ with taxonomic level (Subset)
+#Replace lm_data$____ with taxonomic level
 xval2 <- xvalDapc(lm_values_sub, subset_LM$Genus, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
 
 xval2$`Number of PCs Achieving Highest Mean Success` #Which number of PCs retained has highest accuracy? Put this value for n.pca = ___ when doing dapc() 
@@ -232,7 +227,7 @@ xval2$`Mean Successful Assignment by Number of PCs of PCA` #What is accuracy at 
 
 ```
 
-#DAPC with 1 Discriminant Function (SUBSET)
+#DAPC with 1 Discriminant Function
 Rather than a PCA, we run a DAPC here to visualize difference between groups.
 ```{r}
 dapc_1 <- dapc(lm_values_sub,  
@@ -249,7 +244,7 @@ scatter(dapc_1,1,1,bg="white", #1,1, = 1st discriminant function
 ```
 
 
-# DAPC with 2 Discriminant Functions (SUBSET)
+# DAPC with 2 Discriminant Functions
 ```{r}
 population <- subset_LM[,c(2:19)] # Only preserves LM values
 
@@ -304,7 +299,7 @@ phylo_distances <- cophenetic.phylo(ref_tree)
 write.csv(phylo_distances, "data/phylo_distances.csv", row.names = TRUE)
 ```
 
-### Canonical Variate Analysis (SUBSET)
+### Canonical Variate Analysis
 ```{r}
 vari <- subset_LM[,2:19]
 species <- as.factor(subset_LM$Species)
@@ -541,7 +536,7 @@ SimilarityMetrics(NJvsUPGMA, similarity = TRUE)
 plot(cophylo(nj_tree, upgma_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
 ```
 
-###Allometry Linear Regression (SUBSET)
+###Allometry Linear Regression
 ```{r}
 metadata <- subset_LM[,-c(2:19)]
 
