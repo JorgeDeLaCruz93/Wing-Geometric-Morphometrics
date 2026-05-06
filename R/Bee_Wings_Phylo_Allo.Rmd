@@ -37,7 +37,7 @@ library(shapes) #required to plot CVA
 ```{r}
 #Read in the TPS data for all bee wing images
 
-all_tps_data <- readland.tps("data/bee_wings2.TPS",
+all_tps_data <- readland.tps("data/bee_wings.TPS",
                              specID = c("imageID"), readcurves = FALSE, 
                              warnmsg = TRUE,negNA = FALSE)
 
@@ -46,7 +46,7 @@ all_tps_data <- readland.tps("data/bee_wings2.TPS",
 ##Load csv Data
 Read bee metadata to be merged with the TPS data.
 ```{r}
-bee_data <- read_csv("data/bee_metadata4.csv")
+bee_data <- read_csv("data/bee_metadata.csv")
 
 #df1 <- bee_data
 #df1 <- df1 %>% separate(catalogNumber, c("UCSB", "number", "side")) #issue btwn _ vs - in catalogNumber
