@@ -18,13 +18,14 @@ library(tidyverse)
 library(htmltools)
 library(rgl)
 library(dplyr)
-library(geomorph) #NOTE: download XQuartz if using a Mac
 library(devtools)
+library(geomorph) #NOTE: Mac users please also install XQuartz from https://www.xquartz.org/. This allows the library(rgl) to function.
 library(RRPP) #used for MANOVA 
 library(adegenet) # used for DAPC
 library(phangorn) #Phylogenetic tree Reconstruction
 library(phytools) #Read phylogenetic tree files and calculate phylogenetic signal
 library(ape) #Phylogenetic tree reconstruction
+library(ggplot2) #Required for ggtree extension
 library(ggtree) #Display phylogenetic trees
 library(Quartet) #Calculate quartet similarity of phylogenetic trees
 library(Morpho) #package for geometric morphometrics and canonical variate analysis
@@ -178,14 +179,36 @@ manova_genus <- manova_genus[,c(2:23)] #drop catalog number and other non LM var
 manova_genus_data <- manova_genus[,c(1:18)] #drop genus variable
 manova_genus_data <- as.matrix(manova_genus_data) #as matrix
 
-fit_genus <- lm.rrpp(manova_genus_data ~ Genus, SS.type = "I", #Species, Genus, Subfamily, Family
+fit_genus <- lm.rrpp(manova_genus_data ~ Genus, SS.type = "I", #Genus
                data = manova_genus, print.progress = FALSE) #run the linear model fit
 fitm_genus <- manova.update(fit_genus, print.progress = FALSE, tol = 0) #run manova update
 
+fit_subfam <- lm.rrpp(manova_genus_data ~ Subfamily, SS.type = "I", #Subfamily
+               data = manova_genus, print.progress = FALSE) #run the linear model fit
+fitm_subfam <- manova.update(fit_subfam, print.progress = FALSE, tol = 0) #run manova update
+
+fit_fam <- lm.rrpp(manova_genus_data ~ Family, SS.type = "I", #Family
+               data = manova_genus, print.progress = FALSE) #run the linear model fit
+fitm_fam <- manova.update(fit_fam, print.progress = FALSE, tol = 0) #run manova update
+
+
 #MANOVA Results
+summary(fitm_genus)
+capture.output(summary(fitm_genus), file = "output/manova_roy.txt")
 summary(fitm_genus, test = "Pillai") #summarize with a manova table
+capture.output(summary(fitm_genus, test = "Pillai"), file = "output/manova_pillai.txt")
 summary(fitm_genus, test = "Wilks") #summarize with a manova table
+capture.output(summary(fitm_genus, test = "Wilks"), file = "output/manova_wilks.txt")
 summary(fitm_genus, test = "Hotelling-Lawley") #summarize with a manova table
+capture.output(summary(fitm_genus, test = "Hotelling-Lawley"), file = "output/manova_hl.txt")
+
+#MANOVA Subfamily
+summary(fitm_subfam, test = "Pillai") #summarize with a manova table
+capture.output(summary(fitm_subfam, test = "Pillai"), file = "output/manova_pillai_subfam.txt")
+
+#MANOVA Family
+summary(fitm_fam, test = "Pillai") #summarize with a manova table
+capture.output(summary(fitm_fam, test = "Pillai"), file = "output/manova_pillai_fam.txt")
 
 ```
 
@@ -231,7 +254,7 @@ scatter(dapc_1,1,1,bg="white", #1,1, = 1st discriminant function
 population <- subset_LM[,c(2:19)] # Only preserves LM values
 
 dapc_2 <- dapc(population, 
-                grp = subset_LM$Subfamily, #Species, Genus, Subfamily, Family, 
+                grp = subset_LM$Genus, #Species, Genus, Subfamily, Family, 
                 n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
                 n.da = 10) #Axes retained in Discriminant Analysis
 
@@ -331,21 +354,33 @@ cva.3 <- CVA(vari, groups = family) #canonical variate analysis - Family level
 
 ## get the typicality probabilities and resulting classifications - tagging
 ## all specimens with a probability of < 0.01 as outliers (assigned to no class)
+#species
+cva.0
 typprobs_species <- typprobClass(cva.0$CVscores, groups = species)
 print(typprobs_species)
-cva.0
+# Variance explained by the canonical roots
+cva.0$Var
 
+#genus
+cva.1
 typprobs_genus <- typprobClass(cva.1$CVscores, groups = genus)
 print(typprobs_genus)
-cva.1
+# Variance explained by the canonical roots
+cva.1$Var
 
+#subfamily
+cva.2
 typprobs_subfamily <- typprobClass(cva.2$CVscores, groups = subfamily)
 print(typprobs_subfamily)
-cva.2
+# Variance explained by the canonical roots
+cva.2$Var
 
+#family
+cva.3
 typprobs_family <- typprobClass(cva.3$CVscores, groups = family)
 print(typprobs_family)
-cva.3
+# Variance explained by the canonical roots
+cva.3$Var
 ```
 
 #Visualize Canonical Variate Analysis - Genus

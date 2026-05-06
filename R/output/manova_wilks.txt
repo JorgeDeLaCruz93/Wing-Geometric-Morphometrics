@@ -1,0 +1,14 @@
+
+Linear Model fit with lm.rrpp
+
+Number of observations: 170
+Number of dependent variables: 18
+Data space dimensions: 18
+Residual covariance matrix rank: 16
+Sums of Squares and Cross-products: Type I
+Number of permutations: 1000 
+
+           Df  Rand      Wilks        Z        Pr(<Wilks)
+Genus       16 Residuals 6.136656e-14 8.363953 0.001     
+Full.Model  16 Residuals 6.136656e-14 8.363953 0.001     
+Residuals  153                                           
