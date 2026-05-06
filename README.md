@@ -34,25 +34,24 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
+
+_<ins>R Objects<ins>_	are italized and underlined
+
 | Input  | Analysis / Transformation  | Output |
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 |ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
 |subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | fitm_genus |
-|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | _dapc_2_ |
-|subset_LM.csv | Canonical Variate Analysis (CVA) | _cva.1_ |
+|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | _<ins>dapc_2<ins>_ |
+|subset_LM.csv | Canonical Variate Analysis (CVA) | _<ins>cva.1<ins>_ |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
-|_cva.1$groupmeans_ | Calculate phylogenetic signal quantified by Pagel’s λ | **lambda_result** |
-|_cva.1$groupmeans_ | Calculate phylogenetic signal quantified by Blomberg's K  | **K_result**  |
-|_cva.1[["Dist"]][["GroupdistMaha"]]_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
-|_cva.1[["Dist"]][["GroupdistMaha"]]_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
-| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _RefvsNJ_ / _RefvsUPGMA_ / _NJvsUPGMA_ |
-|_cva.1$CVscores_| Allometric Linear Regression |ITD_regession |
-
-_R Objects_	are italized
-
-**Statistics** are bolded
+|_<ins>cva.1$groupmeans<ins>_ | Calculate phylogenetic signal quantified by Pagel’s λ | _<ins>lambda_result<ins>_ |
+|_<ins>cva.1$groupmeans<ins>_ | Calculate phylogenetic signal quantified by Blomberg's K  | _<ins>K_result<ins>_ |
+|_<ins>cva.1[["Dist"]][["GroupdistMaha"]]<ins>_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
+|_<ins>cva.1[["Dist"]][["GroupdistMaha"]]<ins>_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
+| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _<ins>RefvsNJ<ins>_ / _<ins>RefvsUPGMA<ins>_ / _<ins>NJvsUPGMA<ins>_ |
+|_<ins>cva.1$CVscores<ins>_| Allometric Linear Regression |ITD_regession |
 
 
