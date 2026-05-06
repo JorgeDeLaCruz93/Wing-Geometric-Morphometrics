@@ -129,19 +129,19 @@ write.csv(lm_data, file = "data/LM_Data.csv")
 ### Create subset with equal numbers of specimens
 Since there are different numbers of bee wings from each genus, we randomly select the same number of bees from each genus to create a subset with equal number of wings.
 ```{r}
-set.seed(339)  # for reproducibility
+set.seed(339)  # for reproducibility so that the same subset is produced every time the code is run, if removed the code will produce a new random dataset
 
-subset <- lm_data[!lm_data$Species %in% c("Andrena oenotherae", "Bombus vosnesenskii", "Ceratina punctagena", "Megachile rotundata"), ] #remove any extra species in dataset
+subset <- lm_data[!lm_data$Species %in% c("Andrena oenotherae", "Bombus vosnesenskii", "Ceratina punctagena", "Megachile rotundata"), ] # remove any extra species in dataset
 
-subset2 <- unique(subset) #remove duplicates
+subset2 <- unique(subset) # remove duplicates
 
 ITD_data <- read.csv("data/ITD_covariates2.csv")
 
-subset3 <- merge(subset2, ITD_data, by=("catalogNumber"), all = TRUE) #merge land mark data with ITD data
+subset3 <- merge(subset2, ITD_data, by=("catalogNumber"), all = TRUE) # merge land mark data with ITD data
 
 subset_ITD <- subset3[!is.na(subset3$Species),]
 
-#Include all specimens with ITD values and however many specimens without ITD values until a total subset of 10 specimens is reached
+# Include all specimens with ITD values and however many specimens without ITD values until a total subset of 10 specimens is reached
 subset_LM <- subset_ITD %>% 
   group_by(Genus) %>%
   group_modify(~{
