@@ -134,7 +134,7 @@ subset <- lm_data[!lm_data$Species %in% c("Andrena oenotherae", "Bombus vosnesen
 
 subset2 <- unique(subset) # remove duplicates
 
-ITD_data <- read.csv("data/ITD_covariates2.csv")
+ITD_data <- read.csv("data/ITD_covariates.csv")
 
 subset3 <- merge(subset2, ITD_data, by=("catalogNumber"), all = TRUE) # merge land mark data with ITD data
 
@@ -211,7 +211,7 @@ capture.output(summary(fitm_fam, test = "Pillai"), file = "output/manova_pillai_
 
 ```
 
-### DAPC (Discriminant Analysis of Principal Components)
+### Discriminant Analysis of Principal Components (DAPC)
 
 ## Cross-validation using DAPC
 Assign "unknown" bees to the correct group, and test for % accuracy. Tells number of PCs to retain
@@ -291,6 +291,7 @@ ref_tree <- pruned_tree
 write.tree(ref_tree, file = "data/bee_tree.nwk")
 write.nexus(ref_tree, file = "data/bee_tree.nex")
 ```
+
 #Calculate Phylogenetic Distances
 Extract the cophenetic (phylogenetic) distances from the phylogenetic tree.
 ```{r}
@@ -299,7 +300,7 @@ phylo_distances <- cophenetic.phylo(ref_tree)
 write.csv(phylo_distances, "data/phylo_distances.csv", row.names = TRUE)
 ```
 
-### Canonical Variate Analysis
+### Canonical Variate Analysis (CVA)
 ```{r}
 vari <- subset_LM[,2:19]
 species <- as.factor(subset_LM$Species)
@@ -485,8 +486,8 @@ legend("topright",
 ```
 
 
-### Phylogenetic Signal in Morphometric Data
-Test for phylogenetic signal in the morphometric data using methods like Blomberg’s K or Pagel’s λ.
+### Calculate Phylogenetic Signal
+Calculate phylogenetic signal in the morphometric data by Blomberg’s K or Pagel’s λ.
 ```{r}
 LMmeans <- cva.1$groupmeans
 
@@ -499,7 +500,7 @@ K_result <- phylosig(ref_tree, LMmeans, method = "K", test = TRUE)
 print(K_result)
 ```
 
-###Morphometric Phylogenetic Tree Reconstruction
+### Phylogenetic Tree Reconstruction
 Estimate phylogeny from mahalanobis distance matrix produced by CVA
 ```{r}
 MahaMatrix <- cva.1[["Dist"]][["GroupdistMaha"]] #mahalanobis distance matrix
@@ -516,7 +517,7 @@ write.tree(upgma_tree, file = "data/upgma_tree.nwk")
 
 ```
 
-###Calculate Molecular/Morphometric Phylogenetic Tree Similarity
+###Calculate Phylogenetic Tree Similarity by Quartet
 ```{r}
 #Reference Tree vs Neighbor-Joining Tree
 RefvsNJ <- QuartetStatus(ref_tree, nj_tree)
