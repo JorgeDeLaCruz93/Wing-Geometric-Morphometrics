@@ -28,7 +28,7 @@ library(ape) #Phylogenetic tree reconstruction
 library(ggplot2) #Required for ggtree extension
 library(ggtree) #Display phylogenetic trees
 library(Quartet) #Calculate quartet similarity of phylogenetic trees
-library(Morpho) #package for geometric morphometrics and canonical variate analysis
+library(Morpho) #package for geometric morphometrics and canonical variate analysis (CVA)
 library(car) #required to plot CVA
 library(shapes) #required to plot CVA
 ```
@@ -131,7 +131,7 @@ Since there are different numbers of bee wings from each genus, we randomly sele
 ```{r}
 set.seed(339)  # for reproducibility
 
-subset <- lm_data[!lm_data$Species %in% c("Andrena oenotherae", "Bombus vosnesenskii", "Ceratina punctagena", "Megachile rotundata"), ] #remove any extra species
+subset <- lm_data[!lm_data$Species %in% c("Andrena oenotherae", "Bombus vosnesenskii", "Ceratina punctagena", "Megachile rotundata"), ] #remove any extra species in dataset
 
 subset2 <- unique(subset) #remove duplicates
 
