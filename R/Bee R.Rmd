@@ -192,7 +192,7 @@ fit_fam <- lm.rrpp(manova_genus_data ~ Family, SS.type = "I", #Family
 fitm_fam <- manova.update(fit_fam, print.progress = FALSE, tol = 0) #run manova update
 
 
-#MANOVA Results
+# MANOVA Results (Genus)
 summary(fitm_genus)
 capture.output(summary(fitm_genus), file = "output/manova_roy.txt")
 summary(fitm_genus, test = "Pillai") #summarize with a manova table
@@ -202,11 +202,11 @@ capture.output(summary(fitm_genus, test = "Wilks"), file = "output/manova_wilks.
 summary(fitm_genus, test = "Hotelling-Lawley") #summarize with a manova table
 capture.output(summary(fitm_genus, test = "Hotelling-Lawley"), file = "output/manova_hl.txt")
 
-#MANOVA Subfamily
+# MANOVA Subfamily
 summary(fitm_subfam, test = "Pillai") #summarize with a manova table
 capture.output(summary(fitm_subfam, test = "Pillai"), file = "output/manova_pillai_subfam.txt")
 
-#MANOVA Family
+# MANOVA Family
 summary(fitm_fam, test = "Pillai") #summarize with a manova table
 capture.output(summary(fitm_fam, test = "Pillai"), file = "output/manova_pillai_fam.txt")
 
