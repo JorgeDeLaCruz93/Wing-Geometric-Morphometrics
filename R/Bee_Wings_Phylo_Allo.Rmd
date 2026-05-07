@@ -31,6 +31,11 @@ library(Quartet) #Calculate quartet similarity of phylogenetic trees
 library(Morpho) #package for geometric morphometrics and canonical variate analysis (CVA)
 library(car) #required to plot CVA
 library(shapes) #required to plot CVA
+
+#if "ggtree" does not install use "BiocManager"
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("ggtree")
 ```
 
 ##Load TPS
@@ -191,15 +196,9 @@ fit_fam <- lm.rrpp(manova_genus_data ~ Family, SS.type = "I", #Family
 fitm_fam <- manova.update(fit_fam, print.progress = FALSE, tol = 0) #run manova update
 
 
-# MANOVA Results (Genus)
-summary(fitm_genus)
-capture.output(summary(fitm_genus), file = "output/manova_roy.txt")
+# MANOVA Genus
 summary(fitm_genus, test = "Pillai") #summarize with a manova table
 capture.output(summary(fitm_genus, test = "Pillai"), file = "output/manova_pillai.txt")
-summary(fitm_genus, test = "Wilks") #summarize with a manova table
-capture.output(summary(fitm_genus, test = "Wilks"), file = "output/manova_wilks.txt")
-summary(fitm_genus, test = "Hotelling-Lawley") #summarize with a manova table
-capture.output(summary(fitm_genus, test = "Hotelling-Lawley"), file = "output/manova_hl.txt")
 
 # MANOVA Subfamily
 summary(fitm_subfam, test = "Pillai") #summarize with a manova table
@@ -216,10 +215,12 @@ capture.output(summary(fitm_fam, test = "Pillai"), file = "output/manova_pillai_
 ## Cross-validation using DAPC
 Assign "unknown" bees to the correct group, and test for % accuracy. Tells number of PCs to retain
 ```{r}
+set.seed(339)  # for reproducibility so that the same # of PCs is calculated every time the code is run, if removed the code will run a new calculation
+
 lm_values_sub <- subset_LM[,c(2:19)]
 
 #Replace lm_data$____ with taxonomic level
-xval2 <- xvalDapc(lm_values_sub, subset_LM$Genus, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
+xval2 <- xvalDapc(lm_values_sub, subset_LM$Species, n.pca.max = 300, training.set = 0.9, result = "groupMean", center = TRUE, scale = FALSE, n.pca = NULL, n.rep = 30, xval.plot = TRUE)
 
 xval2$`Number of PCs Achieving Highest Mean Success` #Which number of PCs retained has highest accuracy? Put this value for n.pca = ___ when doing dapc() 
 
@@ -231,9 +232,9 @@ xval2$`Mean Successful Assignment by Number of PCs of PCA` #What is accuracy at 
 Rather than a PCA, we run a DAPC here to visualize difference between groups.
 ```{r}
 dapc_1 <- dapc(lm_values_sub,  
-                grp = subset_LM$Family, 
-                n.pca = 10,
-                n.da = 7) 
+                grp = subset_LM$Genus, 
+                n.pca = 6, #Axes retained in Principal Component Analysis (PCA)
+                n.da = 10) #Axes retained in Discriminant Analysis
 
 dapc_col <- c("red4", "darkblue", "forestgreen","darkcyan", "magenta4") #save color values for DAPC
 
@@ -246,11 +247,11 @@ scatter(dapc_1,1,1,bg="white", #1,1, = 1st discriminant function
 
 # DAPC with 2 Discriminant Functions
 ```{r}
-population <- subset_LM[,c(2:19)] # Only preserves LM values
+dapc_LM <- subset_LM[,c(2:19)] # Only preserves LM values
 
-dapc_2 <- dapc(population, 
+dapc_2 <- dapc(dapc_LM, 
                 grp = subset_LM$Genus, #Species, Genus, Subfamily, Family, 
-                n.pca = 11, #Axes retained in Principal Component Analysis (PCA)
+                n.pca = 6, #Axes retained in Principal Component Analysis (PCA)
                 n.da = 10) #Axes retained in Discriminant Analysis
 
 scatter(dapc_2, 1, 2,  # 1st and 2nd discriminant functions
@@ -262,14 +263,9 @@ scatter(dapc_2, 1, 2,  # 1st and 2nd discriminant functions
         col = dapc_col,
         clabel = 0.5)       # size of group labels
 
-prcomp(population)
-
 print.dapc(dapc_2)
 
 summary.dapc(dapc_2)
-
-predict.dapc(dapc_2)
-
 ```
 
 
@@ -322,6 +318,7 @@ print(typprobs_species)
 # Variance explained by the canonical roots
 cva.0$Var
 
+?CVA()
 # genus
 cva.1
 # calculate the typicality probabilities and classification accuracy
@@ -501,7 +498,7 @@ print(K_result)
 ```
 
 ### Phylogenetic Tree Reconstruction
-Estimate phylogeny from mahalanobis distance matrix produced by CVA
+Estimate phylogeny from mahalanobis distance matrix produced by CVA by Neighbor-Joining and UPGMA
 ```{r}
 MahaMatrix <- cva.1[["Dist"]][["GroupdistMaha"]] #mahalanobis distance matrix
 
