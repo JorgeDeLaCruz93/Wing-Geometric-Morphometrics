@@ -27,6 +27,7 @@ library(phytools) #Read phylogenetic tree files and calculate phylogenetic signa
 library(ape) #Phylogenetic tree reconstruction
 library(ggplot2) #Required for ggtree extension
 library(ggtree) #Display phylogenetic trees
+library(TreeTools) #Dependency for Quartet
 library(Quartet) #Calculate quartet similarity of phylogenetic trees
 library(Morpho) #package for geometric morphometrics and canonical variate analysis (CVA)
 library(car) #required to plot CVA
@@ -194,7 +195,6 @@ fitm_subfam <- manova.update(fit_subfam, print.progress = FALSE, tol = 0) #run m
 fit_fam <- lm.rrpp(manova_genus_data ~ Family, SS.type = "I", #Family
                data = manova_genus, print.progress = FALSE) #run the linear model fit
 fitm_fam <- manova.update(fit_fam, print.progress = FALSE, tol = 0) #run manova update
-
 
 # MANOVA Genus
 summary(fitm_genus, test = "Pillai") #summarize with a manova table
@@ -518,9 +518,33 @@ write.tree(upgma_tree, file = "data/upgma_tree.nwk")
 ```{r}
 #Reference Tree vs Neighbor-Joining Tree
 RefvsNJ <- QuartetStatus(ref_tree, nj_tree)
-SimilarityMetrics(RefvsNJ, similarity = TRUE)
+SimilarityMetrics(RefvsNJ, similarity = TRUE)[,"SimilarityToReference"]
 VisualizeQuartets(ref_tree, nj_tree)
 plot(cophylo(ref_tree, nj_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
+
+#Calculate p-value
+obs <- SimilarityMetrics(RefvsNJ)[,"ExplicitlyAgree"]
+
+nperm <- 999
+
+perm_stats <- numeric(nperm)
+
+for(i in 1:nperm){
+
+  # permute taxa labels of morphology tree
+  perm_tree <- nj_tree
+  perm_tree$tip.label <- sample(perm_tree$tip.label)
+
+  # quartet comparison
+  qs_perm <- QuartetStatus(ref_tree, perm_tree)
+
+  # similarity statistic
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval_nj <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval_nj
 
 #Reference Tree vs UPGMA Tree
 RefvsUPGMA <- QuartetStatus(ref_tree, upgma_tree)
@@ -528,10 +552,29 @@ SimilarityMetrics(RefvsUPGMA, similarity = TRUE)
 VisualizeQuartets(ref_tree, upgma_tree)
 plot(cophylo(ref_tree, upgma_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
 
-#Neighbor-Joining Tree vs UPGMA Tree
-NJvsUPGMA <- QuartetStatus(nj_tree, upgma_tree)
-SimilarityMetrics(NJvsUPGMA, similarity = TRUE)
-plot(cophylo(nj_tree, upgma_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
+#Calculate p-value
+obs <- SimilarityMetrics(RefvsUPGMA)[,"ExplicitlyAgree"]
+
+nperm <- 999
+
+perm_stats <- numeric(nperm)
+
+for(i in 1:nperm){
+
+  # permute taxa labels of morphology tree
+  perm_tree <- upgma_tree
+  perm_tree$tip.label <- sample(perm_tree$tip.label)
+
+  # quartet comparison
+  qs_perm <- QuartetStatus(ref_tree, perm_tree)
+
+  # similarity statistic
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval_upgma <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval_upgma
 ```
 
 ###Allometry Linear Regression

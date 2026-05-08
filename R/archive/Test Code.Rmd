@@ -865,3 +865,175 @@ cva.1
 ```
 
 
+```{r}
+library(Quartet)
+library(ape)
+
+# Example trees
+set.seed(1)
+
+tree1 <- ref_tree
+tree2 <- nj_tree
+
+# Observed quartet similarity
+qs_obs <- QuartetStatus(ref_tree, nj_tree)
+
+# Example similarity metric
+obs <- SimilarityMetrics(qs_obs)[,"ExplicitlyAgree"]
+
+obs
+
+nperm <- 999
+
+perm_stats <- numeric(nperm)
+
+for(i in 1:nperm){
+
+  # permute taxa labels of tree2
+  perm_tree <- nj_tree
+  perm_tree$tip.label <- sample(perm_tree$tip.label)
+
+  # quartet comparison
+  qs_perm <- QuartetStatus(ref_tree, perm_tree)
+
+  # similarity statistic
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval
+```
+
+```{r}
+library(Quartet)
+library(ape)
+
+# Example trees
+set.seed(1)
+
+tree1 <- ref_tree
+#tree2 <- nj_tree
+tree2 <- upgma_tree
+
+# Observed quartet similarity
+qs_obs <- QuartetStatus(ref_tree, upgma_tree)
+
+# Example similarity metric
+obs <- SimilarityMetrics(qs_obs)[,"ExplicitlyAgree"]
+
+obs
+
+nperm <- 999
+
+perm_stats <- numeric(nperm)
+
+for(i in 1:nperm){
+
+  # permute taxa labels of tree2
+  perm_tree <- upgma_tree
+  perm_tree$tip.label <- sample(perm_tree$tip.label)
+
+  # quartet comparison
+  qs_perm <- QuartetStatus(ref_tree, perm_tree)
+
+  # similarity statistic
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval
+```
+
+```{r}
+library(Quartet)
+library(ape)
+
+# Example trees
+set.seed(1)
+
+tree1 <- rtree(20)
+tree2 <- rtree(20)
+
+# Observed quartet similarity
+qs_obs <- QuartetStatus(tree1, tree2)
+
+# Example similarity metric
+obs <- SimilarityMetrics(qs_obs)[,"ExplicitlyAgree"]
+
+obs
+
+nperm <- 999
+
+perm_stats <- numeric(nperm)
+
+for(i in 1:nperm){
+
+  # permute taxa labels of tree2
+  perm_tree <- tree2
+  perm_tree$tip.label <- sample(perm_tree$tip.label)
+
+  # quartet comparison
+  qs_perm <- QuartetStatus(tree1, perm_tree)
+
+  # similarity statistic
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval
+```
+
+```{r}
+library(Quartet)
+library(ape)
+
+# Example trees
+
+ref_tree
+nj_tree
+upgma_tree
+
+tree1 <- ref_tree
+tree1 <- upgma_tree
+tree2 <- nj_tree
+
+# Observed quartet similarity
+qs_obs <- QuartetStatus(tree1, tree2)
+
+# Example similarity metric
+obs <- SimilarityMetrics(qs_obs)[,"ExplicitlyAgree"]
+
+obs
+
+nperm <- 999
+
+perm_stats <- numeric(nperm)
+
+for(i in 1:nperm){
+
+  # permute taxa labels of tree2
+  perm_tree <- tree2
+  perm_tree$tip.label <- sample(perm_tree$tip.label)
+
+  # quartet comparison
+  qs_perm <- QuartetStatus(tree1, perm_tree)
+
+  # similarity statistic
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval
+```
+
+
+
+
+
+
+
+
