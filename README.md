@@ -35,7 +35,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
 
-_**R Objects**_	are italized and underlined
+_**R Objects**_	are italized and bolded
 
 | Input  | Analysis / Transformation  | Output |
 | :------------ |:---------------| :---------------|
