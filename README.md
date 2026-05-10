@@ -55,16 +55,5 @@ _**R Objects**_	are italized and bolded
 | bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _RefvsNJ_ / _RefvsUPGMA_ / _NJvsUPGMA_ |
 |_cva.1$CVscores_| Allometric Linear Regression |ITD_regession |
 
-_R Objects_	are italized
-
-**Statistics** are bolded
-=======
-|_**cva.1$groupmeans**_ | Calculate phylogenetic signal quantified by Pagel’s λ | _**lambda_result**_ |
-|_**cva.1$groupmeans**_ | Calculate phylogenetic signal quantified by Blomberg's K  | _**K_result**_ |
-|_**cva.1[["Dist"]][["GroupdistMaha"]]**_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
-|_**cva.1[["Dist"]][["GroupdistMaha"]]**_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
-| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _**RefvsNJ**_ / _**RefvsUPGMA**_ / _**NJvsUPGMA**_ |
-|_**cva.1$CVscores**_| Allometric Linear Regression |ITD_regession |
->>>>>>> dc9d0333e5f9cd29f0a9ff7a9b3d1ea2d1101491
 
 
