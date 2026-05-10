@@ -33,9 +33,6 @@ library(Morpho) #package for geometric morphometrics and canonical variate analy
 library(car) #required to plot CVA
 library(shapes) #required to plot CVA
 
-packageVersion("Morpho")
-
-?nj()
 #if "ggtree" does not install use "BiocManager"
 #if (!require("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
