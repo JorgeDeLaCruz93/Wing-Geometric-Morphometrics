@@ -34,16 +34,20 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
+
+_**R Objects**_	are italized and underlined
+
 | Input  | Analysis / Transformation  | Output |
 | :------------ |:---------------| :---------------|
 |bee_wings2.TPS | Generalized Procrustes Analysis (GPA) | tpsGPA.csv |
 |tpsGPA.csv + bee_metadata4.csv | Merge landmark data with metadata | LM_Data.csv |
 |ITD_covariates2.csv |Merge landmark data with ITD data | subset_LM.csv |
 |subset_LM.csv | Multivariate Analysis Of Variance (MANOVA) | fitm_genus |
-|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | _dapc_2_ |
-|subset_LM.csv | Canonical Variate Analysis (CVA) | _cva.1_ |
+|subset_LM.csv | Discriminant Analysis of Principal Components (DAPC) | _**dapc_2**_ |
+|subset_LM.csv | Canonical Variate Analysis (CVA) | _**cva.1**_ |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
+<<<<<<< HEAD
 |_cva.1$groupmeans_ | Calculate phylogenetic signal (Pagel’s λ) | **lambda_result** |
 |_cva.1$groupmeans_ | Calculate phylogenetic signal (Blomberg's K)  | **K_result**  |
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
@@ -54,5 +58,13 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 _R Objects_	are italized
 
 **Statistics** are bolded
+=======
+|_**cva.1$groupmeans**_ | Calculate phylogenetic signal quantified by Pagel’s λ | _**lambda_result**_ |
+|_**cva.1$groupmeans**_ | Calculate phylogenetic signal quantified by Blomberg's K  | _**K_result**_ |
+|_**cva.1[["Dist"]][["GroupdistMaha"]]**_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
+|_**cva.1[["Dist"]][["GroupdistMaha"]]**_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
+| bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _**RefvsNJ**_ / _**RefvsUPGMA**_ / _**NJvsUPGMA**_ |
+|_**cva.1$CVscores**_| Allometric Linear Regression |ITD_regession |
+>>>>>>> dc9d0333e5f9cd29f0a9ff7a9b3d1ea2d1101491
 
 
