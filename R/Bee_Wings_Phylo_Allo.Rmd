@@ -319,7 +319,6 @@ print(typprobs_species)
 # Variance explained by the canonical roots
 cva.0$Var
 
-?CVA()
 # genus
 cva.1
 # calculate the typicality probabilities and classification accuracy
@@ -350,8 +349,6 @@ cva.3$Var
 grp <- levels(genus)
 cols <- seq_along(grp)
 pchs <- seq_along(grp)
-
-?plot
 
 plot(cva.1$CVscores,
      col = as.numeric(genus),#color
