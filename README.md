@@ -47,7 +47,6 @@ _**R Objects**_	are italized and bolded
 |subset_LM.csv | Canonical Variate Analysis (CVA) | _**cva.1**_ |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
-<<<<<<< HEAD
 |_cva.1$groupmeans_ | Calculate phylogenetic signal (Pagel’s λ) | **lambda_result** |
 |_cva.1$groupmeans_ | Calculate phylogenetic signal (Blomberg's K)  | **K_result**  |
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
