@@ -133,9 +133,9 @@ write.csv(lm_data, file = "data/LM_Data.csv")
 
 
 ### Create subset with equal numbers of specimens
-Since there are different numbers of bee wings from each genus, we randomly select the same number of bees from each genus to create a subset with equal number of wings.
+Since there are different numbers of bee wings from each genus, we select the same number of bees from each genus to create a subset with equal number of wings.
 ```{r}
-set.seed(339)  # for reproducibility so that the same subset is produced every time the code is run, if removed the code will produce a new random dataset
+set.seed(339)  # for reproducibility so that the same subset is produced every time the code is run, if removed the code will produce a new randomly selected dataset
 
 subset <- lm_data[!lm_data$Species %in% c("Andrena oenotherae", "Bombus vosnesenskii", "Ceratina punctagena", "Megachile rotundata"), ] # remove any extra species in dataset
 
