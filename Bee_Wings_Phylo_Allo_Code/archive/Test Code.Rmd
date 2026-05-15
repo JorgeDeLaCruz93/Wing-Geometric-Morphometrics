@@ -109,6 +109,8 @@ facto <- iris[,5]
 
 cva.1=CVA(vari, groups=facto)
 
+cva.1
+
 ## get the typicality probabilities and resulting classifications - tagging
 ## all specimens with a probability of < 0.01 as outliers (assigned to no class)
 typprobs <- typprobClass(cva.1$CVscores,groups=facto)
@@ -1033,7 +1035,107 @@ pval
 
 
 
+################################## QUARTET RANDOM TOPOLOGY PERMUTATION TEST #######################
+```{r}
+# observed trees
+tree1 <- ref_tree
+tree2 <- nj_tree
+
+# observed quartet similarity
+obs_qs <- QuartetStatus(tree1, tree2)
+
+obs <- SimilarityMetrics(obs_qs)[,"ExplicitlyAgree"]
+
+obs
+
+nperm <- 1000
+
+perm_stats <- numeric(nperm)
+
+taxa <- tree1$tip.label
+
+for(i in 1:nperm){
+
+  # random topology
+  rand_tree <- rtree(17)
+
+  # preserve empirical taxa labels
+  rand_tree$tip.label <- taxa
+
+  # compare to observed tree
+  qs_perm <- QuartetStatus(tree1, rand_tree)
+
+  perm_stats[i] <- SimilarityMetrics(qs_perm)[,"ExplicitlyAgree"]
+}
+
+pval <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
+
+pval
+
+?rtree()
 
 
 
+ggtree(random, branch.length="branch.length", cex = 0.75) + geom_tiplab(size = 2) 
 
+random1 <- rtree(17, rooted = TRUE, tip.label = taxa, br = runif, equiprob = FALSE)
+random2 <- rtree(17, rooted = TRUE, tip.label = taxa, br = runif, equiprob = FALSE)
+
+# compare to observed tree
+random_obs <- QuartetStatus(random1, random2)
+
+random_stats <- SimilarityMetrics(random_obs)[,"ExplicitlyAgree"]
+random_stats
+
+```
+
+
+
+### CVA WIP (DELETE)
+```{r}
+?CVA()
+
+?typprobClass()
+
+
+cva.perm <- CVA(vari,
+                groups = species,
+                rounds = 1000)
+cva.perm
+
+cva.cv <- CVA(vari,
+              groups = species,
+              cv = TRUE)
+
+cva.cv
+
+pca <- prcomp(vari, scale. = FALSE)
+
+# retain first PCs
+pc.scores <- pca$x[,1:5]
+
+cva.pc <- CVA(pc.scores,
+              groups = species,
+              cv = TRUE)
+cva.pc
+
+# retain first PCs
+pc.scores <- cva.0$CVscores[,1:2]
+
+cva.pc <- CVA(pc.scores,
+              groups = species,
+              cv = TRUE)
+cva.pc
+
+# calculate the typicality probabilities and classification accuracy
+typprobs_species <- typprobClass(cva.0$CVscores[,1:2], groups = species)
+print(typprobs_species)
+summary(typprobs_species)
+
+
+?CVA()
+
+# calculate the typicality probabilities and classification accuracy
+typprobs_species <- typprobClass(cva.0$CVscores, groups = species, cv = TRUE)
+print(typprobs_species)
+```
