@@ -282,6 +282,8 @@ cva.3$Var
 typprobs_family <- typprobClass(cva.3$CVscores, groups = family)
 print(typprobs_family)
 
+
+?typprobClass()
 ```
 
 
@@ -426,6 +428,12 @@ legend("topright",
 ### Calculate Phylogenetic Signal
 Calculate phylogenetic signal in the morphometric data by Blomberg’s K or Pagel’s λ.
 ```{r}
+mahalanobis <- as.data.frame(cva.1[["Dist"]][["GroupdistMaha"]])
+
+
+mahalanobis <- as.data.frame(t(cva.1[["Dist"]][["GroupdistMaha"]]))
+
+
 LMmeans <- cva.1$groupmeans
 
 # Calculate Pagel’s λ (phylosig - phytools)
