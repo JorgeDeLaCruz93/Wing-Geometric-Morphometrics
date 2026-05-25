@@ -514,7 +514,7 @@ ggplot(data = CV_sub, aes(x = ITD, y = `CV 1`)) +
   labs(title = "Allometry Regression", x = "ITD (cm)", y = "CV1", color = "Genus") +
   geom_smooth(method = "lm") + theme_light()
 
-ITD_regession <- lm(formula = `CV 1` ~ `ITD`, data = CV_sub) #Linear Regression Model
+ITD_regession <- lm(formula = `CV 1` ~ `ITD`, data = CV_sub) #Linear Regression Model 'y ~ x'
 summary(ITD_regession)
 ```
 
