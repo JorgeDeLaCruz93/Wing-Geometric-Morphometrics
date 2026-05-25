@@ -245,10 +245,10 @@ subfamily <- as.factor(subset_LM$Subfamily)
 family <- as.factor(subset_LM$Family)
 catalog <- as.factor(subset_LM$catalogNumber)
 
-cva.0 <- CVA(vari, groups = species) # canonical variate analysis @ species level
-cva.1 <- CVA(vari, groups = genus) # canonical variate analysis @ generic level
-cva.2 <- CVA(vari, groups = subfamily) # canonical variate analysis @ subfamily level
-cva.3 <- CVA(vari, groups = family) # canonical variate analysis @ family level
+cva.0 <- CVA(vari, groups = species, cv = TRUE) # canonical variate analysis @ species level
+cva.1 <- CVA(vari, groups = genus, cv = TRUE) # canonical variate analysis @ generic level
+cva.2 <- CVA(vari, groups = subfamily, cv = TRUE) # canonical variate analysis @ subfamily level
+cva.3 <- CVA(vari, groups = family, cv = TRUE) # canonical variate analysis @ family level
 
 # species
 cva.0
@@ -282,8 +282,6 @@ cva.3$Var
 typprobs_family <- typprobClass(cva.3$CVscores, groups = family)
 print(typprobs_family)
 
-
-?typprobClass()
 ```
 
 
@@ -454,6 +452,7 @@ MahaMatrix <- cva.1[["Dist"]][["GroupdistMaha"]] #mahalanobis distance matrix
 nj_tree <- nj(MahaMatrix)
 ggtree(nj_tree,branch.length="branch.length", cex = 0.75) + geom_tiplab(size = 2) 
 write.tree(nj_tree, file = "data/nj_tree.nwk")
+
 ```
 
 ### Calculate Phylogenetic Tree Similarity by Quartet
@@ -461,6 +460,7 @@ write.tree(nj_tree, file = "data/nj_tree.nwk")
 #Reference Tree vs Neigchbor-Joining Tree
 RefvsNJ <- QuartetStatus(ref_tree, nj_tree)
 SimilarityMetrics(RefvsNJ, similarity = TRUE)[,"SimilarityToReference"]
+
 VisualizeQuartets(ref_tree, nj_tree)
 plot(cophylo(ref_tree, nj_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
 
@@ -493,6 +493,8 @@ abline(v = obs, col = 2, lwd = 5)
 
 ### Allometric Linear Regression
 ```{r}
+set.seed(339)  # for reproducibility so that the same subset is produced every time the code is run, if removed the code will produce a new randomly selected dataset
+
 metadata <- subset_LM[,-c(2:19)]
 
 CVscores <- cva.1$CVscores
@@ -512,7 +514,7 @@ ggplot(data = CV_sub, aes(x = ITD, y = `CV 1`)) +
   labs(title = "Allometry Regression", x = "ITD (cm)", y = "CV1", color = "Genus") +
   geom_smooth(method = "lm") + theme_light()
 
-ITD_regession <- lm(formula = `ITD`~`CV 1`, data = CV_sub) #Linear Regression Model
+ITD_regession <- lm(formula = `CV 1` ~ `ITD`, data = CV_sub) #Linear Regression Model
 summary(ITD_regession)
 ```
 

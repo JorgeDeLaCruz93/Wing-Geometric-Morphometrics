@@ -8,7 +8,7 @@ Residual covariance matrix rank: 14
 Sums of Squares and Cross-products: Type I
 Number of permutations: 1000 
 
-           Df  Rand      Pillai   Z        Pr(>Pillai)
-Family       4 Residuals 3.189324 19.39258 0.001      
-Full.Model   4 Residuals 3.189324 19.39258 0.001      
-Residuals  165                                        
+           Df  Rand      Pillai   Z       Pr(>Pillai)
+Family       4 Residuals 3.189784 19.1846 0.001      
+Full.Model   4 Residuals 3.189784 19.1846 0.001      
+Residuals  165                                       

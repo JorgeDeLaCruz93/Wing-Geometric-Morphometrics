@@ -4,11 +4,11 @@ Linear Model fit with lm.rrpp
 Number of observations: 170
 Number of dependent variables: 18
 Data space dimensions: 18
-Residual covariance matrix rank: 16
+Residual covariance matrix rank: 14
 Sums of Squares and Cross-products: Type I
 Number of permutations: 1000 
 
-           Df  Rand      Pillai   Z        Pr(>Pillai)
-Genus       16 Residuals 10.40219 28.15829 0.001      
-Full.Model  16 Residuals 10.40219 28.15829 0.001      
-Residuals  153                                        
+           Df  Rand      Pillai  Z        Pr(>Pillai)
+Genus       16 Residuals 10.4122 27.18319 0.001      
+Full.Model  16 Residuals 10.4122 27.18319 0.001      
+Residuals  153                                       
