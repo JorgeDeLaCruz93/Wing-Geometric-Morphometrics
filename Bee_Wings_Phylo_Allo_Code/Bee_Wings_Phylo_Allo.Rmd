@@ -510,7 +510,7 @@ CV_sub <- CV_sub %>%
   ungroup()
 
 ggplot(data = CV_sub, aes(x = ITD, y = `CV 1`)) +
-  geom_point(aes(color = factor(Genus)), size = 2) +
+  geom_point(aes(color = factor(Genus), size = 2) +
   labs(title = "Allometry Regression", x = "ITD (cm)", y = "CV1", color = "Genus") +
   geom_smooth(method = "lm") + theme_light()
 
