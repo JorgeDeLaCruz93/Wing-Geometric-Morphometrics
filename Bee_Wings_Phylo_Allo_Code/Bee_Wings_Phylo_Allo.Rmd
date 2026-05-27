@@ -493,8 +493,8 @@ SimilarityMetrics(RefvsNJ, similarity = TRUE)[,"SimilarityToReference"]
 VisualizeQuartets(ref_tree, nj_tree)
 plot(cophylo(ref_tree, nj_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
 
-png("output/cophylo_plot.png",
-    width = 3000,
+png("output/RefvsNJ_plot.png",
+    width = 4000,
     height = 2000,
     res = 300)
 
