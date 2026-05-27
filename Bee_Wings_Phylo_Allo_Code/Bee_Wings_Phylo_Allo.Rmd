@@ -509,6 +509,7 @@ dev.off()
 
 #Calculate p-value
 obs <- SimilarityMetrics(RefvsNJ)[,"ExplicitlyAgree"]
+taxa <- ref_tree$tip.label
 
 nperm <- 1000
 
