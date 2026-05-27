@@ -286,140 +286,169 @@ print(typprobs_family)
 
 
 ### Visualize Canonical Variate Analysis - Genus
+
 ```{r}
-grp <- levels(genus)
-cols <- seq_along(grp)
-pchs <- seq_along(grp)
+# Extract CV scores into data frame
+cva_df <- data.frame(
+  CV1   = cva.1$CVscores[,1],
+  CV2   = cva.1$CVscores[,2],
+  Genus = factor(cva.1[["groups"]],
+                 levels = sort(unique(cva.1[["groups"]]))))
 
-plot(cva.1$CVscores,
-     col = as.numeric(genus),#color
-     pch = as.numeric(genus), #symbol
-     type = "n",
-     asp = 1,
-     xlab = paste("1st canonical axis", round(cva.1$Var[1,2],1), "%"),
-     ylab = paste("2nd canonical axis", round(cva.1$Var[2,2],1), "%"),
-     xlim = c(-30,35))
+# centroid coordinates
+centroids <- cva_df %>%
+  group_by(Genus) %>%
+  summarise(
+    CV1 = mean(CV1),
+    CV2 = mean(CV2))
 
-points(cva.1$CVscores,
-       col = as.numeric(genus),#color
-       pch = as.numeric(genus),#symbols
-       cex = 0.6) #point size
+# Plot
+ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
-for(i in seq_along(grp)) {
+  geom_point(aes(color = Genus,
+                 shape = Genus),
+             size = 2, stroke = 0.5) +
+
+  # 95% confidence ellipses
+  stat_ellipse(aes(color = Genus),
+               level = 0.95, show.legend = FALSE) +
   
-  group_scores <- cva.1$CVscores[genus == grp[i], 1:2]
+  # group means (centroids)
+  geom_point(data = centroids,
+             aes(x = CV1, y = CV2, color = Genus),
+             shape = 16,
+             size = 3, show.legend = FALSE) +
   
-  dataEllipse(group_scores[,1],
-              group_scores[,2],
-              levels = 0.95, #95% confidence ellipse
-              add = TRUE,
-              plot.points = FALSE,
-              col = cols[i],
-              lwd = 1, center.cex = 1)}
+   # Point shapes
+  scale_shape_manual(values = c(1:17)) +
+  
+  # axis labels with explained variance
+  labs(
+    x = paste("1st canonical axis",
+              round(cva.1$Var[1,2], 1), "%"),
+    
+    y = paste("2nd canonical axis",
+              round(cva.1$Var[2,2], 1), "%"),
+    
+    color = "Genus",
+    shape = "Genus") +
+  
+  theme_light() + 
+  
+  theme(legend.title = element_text(size = 10), legend.text  = element_text(size = 10))
 
-legend("topright",
-       inset = c(0, 0),
-       legend = grp,
-       col = cols,
-       pch = pchs,
-       cex = 0.70,
-       bty = "n")
-
-#text(cva.1$CVscores, #Label each data point
-#     labels = as.character(catalog), #catalog number
-#     col = as.numeric(genus),
-#     cex = 0.2)
+ggsave("output/CVA_genus.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
+
 
 
 ### Visualize Canonical Variate Analysis - Subfamily
 ```{r}
-grp <- levels(subfamily)
-cols <- seq_along(grp)
-pchs <- seq_along(grp)
+# Extract CV scores into data frame
+cva_df <- data.frame(
+  CV1   = cva.2$CVscores[,1],
+  CV2   = cva.2$CVscores[,2],
+  Subfam = factor(cva.2[["groups"]],
+                 levels = sort(unique(cva.2[["groups"]]))))
 
-plot(cva.2$CVscores,
-     col = as.numeric(subfamily),#color
-     pch = as.numeric(subfamily), #symbol
-     type = "n",
-     asp = 1,
-     xlab = paste("1st canonical axis", round(cva.2$Var[1,2],1), "%"),
-     ylab = paste("2nd canonical axis", round(cva.2$Var[2,2],1), "%"))
+# centroid coordinates
+centroids <- cva_df %>%
+  group_by(Subfam) %>%
+  summarise(
+    CV1 = mean(CV1),
+    CV2 = mean(CV2))
 
-points(cva.2$CVscores,
-       col = as.numeric(subfamily),#color
-       pch = as.numeric(subfamily),#symbols
-       cex = 0.6) #point size
+# Plot
+ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
-for(i in seq_along(grp)) {
+  geom_point(aes(color = Subfam,
+                 shape = Subfam),
+             size = 2, stroke = 0.5) +
+
+  # 95% confidence ellipses
+  stat_ellipse(aes(color = Subfam),
+               level = 0.95, show.legend = FALSE) +
   
-  group_scores <- cva.2$CVscores[subfamily == grp[i], 1:2]
+  # group means (centroids)
+  geom_point(data = centroids,
+             aes(x = CV1, y = CV2, color = Subfam),
+             shape = 16,
+             size = 3, show.legend = FALSE) +
   
-  dataEllipse(group_scores[,1],
-              group_scores[,2],
-              levels = 0.95, #95% confidence ellipse
-              add = TRUE,
-              plot.points = FALSE,
-              col = cols[i],
-              lwd = 1, center.cex = 1)}
+   # Point shapes
+  scale_shape_manual(values = c(1:17)) +
+  
+  # axis labels with explained variance
+  labs(
+    x = paste("1st canonical axis",
+              round(cva.1$Var[1,2], 1), "%"),
+    
+    y = paste("2nd canonical axis",
+              round(cva.1$Var[2,2], 1), "%"),
+    
+    color = "Subfamily",
+    shape = "Subfamily") +
+  
+  theme_light() + 
+  
+  theme(legend.title = element_text(size = 10), legend.text  = element_text(size = 10))
 
-legend("topright",
-       inset = c(0, 0),
-       legend = grp,
-       col = cols,
-       pch = pchs,
-       cex = 0.75,
-       bty = "n")
-
-#text(cva.1$CVscores, #Label each data point
-#     labels = as.character(catalog), #catalog number
-#     col = as.numeric(genus),
-#     cex = 0.2)
+ggsave("output/CVA_Subfam.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
+
 
 ### Visualize Canonical Variate Analysis - Family
 ```{r}
-grp <- levels(family)
-cols <- seq_along(grp)
-pchs <- seq_along(grp)
+# Extract CV scores into data frame
+cva_df <- data.frame(
+  CV1   = cva.3$CVscores[,1],
+  CV2   = cva.3$CVscores[,2],
+  Family = factor(cva.3[["groups"]],
+                 levels = sort(unique(cva.3[["groups"]]))))
 
-plot(cva.3$CVscores,
-     col = as.numeric(family),#color
-     pch = as.numeric(family), #symbol
-     type = "n",
-     asp = 1,
-     xlab = paste("1st canonical axis", round(cva.3$Var[1,2],1), "%"),
-     ylab = paste("2nd canonical axis", round(cva.3$Var[2,2],1), "%"))
+# centroid coordinates
+centroids <- cva_df %>%
+  group_by(Family) %>%
+  summarise(
+    CV1 = mean(CV1),
+    CV2 = mean(CV2))
 
-points(cva.3$CVscores,
-       col = as.numeric(family),#color
-       pch = as.numeric(family),#symbols
-       cex = 0.6) #point size
+# Plot
+ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
-for(i in seq_along(grp)) {
+  geom_point(aes(color = Family,
+                 shape = Family),
+             size = 2, stroke = 0.5) +
+
+  # 95% confidence ellipses
+  stat_ellipse(aes(color = Family),
+               level = 0.95, show.legend = FALSE) +
   
-  group_scores <- cva.3$CVscores[family == grp[i], 1:2]
+  # group means (centroids)
+  geom_point(data = centroids,
+             aes(x = CV1, y = CV2, color = Family),
+             shape = 16,
+             size = 3, show.legend = FALSE) +
   
-  dataEllipse(group_scores[,1],
-              group_scores[,2],
-              levels = 0.95, #95% confidence ellipse
-              add = TRUE,
-              plot.points = FALSE,
-              col = cols[i],
-              lwd = 1, center.cex = 1)}
+   # Point shapes
+  scale_shape_manual(values = c(1:17)) +
+  
+  # axis labels with explained variance
+  labs(
+    x = paste("1st canonical axis",
+              round(cva.1$Var[1,2], 1), "%"),
+    
+    y = paste("2nd canonical axis",
+              round(cva.1$Var[2,2], 1), "%"),
+    
+    color = "Family",
+    shape = "Family") +
+  
+  theme_light() + 
+  
+  theme(legend.title = element_text(size = 10), legend.text  = element_text(size = 10))
 
-legend("topright",
-       inset = c(0, 0),
-       legend = grp,
-       col = cols,
-       pch = pchs,
-       cex = 0.75,
-       bty = "n")
-
-#text(cva.1$CVscores, #Label each data point
-#     labels = as.character(catalog), #catalog number
-#     col = as.numeric(genus),
-#     cex = 0.2)
+ggsave("output/CVA_Family.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
 
 
@@ -486,7 +515,7 @@ pval_nj <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
 
 pval_nj
 
-hist(perm_stats,  xlim = c(min(perm_stats), 0.75), main = "Histogram of Quartet Permutation", xlab = "Quartet Similarity")
+hist(perm_stats,  xlim = c(min(perm_stats), 0.75), xlab = "Quartet Similarity")
 abline(v = obs, col = 2, lwd = 5)
 ```
 
@@ -510,12 +539,19 @@ CV_sub <- CV_sub %>%
   ungroup()
 
 ggplot(data = CV_sub, aes(x = ITD, y = `CV 1`)) +
-  geom_point(aes(color = factor(Genus), size = 2) +
-  labs(title = "Allometry Regression", x = "ITD (cm)", y = "CV1", color = "Genus") +
-  geom_smooth(method = "lm") + theme_light()
+  geom_point(aes(color = factor(Genus),
+                 shape = factor(Genus)),
+             size = 2, stroke = 0.5) +
+  labs(x = "ITD (cm)", y = "CV1", color = "Genus", shape = "Genus") +
+  scale_shape_manual(values = c(1:17)) +
+  geom_smooth(method = "lm") +
+  theme_light()
 
 ITD_regession <- lm(formula = `CV 1` ~ `ITD`, data = CV_sub) #Linear Regression Model 'y ~ x'
 summary(ITD_regession)
+
+ggsave("output/allo_regression.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
+
 ```
 
 
