@@ -120,13 +120,15 @@ lmYonly3 <- lmYonly2[,c(2,6:14)]
 
 #Now: unite the Y and X coordinate dataframes into just one
 lm_both <- merge(lmXonly3, lmYonly3, by=("catalogNumber"))
-
 ```
 
 
 ### Merge Landmark and Curation Data
 ```{r}
 lm_data <- merge(lm_both, bee_data_clean, by=c("catalogNumber"), all = FALSE)
+
+lm_data %>% 
+  distinct(catalogNumber, .keep_all = TRUE)
 
 write.csv(lm_data, file = "data/LM_Data.csv")
 ```
@@ -530,7 +532,7 @@ pval_nj <- (sum(perm_stats >= obs) + 1) / (nperm + 1)
 
 pval_nj
 
-hist(perm_stats,  xlim = c(min(perm_stats), 0.75), xlab = "Quartet Similarity")
+hist(perm_stats,  xlim = c(min(perm_stats), 0.75), xlab = "Quartet Similarity", main = NA)
 abline(v = obs, col = 2, lwd = 5)
 ```
 

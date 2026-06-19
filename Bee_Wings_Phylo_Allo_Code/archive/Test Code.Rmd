@@ -1139,3 +1139,181 @@ summary(typprobs_species)
 typprobs_species <- typprobClass(cva.0$CVscores, groups = species, cv = TRUE)
 print(typprobs_species)
 ```
+
+
+############## Thin Plate Spline Deformation Grid
+```{r}
+
+library(Morpho)
+library(geomorph)
+
+# landmarks array
+# p landmarks × k dimensions × n specimens
+#LM
+subset_LM
+LM_array <- arrayspecs(subset_LM[,2:19], 9, 2, sep = NULL)
+
+
+# CVA
+
+# genus
+cva.1
+
+meanshape <- mshape(LM_array)
+
+cv1 <- cva.1$CVscores[,1]
+
+coords <- two.d.array(LM_array)
+
+fit <- lm(coords ~ cv1)
+
+beta <- coef(fit)[-1,]
+
+sd.cv1 <- sd(cv1)
+
+shape.minus <- matrix(
+  as.vector(meanshape) - 2 * sd.cv1 * beta,
+  nrow = dim(meanshape)[1],
+  ncol = dim(meanshape)[2])
+
+shape.plus <- matrix(
+  as.vector(meanshape) + 2 * sd.cv1 * beta,
+  nrow = dim(meanshape)[1],
+  ncol = dim(meanshape)[2])
+
+plotRefToTarget(
+  meanshape,
+  shape.minus,
+  method = "TPS")
+
+plotRefToTarget(
+  meanshape,
+  shape.plus,
+  method = "TPS")
+
+plotRefToTarget(
+  shape.minus,
+  shape.plus,
+  method = "TPS")
+
+```
+
+```{r}
+# Method 1: Reconstruct shapes at CV extremes using regression
+
+#Suppose:
+
+#coords = landmark array (p × k × n)
+#cva.1 = output from Morpho::CVA()
+#CVscores = cva.1$CVscores
+
+all_tps_gpa$coords
+coords = all_tps_gpa$coords
+cva.1
+CVscores = cva.1$CVscores
+```
+
+
+```{r}
+#Fit a multivariate regression of shape on CV scores:
+library(geomorph)
+
+Y <- two.d.array(coords)
+
+fit <- lm(Y ~ CVscores[,1] + CVscores[,2])
+
+#Calculate shapes at the ends of CV1:
+mean.shape <- mshape(coords)
+
+cv1.min <- min(CVscores[,1])
+cv1.max <- max(CVscores[,1])
+
+coef.cv1 <- coefficients(fit)[2,]
+
+shape.min <- arrayspecs(
+  coef.cv1 * cv1.min + coefficients(fit)[1,],
+  p = dim(coords)[1],
+  k = dim(coords)[2]
+)
+
+shape.max <- arrayspecs(
+  coef.cv1 * cv1.max + coefficients(fit)[1,],
+  p = dim(coords)[1],
+  k = dim(coords)[2]
+)
+
+#Visualize TPS deformation
+#For the negative extreme:
+plotRefToTarget(
+  mean.shape,
+  shape.min,
+  method = "TPS"
+)
+
+#For the positive extreme:
+plotRefToTarget(
+  mean.shape,
+  shape.max,
+  method = "TPS"
+)
+
+
+```
+
+```{r}
+coords = LM_array
+
+
+cva.1$CVvis
+
+cva.1$CV
+
+sd.cv1 <- sd(cva.1$CVscores[,1])
+
+shape.plus <- mshape(coords) +
+              cva.1$CVvis[,1] * (2 * sd.cv1)
+
+shape.minus <- mshape(coords) -
+               cva.1$CVvis[,1] * (2 * sd.cv1)
+
+plotRefToTarget(
+  mshape(coords),
+  shape.plus,
+  method = "TPS"
+)
+
+plotRefToTarget(
+  mshape(coords),
+  shape.minus,
+  method = "TPS"
+)
+```
+
+
+
+```{r}
+coords = LM_array
+
+sd1 <- sd(cva.1$CVscores[,1])
+sd2 <- sd(cva.1$CVscores[,2])
+
+cv1vec <- cva.1$CVvis[,1]
+cv2vec <- cva.1$CVvis[,2]
+
+mean.shape <- mshape(coords)
+
+CV1.neg <- mean.shape - cv1vec * 2*sd1
+CV1.pos <- mean.shape + cv1vec * 2*sd1
+
+CV2.neg <- mean.shape - cv2vec * 2*sd2
+CV2.pos <- mean.shape + cv2vec * 2*sd2
+
+plotRefToTarget(mean.shape, CV1.neg, method="TPS")
+plotRefToTarget(mean.shape, CV1.pos, method="TPS")
+plotRefToTarget(mean.shape, CV2.neg, method="TPS")
+plotRefToTarget(mean.shape, CV2.pos, method="TPS")
+
+
+
+```
+
