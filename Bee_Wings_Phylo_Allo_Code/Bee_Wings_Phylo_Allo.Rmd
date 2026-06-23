@@ -247,7 +247,7 @@ subfamily <- as.factor(subset_LM$Subfamily)
 family <- as.factor(subset_LM$Family)
 catalog <- as.factor(subset_LM$catalogNumber)
 
-cva.0 <- CVA(vari, groups = species, cv = TRUE) # canonical variate analysis @ species level
+cva.1 <- CVA(vari, groups = species, cv = TRUE) # canonical variate analysis @ species level
 cva.1 <- CVA(vari, groups = genus, cv = TRUE) # canonical variate analysis @ generic level
 cva.2 <- CVA(vari, groups = subfamily, cv = TRUE) # canonical variate analysis @ subfamily level
 cva.3 <- CVA(vari, groups = family, cv = TRUE) # canonical variate analysis @ family level
@@ -332,14 +332,14 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
     y = paste("2nd canonical axis",
               round(cva.1$Var[2,2], 1), "%"),
     
-    color = "Genus",
-    shape = "Genus") +
+    color = "Species",
+    shape = "Species") +
   
   theme_light() + 
   
   theme(legend.title = element_text(size = 10), legend.text  = element_text(size = 10))
 
-ggsave("output/CVA_genus.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
+ggsave("output/CVA_species.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
 
 
