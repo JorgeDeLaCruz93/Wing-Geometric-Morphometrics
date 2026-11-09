@@ -1,7 +1,7 @@
 ---
-title: "Bee R"
+title: "Bee_Wings_Phylo_Allo"
 author: "Jorge De La Cruz"
-date: "2025-11-24"
+date: "2026-10-24"
 output: html_document
 ---
 
@@ -23,7 +23,7 @@ library(geomorph) #NOTE: Mac users please also install XQuartz from https://www.
 library(RRPP) #used for MANOVA 
 library(adegenet) # used for DAPC
 library(phangorn) #Phylogenetic tree Reconstruction
-library(phytools) #Read phylogenetic tree files and calculate phylogenetic signal
+library(phytools) #Read phylogenetic tree files 
 library(ape) #Phylogenetic tree reconstruction
 library(ggplot2) #Required for ggtree extension
 library(ggtree) #Display phylogenetic trees
@@ -37,7 +37,6 @@ library(shapes) #required to plot CVA
 #if (!require("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
 #BiocManager::install("ggtree")
-
 ```
 
 ##Load TPS
@@ -287,6 +286,7 @@ print(typprobs_family)
 ```
 
 
+
 ### Visualize Canonical Variate Analysis - Genus
 
 ```{r}
@@ -295,7 +295,10 @@ cva_df <- data.frame(
   CV1   = cva.1$CVscores[,1],
   CV2   = cva.1$CVscores[,2],
   Genus = factor(cva.1[["groups"]],
-                 levels = sort(unique(cva.1[["groups"]]))))
+                 levels = sort(unique(cva.1[["groups"]]))), 
+  Family = factor(cva.3[["groups"]],
+                 levels = sort(unique(cva.3[["groups"]]))))
+  
 
 # centroid coordinates
 centroids <- cva_df %>%
@@ -309,7 +312,7 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
   geom_point(aes(color = Genus,
                  shape = Genus),
-             size = 2, stroke = 0.5) +
+             size = 2, stroke = 0.6) +
 
   # 95% confidence ellipses
   stat_ellipse(aes(color = Genus),
@@ -341,6 +344,152 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
 ggsave("output/CVA_genus.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
+### Visualize Canonical Variate Analysis - Genus (Colored by Family)
+```{r}
+
+cva_df <- data.frame(
+  CV1   = cva.1$CVscores[,1],
+  CV2   = cva.1$CVscores[,2],
+  Genus = factor(cva.1[["groups"]],
+                 levels = sort(unique(cva.1[["groups"]]))),
+  Family = factor(cva.3[["groups"]],
+                  levels = sort(unique(cva.3[["groups"]]))))
+
+# centroid coordinates
+centroids <- cva_df %>%
+  group_by(Genus) %>%
+  summarise(CV1 = mean(CV1), CV2 = mean(CV2))
+
+# Genus by Family
+genus_family <- cva_df %>%
+  distinct(Genus, Family) %>%
+  arrange(Family, Genus)          # sorted by family, then genus
+
+# legend order: genera grouped by family
+genus_order <- as.character(genus_family$Genus)
+
+# family color
+family_cols <- c("Andrenidae"  = "indianred3",
+                 "Apidae"      = "#E5BB53",
+                 "Halictidae"  = "seagreen3",
+                 "Megachilidae"= "steelblue2",
+                 "Melittidae"  = "mediumorchid2")
+  
+# genus = family color
+genus_cols <- setNames(
+  family_cols[as.character(genus_family$Family)],
+  genus_order)
+
+# one shape per genus
+genus_shapes <- setNames(
+  rep_len(1:17, length(genus_order)),
+  genus_order)
+
+# Plot
+ggplot(cva_df, aes(x = CV1, y = CV2)) +
+
+  geom_point(aes(color = Genus, shape = Genus),
+             size = 2, stroke = 0.6) +
+
+  # 95% confidence ellipses
+  stat_ellipse(aes(color = Genus, group = Genus),
+               level = 0.95, show.legend = FALSE) +
+
+  # group means (centroids)
+  geom_point(data = centroids,
+             aes(x = CV1, y = CV2, color = Genus),
+             shape = 16, size = 3, show.legend = FALSE) +
+
+  # breaks controls legend order; both scales must match to stay merged
+  scale_color_manual(values = genus_cols, breaks = genus_order) +
+  scale_shape_manual(values = genus_shapes, breaks = genus_order) +
+
+  labs(
+    x = paste("1st canonical axis", round(cva.1$Var[1,2], 1), "%"),
+    y = paste("2nd canonical axis", round(cva.1$Var[2,2], 1), "%"),
+    color = "Genus",
+    shape = "Genus") +
+
+  theme_light() +
+  theme(legend.title = element_text(size = 10),
+        legend.text  = element_text(size = 10))
+
+ggsave("output/CVA_genus2.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
+
+```
+### Visualize Canonical Variate Analysis - Species (Colored by Family)
+```{r}
+
+cva_df <- data.frame(
+  CV1   = cva.0$CVscores[,1],
+  CV2   = cva.0$CVscores[,2],
+  Species = factor(cva.0[["groups"]],
+                 levels = sort(unique(cva.0[["groups"]]))),
+  Family = factor(cva.3[["groups"]],
+                  levels = sort(unique(cva.3[["groups"]]))))
+
+# centroid coordinates
+centroids <- cva_df %>%
+  group_by(Species) %>%
+  summarise(CV1 = mean(CV1), CV2 = mean(CV2))
+
+# Species by Family
+Species_family <- cva_df %>%
+  distinct(Species, Family) %>%
+  arrange(Family, Species)          # sorted by family, then Species
+
+# legend order: genera grouped by family
+Species_order <- as.character(Species_family$Species)
+
+# family color
+family_cols <- c("Andrenidae"  = "indianred3",
+                 "Apidae"      = "#E5BB53",
+                 "Halictidae"  = "seagreen3",
+                 "Megachilidae"= "steelblue2",
+                 "Melittidae"  = "mediumorchid2")
+  
+# Species = family color
+Species_cols <- setNames(
+  family_cols[as.character(Species_family$Family)],
+  Species_order)
+
+# one shape per Species
+Species_shapes <- setNames(
+  rep_len(1:17, length(Species_order)),
+  Species_order)
+
+# Plot
+ggplot(cva_df, aes(x = CV1, y = CV2)) +
+
+  geom_point(aes(color = Species, shape = Species),
+             size = 2, stroke = 0.6) +
+
+  # 95% confidence ellipses
+  stat_ellipse(aes(color = Species, group = Species),
+               level = 0.95, show.legend = FALSE) +
+
+  # group means (centroids)
+  geom_point(data = centroids,
+             aes(x = CV1, y = CV2, color = Species),
+             shape = 16, size = 3, show.legend = FALSE) +
+
+  # breaks controls legend order; both scales must match to stay merged
+  scale_color_manual(values = Species_cols, breaks = Species_order) +
+  scale_shape_manual(values = Species_shapes, breaks = Species_order) +
+
+  labs(
+    x = paste("1st canonical axis", round(cva.0$Var[1,2], 1), "%"),
+    y = paste("2nd canonical axis", round(cva.0$Var[2,2], 1), "%"),
+    color = "Species",
+    shape = "Species") +
+
+  theme_light() +
+  theme(legend.title = element_text(size = 10),
+        legend.text  = element_text(size = 10))
+
+ggsave("output/CVA_Species.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
+
+```
 
 
 
@@ -361,11 +510,12 @@ centroids <- cva_df %>%
     CV2 = mean(CV2))
 
 # Plot
+
 ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
   geom_point(aes(color = Subfam,
                  shape = Subfam),
-             size = 2, stroke = 0.5) +
+             size = 2, stroke = 0.6) +
 
   # 95% confidence ellipses
   stat_ellipse(aes(color = Subfam),
@@ -398,6 +548,81 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
 ggsave("output/CVA_Subfam.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
 
+### Visualize Canonical Variate Analysis - Subfamily (Colored by Family)
+```{r}
+
+cva_df <- data.frame(
+  CV1   = cva.2$CVscores[,1],
+  CV2   = cva.2$CVscores[,2],
+  Subfam = factor(cva.2[["groups"]],
+                 levels = sort(unique(cva.2[["groups"]]))),
+  Family = factor(cva.3[["groups"]],
+                  levels = sort(unique(cva.3[["groups"]]))))
+
+# centroid coordinates
+centroids <- cva_df %>%
+  group_by(Subfam) %>%
+  summarise(CV1 = mean(CV1), CV2 = mean(CV2))
+
+# Subfamily by Family
+Subfam_family <- cva_df %>%
+  distinct(Subfam, Family) %>%
+  arrange(Family, Subfam)          # sorted by family, then subfamily
+
+# legend order: genera grouped by family
+Subfam_order <- as.character(Subfam_family$Subfam)
+
+# Family color
+family_cols <- c("Andrenidae"  = "indianred3",
+                 "Apidae"      = "#E5BB53",
+                 "Halictidae"  = "seagreen3",
+                 "Megachilidae"= "steelblue2",
+                 "Melittidae"  = "mediumorchid2")
+  
+# Subfam = family color
+Subfam_cols <- setNames(
+  family_cols[as.character(Subfam_family$Family)],
+  Subfam_order)
+
+# one shape per Subfam
+Subfam_shapes <- setNames(
+  rep_len(1:17, length(Subfam_order)),
+  Subfam_order)
+
+ggplot(cva_df, aes(x = CV1, y = CV2)) +
+
+  geom_point(aes(color = Subfam, shape = Subfam),
+             size = 2, stroke = 0.6) +
+
+  # 95% confidence ellipses
+  stat_ellipse(aes(color = Subfam, group = Subfam),
+               level = 0.95, show.legend = FALSE) +
+
+  # group means (centroids)
+  geom_point(data = centroids,
+             aes(x = CV1, y = CV2, color = Subfam),
+             shape = 16, size = 3, show.legend = FALSE) +
+
+  # breaks controls legend order; both scales must match to stay merged
+  scale_color_manual(values = Subfam_cols, breaks = Subfam_order) +
+  scale_shape_manual(values = Subfam_shapes, breaks = Subfam_order) +
+
+  labs(
+    x = paste("1st canonical axis", round(cva.2$Var[1,2], 1), "%"),
+    y = paste("2nd canonical axis", round(cva.2$Var[2,2], 1), "%"),
+    color = "Subfamily",
+    shape = "Subfamily") +
+
+  theme_light() +
+  theme(legend.title = element_text(size = 10),
+        legend.text  = element_text(size = 10))
+
+ggsave("output/CVA_Subfam2.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
+
+```
+
+
+
 
 ### Visualize Canonical Variate Analysis - Family
 ```{r}
@@ -407,6 +632,12 @@ cva_df <- data.frame(
   CV2   = cva.3$CVscores[,2],
   Family = factor(cva.3[["groups"]],
                  levels = sort(unique(cva.3[["groups"]]))))
+
+family_cols <- c("Andrenidae"  = "indianred3",
+                 "Apidae"      = "#E5BB53",
+                 "Halictidae"  = "seagreen3",
+                 "Megachilidae"= "steelblue2",
+                 "Melittidae"  = "mediumorchid2")
 
 # centroid coordinates
 centroids <- cva_df %>%
@@ -420,7 +651,7 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
 
   geom_point(aes(color = Family,
                  shape = Family),
-             size = 2, stroke = 0.5) +
+             size = 2, stroke = 0.6) +
 
   # 95% confidence ellipses
   stat_ellipse(aes(color = Family),
@@ -432,16 +663,19 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
              shape = 16,
              size = 3, show.legend = FALSE) +
   
-   # Point shapes
+  # Point colors
+  scale_color_manual(values = family_cols) +
+   
+  # Point shapes
   scale_shape_manual(values = c(1:17)) +
   
   # axis labels with explained variance
   labs(
     x = paste("1st canonical axis",
-              round(cva.1$Var[1,2], 1), "%"),
-    
+              round(cva.3$Var[1,2], 1), "%"),
+  
     y = paste("2nd canonical axis",
-              round(cva.1$Var[2,2], 1), "%"),
+              round(cva.3$Var[2,2], 1), "%"),
     
     color = "Family",
     shape = "Family") +
@@ -453,25 +687,56 @@ ggplot(cva_df, aes(x = CV1, y = CV2)) +
 ggsave("output/CVA_Family.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
 ```
 
-
 ### Calculate Phylogenetic Signal
-Calculate phylogenetic signal in the morphometric data by Blomberg’s K or Pagel’s λ.
+Calculate phylogenetic signal (Multivariate K and Lambda) from Procrustes shape variables, using effect size estimated from likelihood.
 ```{r}
-mahalanobis <- as.data.frame(cva.1[["Dist"]][["GroupdistMaha"]])
+
+LMmeans <- cva.1$groupmeans #mean landmark values per genus
+
+#Test for phylogenetic signal across all landmarks
+physig_LMs_K <- physignal(A = LMmeans, phy = ref_tree, iter = 999) #Multivariate Blomberg's K
+summary(physig_LMs_K)
+
+physig_LMs <- physignal.z(A = LMmeans, phy = ref_tree, lambda = "mean", iter = 999) #Phylogenetic signal effect size (Z)
+summary(physig_LMs)
 
 
-mahalanobis <- as.data.frame(t(cva.1[["Dist"]][["GroupdistMaha"]]))
+
+#Test for phylogenetic signal effect size for each individual landmark (include both x and y coordinate)
+physig_LM1 <- physignal.z(A = LMmeans[,c("LM1x", "LM1y")], phy = ref_tree, lambda = "mean") #Landmark 1
+summary(physig_LM1)
+
+physig_LM2 <- physignal.z(A = LMmeans[,c("LM2x", "LM2y")], phy = ref_tree, lambda = "mean") #Landmark 2
+summary(physig_LM2)
+
+physig_LM3 <- physignal.z(A = LMmeans[,c("LM3x", "LM3y")], phy = ref_tree, lambda = "mean") #Landmark 3
+summary(physig_LM3)
+
+physig_LM4 <- physignal.z(A = LMmeans[,c("LM4x", "LM4y")], phy = ref_tree, lambda = "mean") #Landmark 4
+summary(physig_LM4)
+
+physig_LM5 <- physignal.z(A = LMmeans[,c("LM5x", "LM5y")], phy = ref_tree, lambda = "mean") #Landmark 5
+summary(physig_LM5)
+
+physig_LM6 <- physignal.z(A = LMmeans[,c("LM6x", "LM6y")], phy = ref_tree, lambda = "mean") #Landmark 6
+summary(physig_LM6)
+
+physig_LM7 <- physignal.z(A = LMmeans[,c("LM7x", "LM7y")], phy = ref_tree, lambda = "mean") #Landmark 7
+summary(physig_LM7)
+
+physig_LM8 <- physignal.z(A = LMmeans[,c("LM8x", "LM8y")], phy = ref_tree, lambda = "mean") #Landmark 8
+summary(physig_LM8)
+
+physig_LM9 <- physignal.z(A = LMmeans[,c("LM9x", "LM9y")], phy = ref_tree, lambda = "mean") #Landmark 9
+summary(physig_LM9)
+
+physig_LM3 <- physignal.z(A = LMmeans[,c("LM3x", "LM3y")], phy = ref_tree, lambda = "mean") #Landmark 3
+summary(physig_LM3)
 
 
-LMmeans <- cva.1$groupmeans
-
-# Calculate Pagel’s λ (phylosig - phytools)
-lambda_result <- phylosig(ref_tree, LMmeans, method = "lambda", test = TRUE)
-print(lambda_result)
-
-# Calculate Blomberg's K
-K_result <- phylosig(ref_tree, LMmeans, method = "K", test = TRUE)
-print(K_result)
+#Compare phylogenetic effect sizes between landmarks
+physig_compare <- compare.physignal.z(physig_LM1, physig_LM2, physig_LM3, physig_LM4, physig_LM5, physig_LM6, physig_LM7, physig_LM8, physig_LM9)
+summary(physig_compare)
 ```
 
 ### Phylogenetic Tree Reconstruction
@@ -494,20 +759,6 @@ SimilarityMetrics(RefvsNJ, similarity = TRUE)[,"SimilarityToReference"]
 
 VisualizeQuartets(ref_tree, nj_tree)
 plot(cophylo(ref_tree, nj_tree, rotate = TRUE), link.type = "curved", link.lwd = 2, link.col = make.transparent("red", 0.5))
-
-png("output/RefvsNJ_plot.png",
-    width = 4000,
-    height = 2000,
-    res = 300)
-
-plot(
-  cophylo(ref_tree, nj_tree, rotate = TRUE),
-  link.type = "curved",
-  link.lwd = 2,
-  link.col = make.transparent("red", 0.5)
-)
-
-dev.off()
 
 #Calculate p-value
 obs <- SimilarityMetrics(RefvsNJ)[,"ExplicitlyAgree"]
@@ -536,6 +787,39 @@ hist(perm_stats,  xlim = c(min(perm_stats), 0.75), xlab = "Quartet Similarity", 
 abline(v = obs, col = 2, lwd = 5)
 ```
 
+### Visualize Tree Topology Comparison
+```{r}
+png("output/RefvsNJ_plot.png",
+    width = 4000,
+    height = 2000,
+    res = 300)
+
+# Color Genus by Family
+family_cols <- c("Andrenidae"   = "indianred3",
+                 "Apidae"       = "#E5BB53",
+                 "Halictidae"   = "seagreen3",
+                 "Megachilidae" = "steelblue2",
+                 "Melittidae"   = "mediumorchid2")
+
+taxa <- read.csv("data/taxa.csv")
+taxa[] <- lapply(taxa, trimws)
+gf <- unique(taxa[, c("genus", "family")])
+fam_lookup <- setNames(gf$family, gf$genus)
+
+cophylo_trees <- cophylo(ref_tree, nj_tree, rotate = TRUE)
+
+tip_genus  <- ref_tree$tip.label      
+tip_family <- fam_lookup[tip_genus]
+link_cols  <- family_cols[tip_family]
+
+# Plot
+plot(cophylo_trees,
+     link.lwd  = 1.8,
+     link.col  = make.transparent(link_cols, 1))
+
+dev.off()
+
+```
 
 ### Allometric Linear Regression
 ```{r}
@@ -555,21 +839,185 @@ CV_sub <- CV_sub %>%
   slice_sample(n = 5) %>%
   ungroup()
 
+# Plot colors (Genera colored by Family)
+family_cols <- c("Andrenidae"   = "indianred3",
+                 "Apidae"       = "#E5BB53",
+                 "Halictidae"   = "seagreen3",
+                 "Megachilidae" = "steelblue2",
+                 "Melittidae"   = "mediumorchid2")
+
+genus_family <- CV_sub %>%
+  distinct(Genus, Family) %>%
+  arrange(Family, Genus)
+
+genus_order <- as.character(genus_family$Genus)
+
+genus_cols <- setNames(
+  family_cols[as.character(genus_family$Family)],
+  genus_order)
+
+genus_shapes <- setNames(
+  rep_len(1:17, length(genus_order)),
+  genus_order)
+
+# Plot
 ggplot(data = CV_sub, aes(x = ITD, y = `CV 1`)) +
   geom_point(aes(color = factor(Genus),
                  shape = factor(Genus)),
-             size = 2, stroke = 0.5) +
-  labs(x = "ITD (cm)", y = "CV1", color = "Genus", shape = "Genus") +
-  scale_shape_manual(values = c(1:17)) +
+             size = 2, stroke = 0.6) +
+  scale_color_manual(values = genus_cols, breaks = genus_order) +
+  scale_shape_manual(values = genus_shapes, breaks = genus_order) +
+  labs(x = "ITD (cm)", y = "Canonical Variate 1 (CV1)", color = "Genus", shape = "Genus") +
   geom_smooth(method = "lm") +
   theme_light()
 
+# Regression Statistics
 ITD_regession <- lm(formula = `CV 1` ~ `ITD`, data = CV_sub) #Linear Regression Model 'y ~ x'
 summary(ITD_regession)
 
-ggsave("output/allo_regression.png", plot = last_plot(), dpi = 300, width = 10, height = 5, units = "in")
+ggsave("output/allo_regression.png", plot = last_plot(), dpi = 600, width = 10, height = 5, units = "in")
 
 ```
+
+### Phylogenetic Generalised Least Squares (PGLS) Analysis 
+Procrustes ANOVA in a phylogenetic framework and uses permutation procedures to assess statistical hypotheses describing patterns of shape variation and covariation for a set of Procrustes-aligned coordinates
+```{r}
+subset_ITD <- subset_LM[!is.na(subset_LM$ITD), ]
+
+subset_ITD$ITD <- as.numeric(subset_ITD$ITD)
+
+mean_ITD <-  aggregate(ITD ~ Genus, data = subset_ITD, FUN = mean) %>% 
+  column_to_rownames(var = "Genus")
+
+mean_ITD$ITD <- as.numeric(mean_ITD$ITD)
+
+ITD_pgls <- geomorph.data.frame(
+  shape = LMmeans,
+  size  = mean_ITD,
+  phy   = ref_tree)
+
+taxa <- rownames(LMmeans)
+cols <- scales::hue_pal()(17)
+shapes <- c(1:17)
+
+### Ordinary Least Squares (OLS) Linear Regression
+# Shape ~ size (allometry)
+fit_ols <- procD.lm(shape ~ size.ITD, data = ITD_pgls, iter = 9999)
+summary(fit_ols)
+
+# Predline
+par(mar=c(5, 5, 3, 8), xpd=TRUE)
+plotAllometry(fit_ols, size = ITD_pgls$size.ITD, logsz = FALSE, 
+method = "PredLine", pch = shapes, col = cols)
+legend("topright", legend = taxa, col = cols, pch = shapes, 
+       cex = 0.85, ncol = 1, x = "right", inset = c(-0.26,0), xpd=TRUE, bty = "n")
+
+# RegScore
+par(mar=c(5, 5, 3, 8), xpd=TRUE)
+plotAllometry(fit_ols, size = ITD_pgls$size.ITD, logsz = FALSE, 
+method = "RegScore", cex = 1.2, pch = shapes, col = cols, xlab = "ITD (cm)")
+legend("topright", legend = taxa, col = cols, pch = shapes, 
+       cex = 0.85, ncol = 1, x = "right", inset = c(-0.26,0), xpd=TRUE, bty = "n")
+
+# CAC
+plotAllometry(fit_ols, size = ITD_pgls$size.ITD, logsz = TRUE, 
+method = "CAC", col = cols, pch = shapes)
+
+
+### Phylogenetic Generalised Least Squares (PGLS) Linear Regression
+# Shape ~ size (allometry), accounting for phylogeny
+fit_pgls <- procD.pgls(shape ~ size.ITD, phy = ref_tree, data = ITD_pgls, lambda = 0.2143, iter = 9999) #lambda = 0.2143 from physignal.z() results
+summary(fit_pgls)
+
+# Predline
+par(mar=c(5, 5, 3, 8), xpd=TRUE)
+plotAllometry(fit_pgls, size = ITD_pgls$size.ITD, logsz = FALSE, 
+method = "PredLine", col = cols, pch = shapes)
+legend("topright", legend = taxa, col = cols, pch = shapes, 
+       cex = 0.85, ncol = 1, x = "right", inset = c(-0.26,0), xpd=TRUE, bty = "n")
+
+# RegScore
+par(mar=c(5, 5, 3, 8), xpd=FALSE)
+
+plotAllometry(fit_pgls, size = ITD_pgls$size.ITD, logsz = FALSE, 
+              method = "RegScore", cex = 1.2, pch = shapes, col = cols, xlab = "ITD (cm)", ylab = "Wing Shape")
+
+legend(legend = taxa, col = cols, pch = shapes, 
+       cex = 0.85, ncol = 1, x = "right", inset = c(-0.26,0), xpd = NA, bty = "n")
+
+# CAC
+plotAllometry(fit_pgls, size = ITD_pgls$size.ITD, logsz = TRUE, 
+method = "CAC", col = cols, pch = shapes)
+
+
+?procD.pgls
+```
+
+### Save OLS and PGLS Plots
+```{r}
+### Plot Colors (Genera colored by Family)
+# Genus by Family 
+genus_family <- subset_ITD %>%
+  distinct(Genus, Family)
+
+# Family of each taxon in correct order
+taxa_family <- as.character(genus_family$Family[match(taxa, genus_family$Genus)])
+
+# Color genus by family
+cols <- unname(family_cols[taxa_family])
+
+# Legend order: grouped by family, then genus
+leg_order <- order(taxa_family, taxa)
+
+# Assign shapes 1:17 in legend order, stored back in taxa order
+shapes <- integer(length(taxa))
+shapes[leg_order] <- rep_len(1:17, length(taxa))
+
+stopifnot(!anyNA(cols))   # stops if a genus has no matching family color
+
+fit_ols <- procD.lm(shape ~ size.ITD, data = ITD_pgls, iter = 9999)
+
+### Plot OLS
+png("output/OLS_plot.png", width = 4000, height = 2000, res = 300)
+
+par(mar = c(5, 5, 3, 10), xpd = FALSE)
+
+plotAllometry(fit_ols, size = ITD_pgls$size.ITD, logsz = FALSE,
+              method = "RegScore", cex.lab = 1.3, cex = 2, lwd = 2,
+              pch = shapes, col = cols,
+              xlab = "ITD (cm)", ylab = "Wing Shape")
+
+grid(nx = NULL, ny = NULL, col = "lightgray", lty = 1, lwd = 0.6)
+
+usr <- par("usr")
+legend(x = usr[2], y = usr[4],
+       legend = taxa[leg_order], col = cols[leg_order], pch = shapes[leg_order], pt.lwd = 2,
+       cex = 1.4, bty = "n", xpd = NA)
+
+dev.off()
+
+### Plot PGLS
+png("output/PGLS_plot.png", width = 4000, height = 2000, res = 300)
+
+par(mar = c(5, 5, 3, 10), xpd = FALSE)
+
+plotAllometry(fit_pgls, size = ITD_pgls$size.ITD, logsz = FALSE,
+              method = "RegScore", cex.lab = 1.3, cex = 2, lwd = 2,
+              pch = shapes, col = cols,
+              xlab = "ITD (cm)", ylab = "Wing Shape")
+
+grid(nx = NULL, ny = NULL, col = "lightgray", lty = 1, lwd = 0.6)
+
+usr <- par("usr")
+legend(x = usr[2], y = usr[4],
+       legend = taxa[leg_order], col = cols[leg_order], pch = shapes[leg_order], pt.lwd = 2,
+       cex = 1.4, bty = "n", xpd = NA)
+
+dev.off()
+```
+
+
+
 
 
 
