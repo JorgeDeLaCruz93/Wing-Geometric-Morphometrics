@@ -6,7 +6,7 @@ Jorge De La Cruz, Charles N. Thrift, Madeleine M. Ostwald, Katja C. Seltmann
 
 University of California Santa Barbara, Cheadle Center for Biodiversity and Ecological Restoration
 
-https://doi.org/10.5281/zenodo.16883838
+https://doi.org/10.5281/zenodo.20694961
 
 ## Abstract
 Wing venation is widely used in insect systematics, but the extent to which bee wing morphology reflects phylogenetic divergence, taxonomic identity, and body-size scaling remains poorly understood. Here, we used geometric morphometrics to quantify forewing venation across 17 bee species representing 17 genera and five families. We placed nine homologous landmarks on wing vein intersections and analyzed shape variation among species, subfamilies, and families. We also evaluated phylogenetic signal in overall wing shape and individual landmarks, compared a morphology-inferred tree with a molecular reference phylogeny, and examined the relationship between wing shape and intertegular distance, a proxy for body size.
