@@ -9,9 +9,10 @@ University of California Santa Barbara, Cheadle Center for Biodiversity and Ecol
 https://doi.org/10.5281/zenodo.16883838
 
 ## Abstract
-Wing venation characteristics are fundamental to taxonomic delimitation and classification in insect systematics, yet traditional approaches to analyzing these complex morphological traits are difficult and time-consuming. These challenges limit the pace and accessibility of research assessing insect biodiversity and the characterization of ecological morphotypes. Although bees (Hymenoptera: Anthophila) exhibit relatively conserved wing morphology, the variation between lineages remains poorly understood. In this study, we apply geometric morphometrics to investigate divergence in wing morphology for taxonomic identification and phylogenetic inference. Nine homologous landmarks plotted on wing vein intersections allow for the quantification and comparison of wing shape across 20 species and spanning 5 families. These landmarks have previously been shown to differentiate congeneric species and conspecific populations in prior exploratory studies.
+Wing venation is widely used in insect systematics, but the extent to which bee wing morphology reflects phylogenetic divergence, taxonomic identity, and body-size scaling remains poorly understood. Here, we used geometric morphometrics to quantify forewing venation across 17 bee species representing 17 genera and five families. We placed nine homologous landmarks on wing vein intersections and analyzed shape variation among species, subfamilies, and families. We also evaluated phylogenetic signal in overall wing shape and individual landmarks, compared a morphology-inferred tree with a molecular reference phylogeny, and examined the relationship between wing shape and intertegular distance, a proxy for body size.
 
-Our results demonstrate that wing shape alone can reliably distinguish taxa at multiple hierarchical levels (species, genus, subfamily, and family), with increasing morphological divergence among more distantly related lineages. Phylogenetic analysis of the morphometric data reveals strong concordance between wing morphology and evolutionary relationships. Additionally, intertegular distance (a proxy for body size) correlates with divergence in wing morphology, suggesting potential allometric effects of bee body size on wing structure. These findings underscore the utility of geometric morphometrics for inferring the phylogenetic placement of indeterminate taxa and highlight its practical value as an efficient tool for species identification based solely on wing venation. 
+Wing morphology distinguished taxa with high classification accuracy at the species, subfamily, and family levels. Landmark data exhibited phylogenetic signal, although its strength varied among individual landmarks, and the morphology-inferred tree showed moderate concordance with the molecular reference phylogeny. Intertegular distance explained a substantial proportion of variation in the primary canonical variate and was significantly associated with multivariate wing shape, even after accounting for phylogenetic relatedness. These findings suggest that bee forewing venation contains taxonomic and phylogenetic information, but that its morphological variation is also influenced by body-size scaling. Our results highlight the importance of considering allometry and landmark configuration when applying geometric morphometrics to wing venation in insect systematics and support its use as a complementary tool for bee identification, comparative morphology, and studies of evolutionary divergence.
+
 
 ## Description of data
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
@@ -31,7 +32,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |bee_tree.nex | Nexus format pruned reference phylogeny |
 |nj_tree.nwk | Newick format Neighbor-Joining (NJ) tree reconstruction from Mahalanobis Distance |
 |upgma_tree.nwk | Newick format UPGMA tree reconstruction from Mahalanobis Distance |
-|taxa.csv| Taxonomy Table |
+|taxa.csv| Taxonomy table |
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
