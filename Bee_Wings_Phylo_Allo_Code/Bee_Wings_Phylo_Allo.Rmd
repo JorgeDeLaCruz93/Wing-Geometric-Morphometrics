@@ -1,7 +1,7 @@
 ---
 title: "Bee_Wings_Phylo_Allo"
 author: "Jorge De La Cruz"
-date: "2026-10-24"
+date: "2026-11-12"
 output: html_document
 ---
 
@@ -37,6 +37,7 @@ library(shapes) #required to plot CVA
 #if (!require("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
 #BiocManager::install("ggtree")
+
 ```
 
 ##Load TPS
@@ -701,7 +702,6 @@ physig_LMs <- physignal.z(A = LMmeans, phy = ref_tree, lambda = "mean", iter = 9
 summary(physig_LMs)
 
 
-
 #Test for phylogenetic signal effect size for each individual landmark (include both x and y coordinate)
 physig_LM1 <- physignal.z(A = LMmeans[,c("LM1x", "LM1y")], phy = ref_tree, lambda = "mean") #Landmark 1
 summary(physig_LM1)
@@ -949,8 +949,6 @@ legend(legend = taxa, col = cols, pch = shapes,
 plotAllometry(fit_pgls, size = ITD_pgls$size.ITD, logsz = TRUE, 
 method = "CAC", col = cols, pch = shapes)
 
-
-?procD.pgls
 ```
 
 ### Save OLS and PGLS Plots

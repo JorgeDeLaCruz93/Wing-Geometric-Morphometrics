@@ -9,6 +9,6 @@ Sums of Squares and Cross-products: Type I
 Number of permutations: 1000 
 
            Df  Rand      Pillai   Z        Pr(>Pillai)
-Subfamily    6 Residuals 4.091434 18.48439 0.001      
-Full.Model   6 Residuals 4.091434 18.48439 0.001      
+Subfamily    6 Residuals 4.091434 18.48467 0.001      
+Full.Model   6 Residuals 4.091434 18.48467 0.001      
 Residuals  163                                        

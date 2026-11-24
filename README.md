@@ -31,6 +31,7 @@ In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree
 |bee_tree.nex | Nexus format pruned reference phylogeny |
 |nj_tree.nwk | Newick format Neighbor-Joining (NJ) tree reconstruction from Mahalanobis Distance |
 |upgma_tree.nwk | Newick format UPGMA tree reconstruction from Mahalanobis Distance |
+|taxa.csv| Taxonomy Table |
 
 ## Data Processing & Analysis
 In [R/data](https://github.com/JorgeDeLaCruz93/Wing-Geometric-Morphometrics/tree/master/R/data) 
@@ -47,8 +48,8 @@ _**R Objects**_	are italized and bolded
 |subset_LM.csv | Canonical Variate Analysis (CVA) | _**cva.1**_ |
 |BEE_mat7gen_p8pmAa_fst.nwk | Prune phylogenetic tree | bee_tree.nex |
 |bee_tree.nwk | Calculate phylogenetic distances | phylo_distances.csv |
-|_cva.1$groupmeans_ | Calculate phylogenetic signal (Pagel’s λ) | **lambda_result** |
-|_cva.1$groupmeans_ | Calculate phylogenetic signal (Blomberg's K)  | **K_result**  |
+|_cva.1$groupmeans_ | Calculate phylogenetic signal (Blomberg's K)  | **physig_LMs_K**  |
+|_cva.1$groupmeans_ | Calculate phylogenetic signal effect size (Z) | **physig_LMs** |
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | Neighbor-joining (NJ) Tree Reconstruction | nj_tree.nwk |
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
 | bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _RefvsNJ_ / _RefvsUPGMA_ / _NJvsUPGMA_ |
