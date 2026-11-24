@@ -55,6 +55,9 @@ _**R Objects**_	are italized and bolded
 |_cva.1[["Dist"]][["GroupdistMaha"]]_ | UPGMA (Unweighted Pair Group Method with Arithmetic mean) Tree Reconstruction | upgma_tree.nwk  |
 | bee_tree.nwk / nj_tree.nwk / upgma_tree.nwk  | Quartet Tree Similarity | _RefvsNJ_ / _RefvsUPGMA_ / _NJvsUPGMA_ |
 |_cva.1$CVscores_| Allometric Linear Regression |ITD_regession |
+|_subset_LM.csv_|Ordinary Least Squares (OLS) Regression| **fit_ols** |
+|_subset_LM.csv_|Phylogenetic Generalised Least Squares (PGLS) Regression| **fit_pgls** |
+
 
 
 
